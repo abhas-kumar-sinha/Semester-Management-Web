@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Sign Up</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/L_S_style.css')}}">
+    <link rel="shortcut icon" href="{{url_for('static', filename='logo/logo.png')}}" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div id="main">
+        <div class="box">
+            <div class="form-top">
+                <div class="logo"></div>
+                <div class="top-para">
+                    <h4>Welcome Back</h4>
+                </div>
+            </div>
+            <div class="form">
+                <form action="/Sign-In" method="POST">
+                    <legend>Please enter your details to sign in.</legend>
+                    <fieldset class="short-signin">
+                        <button class="Google button" type="button"><i class='bx bxl-google'></i></button>
+                        <button class="Apple button" type="button"><i class='bx bxl-apple'></i></button>
+                        <button class="LinkedIn button" type="button"><i class='bx bxl-linkedin'></i></button>
+                    </fieldset>
+
+                    <div class="partition">
+                        <div class="line left-side"></div>
+                        <span>or</span>
+                        <div class="line right-side"></div>
+                    </div>
+
+                    <fieldset class="normal-signin">
+                        <label for="signin-i'd">User I'd</label>
+                        <input type="text" class="form-input" name="signin-i'd" required placeholder="Enter your User I'd...">
+                        <label for="signin-password">Password</label>
+                        <input type="password" class="form-input form-password" name="signin-password" required placeholder="••••••••">
+                        <div class="form-features">
+                            <div class="features-1">
+                                <label for="remember-me">Remember me</label>
+                                <input type="checkbox" id="remember-me">
+                            </div>
+                            <a href="#">Forgot Password</a>
+                        </div>
+                        <button type="submit" class="sign-btn">Sign In</button>
+                    </fieldset>
+                </form>
+                <div class="redirect-signup">
+                    <span>Don't have an account yet?</span>
+                    <a href="Sign-Up">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{url_for('static', filename='js/L_S_script.js')}}"></script>
+</body>
+</html>

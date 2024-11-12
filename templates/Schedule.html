@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+{% block head %}
+    {{ super() }} <!-- This includes all content from the base template's head block -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/S_style.css') }}">
+{% endblock %}
+            
+<div class="hero-section">
+
+    {% include 'base_navBar.html' %}
+
+    <div class="add-course-container">
+        <div class="course-container-head">
+            <p>Time Tables</p>
+        </div>
+
+        <button class="edit-button">Edit</button>
+        <div id="timetables_list" style="display: none;">{{ timetables_list | tojson }}</div>
+    </div>
+
+    <div class="all-courses">
+        <div id="back-calendar" class="back-calendar">
+            <table border="1">
+                <tr>
+                    <th></th>
+                    <th>8:00 AM - 9:00 AM</th>
+                    <th>9:00 AM - 10:00 AM</th>
+                    <th>10:00 AM - 11:00 AM</th>
+                    <th>11:00 AM - 12:00 PM</th>
+                    <th>12:00 PM - 1:00 PM</th>
+                    <th>1:00 PM - 2:00 PM</th>
+                    <th>2:00 PM - 3:00 PM</th>
+                    <th>3:00 PM - 4:00 PM</th>
+                    <th>4:00 PM - 5:00 PM</th>
+                    <th>5:00 PM - 6:00 PM</th>
+                </tr>
+
+                <tr>
+                    <th>MON</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <th>TUE</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <th>WED</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <th>THUR</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <th>FRI</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="front-view">
+        </div>
+    </div>
+
+    <button class="add-button">
+        <i class='bx bx-calendar'></i>
+        <p>Add Timetable</p>
+    </button>
+
+</div>
+
+<div class="course-add-form hide">
+    <div class="course-form">
+        <form class="additive-form" action="/Today-Schedule" method="POST">
+            <input name="form-name" value="add-course" style="display: none;">
+            <div id="courses" style="display: none;">{{ courses | tojson }}</div>
+            <legend>Add Timetable &nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="close-add-form"><i class='bx bx-x'></i></button></legend>
+            <div class="form-wrapper">
+                <div class="in-forms">
+                    <div class="form-separator">
+                        <div class="line-div"></div>
+                        <span>Course Details</span>
+                        <div class="line-div"></div>
+                    </div>
+
+                    <table class="form-table">
+                        <tr>
+                            <td><label class="form-label" for="form-course-name">Course Id</label></td>
+                            <td><select class="form-input" name="course-id-0" id="form-course-name" required>
+                                <option value="none">—————SELECT—————</option>
+                                {% for course in courses %}
+                                    <option value="{{course[0]}}">{{course[0]}}</option>
+                                {% endfor %}
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td><label class="form-label" for="form-course-name">Class Type</label></td>
+                            <td><select class="form-input" name="class-type-0" id="form-course-name" required>
+                                <option value="none">—————SELECT—————</option>
+                                <option value="LECTURE">LECTURE</option>
+                                <option value="TUTORIAL">TUTORIAL</option>
+                                <option value="INTRODUCTION">INTRODUCTION</option>
+                                <option value="LAB">LAB</option>
+                            </select></td>
+                        </tr>
+
+                        <tr>
+                            <td><label class="form-label" for="form-course-name">Day</label></td>
+                            <td><select class="form-input" name="day-0" id="form-course-name" required>
+                                <option value="none">—————SELECT—————</option>
+                                <option value="MON">MON</option>
+                                <option value="TUE">TUE</option>
+                                <option value="WED">WED</option>
+                                <option value="THUR">THUR</option>
+                                <option value="FRI">FRI</option>
+                            </select></td>
+                        </tr>
+
+                        <tr>
+                            <td><label class="form-label" for="form-course-name">Class Start Time</label></td>
+                            <td><select class="form-input start-time" name="class-start-time-0" id="form-course-name" required>
+                                <option value="none">—————SELECT—————</option>
+                                <option value="8:00 AM">8:00 AM</option>
+                                <option value="9:00 AM">9:00 AM</option>
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="11:00 AM">11:00 AM</option>
+                                <option value="12:00 PM">12:00 PM</option>
+                                <option value="1:00 PM">1:00 PM</option>
+                                <option value="2:00 PM">2:00 PM</option>
+                                <option value="3:00 PM">3:00 PM</option>
+                                <option value="4:00 PM">4:00 PM</option>
+                                <option value="5:00 PM">5:00 PM</option>
+                            </select></td>
+                        </tr>
+
+                        <tr>
+                            <td><label class="form-label" for="form-course-name">Class End Time</label></td>
+                            <td><select class="form-input end-time" name="class-end-time-0" id="form-course-name" required>
+                            </select></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="add-in-form-div">
+                <button type="button" class="add-in-form">
+                    <i class='bx bx-plus'></i>
+                    <p>Add more</p>
+                </button>
+            </div>
+
+            <button class="add-submit" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/S_script.js') }}"></script>
+{% endblock main %}

@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.otp-box-container{
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 100;
+    background-color: rgba(255, 255, 255, 0.126);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.otp-box{
+    height: 42.5vh;
+    width: 60%;
+    background-color: rgba(242, 246, 245, 0.82);
+    border-radius: 2vw;
+    border-top: 10px solid black;
+    border-bottom: 10px solid black;
+}
+
+.otp-form{
+    padding: 0 2vw 0vw 2vw;
+    height: 100%;
+    width: 100%;
+    border-radius: 2vw;
+}
+
+.otp-form legend{
+    padding-left: 17vw;
+    font-size: 2.5vw;
+    font-family: "Cedarville Cursive", cursive;
+    display: flex;
+    align-items: center;
+    margin-right: -6%;
+}
+
+.otp-form legend a{
+    background-color: transparent;
+    font-size: 2.5vw;
+    border: none;
+    border-radius: 50%;
+    height: 3vw;
+    width: 3vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -2%;
+    color: red;
+    transition: 0.2s;
+    text-decoration: none;
+}
+
+.otp-form legend a:hover {
+    scale: 1.2;
+}
+
+.otp-form input{
+    height: 4vw;
+    width: 55%;
+    border-radius: 1vw;
+    margin: 0.75vw 1vw 1vw 1vw;
+    font-size: 1.5vw;
+    padding: 0.5vw 0 0.5vw 4.6vw;
+    padding-right: 4.6vw;
+    letter-spacing: 3.1vw;
+}
+
+.otp-submit{
+    margin-top: 0.5vw;
+    height:3.5vw;
+    width: 8vw;
+    border-radius: 2vw;
+    font-size: 1.5vw;
+    background-color: black;
+    color: white;
+    transition: 0.2s;
+}
+
+.otp-submit:hover{
+    scale: 1.05;
+}
+
+.end-p{
+    margin-top: 0.5vw;
+}

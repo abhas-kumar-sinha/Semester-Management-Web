@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body{
+            height: 100vh;
+            width: 100vw;
+            background-color: #E4E9F7;
+        }
+
+        .otp-container{
+            height: 80vh;
+            width: 37.5vw;
+            background-color: white;
+            border-radius: 1.5vw;
+            padding: 1.5vw;
+            margin: 0 13vw;
+        }
+        .top-head{
+            font-family: "Cedarville Cursive", cursive;
+            font-size: 2.25vw;
+            margin: 0.75vw 0;
+            padding-left: 8vw;
+        }
+
+        .line1{
+            padding-left: 9.5vw;
+        }
+
+        .line2{
+            padding-left: 5vw;
+        }
+
+        .line3{
+            padding-left: 10vw;
+        }
+
+        .line4{
+            padding-left: 4vw;
+        }
+
+        .otp{
+            width: 100%;
+            margin: 5vw 0;
+        }
+
+        .otp h1{
+            font-size: 4vw;
+            margin: 2.5vw 0;
+            letter-spacing: 3.5vw;
+            padding-left: 1.75vw;
+            background-color: #e4e9f781;
+            font-weight: 500;
+            border-radius: 1vw;
+        }
+
+        .container-bottom{
+            margin-top: 3vw;
+        }
+
+        .ignore-msg{
+            margin-top: 4vw;
+            font-size: 1.1vw;
+        }
+
+        @media only screen and (max-width: 455px){
+
+            *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            }
+
+            body{
+                height: 100vh;
+                width: 100vw;
+                background-color: #E4E9F7;
+            }
+
+            .otp-container{
+                height: 100vh;
+                width: 100vw;
+                background-color: white;
+                border-radius: 1.5vw;
+                padding: 1.5vw;
+                margin-left: -0.1vh;
+            }
+            .top-head{
+                font-family: "Cedarville Cursive", cursive;
+                font-size: 5vh;
+                margin: 4vh 0;
+                margin-left: 7vh;
+                padding-left: 8vw;
+                margin-bottom: 3vh;
+            }
+
+            .line1{
+                padding-left: 23vw;
+            }
+
+            .line2{
+                padding-left: 4.5vh;
+            }
+
+            .line3{
+                padding-left: 14vh;
+            }
+
+            .line4{
+                margin-top: 5vh;
+                padding-left: 11vh;
+            }
+
+            .otp{
+                width: 100%;
+                margin: 5vh 0;
+            }
+
+            .otp h1{
+                font-size: 8vh;
+                margin: 2.5vw 0;
+                letter-spacing: 7vw;
+                padding-left: 1.75vw;
+                background-color: #e4e9f781;
+                font-weight: 500;
+                border-radius: 1vw;
+            }
+
+            .container-bottom{
+                margin-top: 3vw;
+            }
+
+            .ignore-msg{
+                margin-top: 4vw;
+                font-size: 1.1vw;
+            }
+            
+        }
+
+    </style>
+</head>
+<body>
+    <div class="otp-container">
+        <div class="container-top">
+            <h2 class="top-head">Let's log you in</h2>
+            <p class="line1">Use this OTP to verify you email.</p>
+            <p class="line2">This OTP will expire in 10 minutes from recieve time.</p>
+        </div>
+
+        <div class="otp">
+            <h1>{{OTP}}</h1>
+        </div>
+
+        <div class="container-bottom">
+            <p class="line2">This code will securely log you into AT Tracker using</p>
+            <a href="{{email}}" class="line3">{{email}}</a>
+            <div class="ignore-msg">
+                <p class="line4">If you didn't request this email, you can safely Ignore this.</p>
+            </div>
+        </div>
+    </div> 
+</body>
+</html>

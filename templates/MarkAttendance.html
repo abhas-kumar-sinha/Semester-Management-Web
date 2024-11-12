@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+{% block head %}
+    {{ super() }} <!-- This includes all content from the base template's head block -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/M_A_style.css') }}">
+{% endblock %}
+            
+<div class="hero-section">
+
+    {% include 'base_navBar.html' %}
+    <div id="courses" style="display: none;">{{ courses | tojson }}</div>
+    <div id="timetables_list" style="display: none;">{{ fin_timetables_list | tojson }}</div>
+
+    <div class="active-course">
+        <div class="head-active">
+            <h2>Today's Classes ({{fin_day_name}})</h2>
+        </div>
+        {% for timetable in fin_timetables_list %}
+            <button type="button" class="active-class active-now">
+                <div class="active-class-content">
+                    <h2>{{timetable.course_id}}</h2>
+                    <p>{{timetable.class_type}}</p>
+                    <p>{{timetable.start_time}} - {{timetable.end_time}}</p>
+                </div>
+                <div class="mark-att">
+                    <form action="/Mark-Attendance" method="POST">
+                        <input name="form-course-id" style="display: none;" value="{{timetable.course_id}}">
+                        <input name="form-class-type" style="display: none;" value="{{timetable.class_type}}">
+                        <h2>Mark Attendance</h2>
+                        <table class="ans-input">
+                            <tr>
+                                <td><label for="present">Present</label></td>
+                                <td><input type="radio" id="present" name="attendance" value="Present" checked></td>
+                            </tr>
+                            <tr>
+                                <td><label for="absent">Absent</label></td>
+                                <td><input type="radio" id="absent" name="attendance" value="Absent"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="leave">Medical Leave</label></td>
+                                <td><input type="radio" id="leave" name="attendance" value="medical_leave"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="cancelled">Cancelled</label></td>
+                                <td><input type="radio" id="cancelled" name="attendance" value="cancelled"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="submit-td"><button class="marked-att" type="submit">Submit</button></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </button>  
+        {% endfor %}
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/M_A_script.js') }}"></script>
+{% endblock main %}

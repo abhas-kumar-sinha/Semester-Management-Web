@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Sign Up</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/L_S_style.css')}}">
+    <link rel="shortcut icon" href="../../Assets/logo/At_logo.png" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div id="main">
+        <button class="is_valid"></button>
+        <div class="box">
+            <div class="form-top">
+                <div class="logo"></div>
+                <div class="top-para">
+                    <h4>Get Started</h4>
+                </div>
+            </div>
+            <div class="form">
+                <form action="/Sign-Up" method="POST">
+                    <legend>Please enter your details to sign up.</legend>
+                    <fieldset class="short-signin">
+                        <button class="Google button" type="button"><i class='bx bxl-google'></i></button>
+                        <button class="Apple button" type="button"><i class='bx bxl-apple'></i></button>
+                        <button class="LinkedIn button" type="button"><i class='bx bxl-linkedin'></i></button>
+                    </fieldset>
+
+                    <div class="partition">
+                        <div class="line left-side"></div>
+                        <span>or</span>
+                        <div class="line right-side"></div>
+                    </div>
+
+                    <fieldset class="normal-signin">
+                        <label for="signin-email">E-Mail Address</label>
+                        <input type="email" class="form-input" name="signup-email" required placeholder="Enter your email...">
+                        <label for="signin-password">Password</label>
+                        <input type="password" class="form-input form-password" name="signup-password" minlength="8" required placeholder="••••••••">
+                        <button type="submit" class="sign-btn">Sign Up</button>
+                    </fieldset>
+                </form>
+                <div class="redirect-signup">
+                    <span>Already have an account? </span>
+                    <a href="Sign-In">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{url_for('static', filename='js/L_S_script.js')}}"></script>
+</body>
+</html>

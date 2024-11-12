@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% set include_base_css = false %}
+
+{% block head %}<link rel="stylesheet" href="{{url_for('static', filename='css/A_style.css')}}">{% endblock %}
+
+{% block main %}
+            
+<div class="hero-section">
+
+    {% include 'base_navBar.html' %}
+
+    <div class="hero-analytics" >
+        <div id="attendance" style="display: none;">{{ attendance | tojson }}</div>
+        <p class="course-analytics-p">Course Attendance Analytics</p>
+        <div class="course-analytics"></div> 
+    </div>
+    
+</div>
+
+<script src="{{url_for('static', filename='js/A_script.js')}}"></script>
+
+{% endblock main %}
+
+{% set include_base_js = false %}

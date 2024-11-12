@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block main %}
+            
+<div class="hero-section">
+
+    {% include 'base_navBar.html' %}
+
+    <div class="hero-analytics" >
+        <div id="attendance" style="display: none;">{{ attendance | tojson }}</div>
+        <p class="course-analytics-p">All Course Attendance details</p>
+        <div class="course-analytics"></div>
+    </div>
+
+    <div class="hero-bottom">
+        <div class="box">
+            <i class='bx bx-notepad'></i>
+            <a href="Grades" class="fn">
+                <h6>Your</h6>
+                <h6>Grades</h6>
+                <h6>Overview</h6>
+            </a>
+        </div>
+
+        <div class="box">
+            <i class='bx bx-user-check'></i>
+            <a href="Mark-Attendance" class="fn">
+                <h6>Mark Today's Attendance</h6>
+            </a>
+        </div>
+
+        <div class="box">
+            <i class='bx bx-calendar'></i>
+            <a href="Today-Schedule#back-calendar" class="fn">
+                <h6>Check Today's Schedule</h6>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock main %}

@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background-color: #E4E9F7;
+    z-index: 1;
+}
+
+.box{
+    position: absolute;
+    height: 92vh;
+    width: 35vw;
+    background-color: white;
+    border-radius: 1.5vw;
+    top: 4vh;
+    left: 32.5vw;
+    z-index: 2;
+}
+
+.is_valid{
+    display: none;
+}
+
+.form-top{
+    height: 25%;
+    width: 100%;
+    border-top-left-radius: 1.5vw;
+    border-top-right-radius: 1.5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo{
+    height: 4.5vw;
+    width: 4.5vw;
+    border-radius: 50%;
+    background-image: url('../logo/logo.png');
+    background-position: center;
+    background-size: contain;
+    margin-top: 1.6vw;
+}
+
+.top-para h4{
+    font-family: "Cedarville Cursive", cursive;
+    font-size: 2.6vw;
+    height: 2.8vw;
+    margin-top: -4%;
+}
+
+.form legend{
+    margin-top: -3%;
+    margin-bottom: 2.25vw;
+    color: #707070;
+    font-size: 1.25vw;
+}
+
+.form fieldset{
+    width: 100%;
+    border: none;
+}
+
+.short-signin{
+    display: flex;
+    justify-content: space-between;
+}
+
+.form{
+    height: 75%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form{
+    height: 90%;
+    width: 88%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button{
+    height: 3.5vw;
+    width: 30%;
+    border-radius: 1vw;
+    border: 1px solid #707070;
+    background-color: transparent;
+    font-size: 2vw;
+    transition: 0.2s;
+}
+
+.button:hover{
+    scale: 1.06;
+}
+
+.partition{
+    height: 1px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 2vw 0 1.5vw 0;
+}
+
+.partition span{
+    margin-top: -3%;
+}
+
+.line{
+    height: 1px;
+    width: 47%;
+    background-color: #707070;
+}
+
+.normal-signin{
+    margin-top: 0.8vw;
+    height: 52vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-input{
+    height: 3vw;
+    margin: 0.5vw 0 1.5vw 0;
+    border-radius: 0.5vw;
+    border: 1px solid #707070;
+    font-size: 1.2vw;
+    padding: 0.5vw;
+}
+
+.form-password{
+    font-size: 1.5vw;
+    letter-spacing: 1vw;
+}
+
+#signin-password{
+    display: flex;
+    gap: 1.5vw;
+}
+
+.form-input:focus{
+    outline: none;
+}
+
+.features-1{
+    display: flex;
+    align-items: center;
+}
+
+.features-1 label{
+    margin-right: 6px;    
+}
+
+.form-features{
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-features a{
+    text-decoration: none;
+    color: #707070;
+}
+
+.sign-btn{
+    margin-top: 0.6vw;
+    height: 3.2vw;
+    background-color: black;
+    color: white;
+    border-radius: 0.5vw;
+    transition: 0.2s;
+    font-size: 1.2vw;
+}
+
+.sign-btn:hover {
+    scale: 1.03;
+}
+
+.redirect-signup {
+    margin-top: 0.1vw;
+}
+
+.redirect-signup span{
+    color: #707070;
+    font-family: "Cedarville Cursive", cursive;
+    font-size: 1.5vw;
+}
+
+.redirect-signup a{
+    text-decoration: none;
+    font-weight: 550;
+    color: black;
+}

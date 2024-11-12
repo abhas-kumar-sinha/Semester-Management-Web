@@ -1,11 +1,19 @@
 <div class="nav-up">
     <div class="up-left">
-        <span class="User-name">Welcome, <span class="User-name-main">Abhas Kumar Sinha</span></span>
+        {% if read_data_user[0][1] == "" %}
+        <span class="User-name">Welcome, <span class="User-name-main">(Please add a User Name)</span></span>            
+        {% else %}
+        <span class="User-name">Welcome, <span class="User-name-main">{{read_data_user[0][1]}}</span></span> 
+        {% endif %}
     </div>
     <div class="up-right">
         <i class='bx bx-plus-circle nav-up-bx'></i>
         <i class='bx bx-chat nav-up-bx'></i>
         <i class='bx bx-bell nav-up-bx'></i>
-        <div class="profile-pic"></div>
+        {% if read_data_user[0][4] == "" %}
+            <a href="User-Profile" class="profile-pic" style="background-image: url(../static/Profile-Pic/dummy.jpeg);"></a>
+        {% else %}
+            <a href="User-Profile" class="profile-pic" style="background-image: url({{read_data_user[0][4]}});"></a>
+        {% endif %}
     </div>
 </div>

@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect, session, jsonify, json
+from flask import Flask, render_template, request, redirect, session, url_for, json
 from flask_mail import Mail, Message
 import sqlite3
 from datetime import datetime
 from random import randint
 from dotenv import load_dotenv
+from werkzeug.utils import secure_filename
 import os
 load_dotenv()
 
@@ -57,10 +58,57 @@ def create_User(U_id):
                     thursday TEXT ,
                     friday TEXT)''')
     
-    User_cursor.execute('''INSERT INTO timetable (monday, tuesday, wednesday, thursday, friday) VALUES(" ", " ", " ", " ", " ")''')
+    User_cursor.execute('''INSERT INTO timetable 
+                        (monday, tuesday, wednesday, thursday, friday) 
+                        VALUES(" ", " ", " ", " ", " ")''')
+    
+    User_cursor.execute('''CREATE TABLE IF NOT EXISTS userDetails (
+                    U_id TEXT PRIMARY KEY,
+                    user_name TEXT ,
+                    user_email TEXT ,
+                    joined_date TEXT ,
+                    profile_image_url TEXT)''')
+    
+    insert_details = read_User_table()
+    for i in insert_details:
+        if i[0] == U_id:
+            user_email = i[1]
+            joined_date = i[3]
+    
+    User_cursor.execute('''INSERT INTO userDetails 
+                        (U_id, user_name, user_email, joined_date, profile_image_url) 
+                        VALUES(?, "", ?, ?, "")''', (U_id, user_email, joined_date))
     
     User_db.commit()
     User_db.close()
+
+def read_userDetails(U_id):
+    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
+    User_cursor = User_db.cursor()
+
+    User_cursor.execute('''SELECT * FROM userDetails''')
+    read_data = User_cursor.fetchall()
+
+    User_db.close()
+    return read_data
+
+def update_userDetails(U_id, user_name, profile_image_url):
+    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
+    User_cursor = User_db.cursor()
+
+    if user_name != "":
+        User_cursor.execute('''UPDATE userDetails 
+            SET user_name = ? 
+            WHERE U_id = ?''', 
+            (user_name, U_id)) 
+
+    User_cursor.execute('''UPDATE userDetails 
+                    SET profile_image_url = ? 
+                    WHERE U_id = ?''', 
+                    (profile_image_url, U_id)) 
+    
+    User_db.commit()
+    User_db.close()  
 
 def if_table_exist(U_id):
     User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
@@ -309,7 +357,7 @@ def create_U_id():
 def generate_otp():
     return str(randint(100000, 999999))
 
-
+app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
@@ -324,8 +372,9 @@ def home():
 
 @app.route("/Home", methods=['GET', 'POST'])
 def main_Web():
+    read_data_user = read_userDetails(session['U_id'])
     attendance = read_User_attendance(session['U_id'])
-    return render_template('index.html', attendance = attendance)
+    return render_template('index.html', attendance = attendance, read_data_user=read_data_user)
 
 @app.route("/Sign-In", methods=['GET', 'POST'])
 def Sign_In_Web():
@@ -409,6 +458,7 @@ def Verify_User():
 
 @app.route("/Add-Course", methods = ['GET', 'POST'])
 def Add_Course():
+    read_data_user = read_userDetails(session['U_id'])
     courses = read_User(session['U_id'])
     form_name = request.form.get('form-name')
 
@@ -432,10 +482,11 @@ def Add_Course():
         del_User(session['U_id'], C_id)
         courses = read_User(session['U_id'])
 
-    return render_template('AddCourse.html', courses = courses)
+    return render_template('AddCourse.html', courses = courses, read_data_user=read_data_user)
 
 @app.route("/Mark-Attendance", methods = ['GET', 'POST'])
 def Mark_Attendance():
+    read_data_user = read_userDetails(session['U_id'])
     timetables = read_timetable(session['U_id'])
     timetables_list = [item for sublist in timetables for item in sublist]
     courses = read_User(session['U_id'])
@@ -461,10 +512,11 @@ def Mark_Attendance():
         write_User_attendance(session['U_id'], attendance, course_id)
         
 
-    return render_template('MarkAttendance.html', courses=courses, fin_timetables_list=fin_timetables_list, fin_day_name=fin_day_name)
+    return render_template('MarkAttendance.html', courses=courses, fin_timetables_list=fin_timetables_list, fin_day_name=fin_day_name, read_data_user = read_data_user)
 
 @app.route("/Today-Schedule", methods = ['GET', 'POST'])
 def Schedule():
+    read_data_user = read_userDetails(session['U_id'])
     timetables = read_timetable(session['U_id'])
     timetables_list = [item for sublist in timetables for item in sublist]
     courses = read_User(session['U_id'])
@@ -501,16 +553,46 @@ def Schedule():
         timetables_list = [item for sublist in timetables for item in sublist]
         courses = read_User(session['U_id'])
 
-    return render_template('Schedule.html', timetables_list=timetables_list, courses=courses)
+    return render_template('Schedule.html', timetables_list=timetables_list, courses=courses, read_data_user=read_data_user)
 
 @app.route("/Analytics", methods = ['GET', 'POST'])
 def Course_Analytics():
+    read_data_user = read_userDetails(session['U_id'])
     attendance = read_User_attendance(session['U_id'])
-    return render_template('Analytics-web.html', attendance=attendance)
+    return render_template('Analytics-web.html', attendance=attendance, read_data_user=read_data_user)
 
 @app.route("/Grades", methods = ['GET', 'POST'])
 def Grades():
-    return render_template('Grades.html')
+    read_data_user = read_userDetails(session['U_id'])
+    return render_template('Grades.html', read_data_user=read_data_user)
+
+@app.route("/User-Profile", methods = ['GET', 'POST'])
+def User_Profile():
+    read_data_user = read_userDetails(session['U_id'])
+
+    if request.method == 'POST':
+        user_name = request.form.get('User-Name')
+        user_name =user_name.title()
+        file = request.files['imageInput']
+        if file:
+            # Secure the filename and save the file to the server
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(filepath)
+            
+            # Generate the URL to the uploaded file
+            profile_image_url = url_for('static', filename=f'uploads/{filename}', _external=True)
+        else:
+            profile_image_url = ""
+
+        if profile_image_url != "":
+            update_userDetails(session['U_id'], user_name, profile_image_url)
+        else:
+            update_userDetails(session['U_id'], user_name, read_data_user[0][4])
+
+        return redirect('User-Profile')
+
+    return render_template('UserProfile.html', read_data_user=read_data_user)
 
 @app.route("/Log-Out", methods = ['GET', 'POST'])
 def Logout():

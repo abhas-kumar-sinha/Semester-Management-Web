@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+{% block head %}
+    {{ super() }} <!-- This includes all content from the base template's head block -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/U_P_style.css') }}">
+{% endblock %}
+            
+<div class="hero-section">
+    <form action="/User-Profile" method="POST" enctype="multipart/form-data">
+        {% include 'base_navBar.html' %}
+        <div class="user-details">
+            <div class="left-photo">
+                {% if read_data_user[0][4] == "" %}
+                    <div class="img-container" style="background-image: url(../static/Profile-Pic/dummy.jpeg);">
+                    </div>
+                {% else %}
+                    <div class="img-container" style="background-image: url({{read_data_user[0][4]}});">
+                    </div>
+                {% endif %}
+                <div class="upload-container">
+                    <label for="imageInput" class="file-chosen-text" id="fileText">No file chosen</label>
+                    <input type="file" name="imageInput" id="imageInput" accept="image/*" style="display: none;">
+                </div>
+            </div>
+            <div class="right-details">
+                <h1>User Details</h1>
+                <table>
+                    <tr>
+                        <td><label class="profile-label" for="User-Name">User Name</label></td>
+                        {% if read_data_user[0][1] == "" %}
+                        <td><input class="profile-input" type="text" name="User-Name" id="User-Name" required></td>                            
+                        {% else %}
+                        <td><input class="profile-input" type="text" name="User-Name" id="User-Name" placeholder="{{read_data_user[0][1]}}"></td>   
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td><label class="profile-label" for="User-email">E-mail Address</label></td>
+                        <td><input class="profile-input" type="text" name="User-email" id="User-email" placeholder="{{read_data_user[0][2]}}" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><label class="profile-label" for="User-joined-on">Joined on</label></td>
+                        <td><input class="profile-input" type="text" name="User-joined-on" id="User-joined-on" placeholder="{{read_data_user[0][3]}}" readonly></td> 
+                    </tr>
+                    <tr>
+                        <td><label class="profile-label" for="User-courses">Courses Registered</label></td>
+                        <td><input class="profile-input" type="text" name="User-courses" id="User-courses" readonly></td> 
+                    </tr>
+                    <tr style="height: 6vw;">
+                        <td colspan="2"><button id="profile-update" type="submit">Update Details</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="{{ url_for('static', filename='js/U_P_script.js') }}"></script>
+{% endblock main %}

@@ -383,7 +383,6 @@ header .img-text .header-text {
 }
 
 .profile-pic {
-    background-image: url("../Profile-Pic/pic.jpg");
     background-position: center;
     background-size: contain;
     border: 1px solid black;

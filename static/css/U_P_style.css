@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.user-details{
+    height: 80vh;
+    width: 100%;
+    background-color: white;
+    border: 1.5px solid #695cfe;
+    border-radius: 2vw;
+    margin-top: 2vw;
+    display: flex;
+}
+
+.left-photo{
+    height: 100%;
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-right: 2px solid #695cfe;
+}
+
+.img-container{
+    height: 15vw;
+    width: 15vw;
+    border-radius: 50%;
+    margin-top: 4vw;
+    border: 1.5px solid #695cfe;
+    background-size: cover;
+    background-position: center;
+}
+
+.right-details{
+    height: 100%;
+    width: 55%;
+}
+
+.file-chosen-text{
+    padding: 0.5vw 2vw;
+    border-radius: 2vw;
+    border: 1.5px solid #695cfe;
+    transition: 0.2s;
+}
+
+.file-chosen-text:hover{
+    background-color: #695cfe;
+    color: white;
+}
+
+.upload-container{
+    margin-top: 2vw;
+}
+
+.right-details{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.right-details h1{
+    font-family: "Cedarville Cursive", cursive;
+}
+
+form table{
+    margin-top: 0.5vw;
+    height: 32vw;
+    width: 38vw;
+    margin-left: 1vw;
+}
+
+.profile-label{
+    font-size: 1.9vw;
+    font-family: "Cedarville Cursive", cursive;
+    margin-right: 1vw;
+}
+
+#profile-update{
+    margin-left: 10.5vw;
+    padding: 0.7vw 2.5vw;
+    border-radius: 2vw;
+    border: 1.5px solid #695cfe;
+    background-color: transparent;
+    transition: 0.2s;
+}
+
+#profile-update:hover{
+    scale: 1.1;
+    background-color: #695cfe;
+    color: white;
+}
+
+.profile-input{
+    font-family: "Poppins", sans-serif;
+    height: 3vw;
+    width: 21vw;
+    margin-bottom: 1.1vw;
+    border: none;
+    border-bottom: 1.5px solid #695cfe;
+    outline: none;
+    font-size: 1.3vw;
+    letter-spacing: 0.01vw;
+    line-height: 1;
+    box-sizing: border-box;
+    padding-bottom: 0vw;
+    padding-top: 1.3vw;
+}

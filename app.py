@@ -590,7 +590,7 @@ def User_Profile():
         else:
             update_userDetails(session['U_id'], user_name, read_data_user[0][4])
 
-        return redirect('User-Profile')
+        return redirect('Home')
 
     return render_template('UserProfile.html', read_data_user=read_data_user)
 

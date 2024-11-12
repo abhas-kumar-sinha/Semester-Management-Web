@@ -6,7 +6,6 @@ User Authentication: Secure sign-up and sign-in system with email OTP verificati
 Course Selection: Allows users to select courses for attendance tracking.
 Dynamic Course List: Courses that have already been submitted in the attendance form no longer appear in the list, even after a page reload.
 Database Management: Each new user is assigned a unique database with relevant tables for their attendance records, stored persistently using SQLite3.
-Responsive Design: Works smoothly across devices, ensuring accessibility and ease of use.
 Project Structure
 Frontend: Built with HTML, CSS, and JavaScript for a clean and responsive UI.
 Backend: Built with Python and Flask for server-side processing, handling authentication and database interactions.

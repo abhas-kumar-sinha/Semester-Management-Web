@@ -62,6 +62,22 @@ def create_User(U_id):
     User_db.commit()
     User_db.close()
 
+def if_table_exist(U_id):
+    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
+    User_cursor = User_db.cursor()
+
+    table_name = 'temp_attendance'
+
+    User_cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}';")
+
+    table_exists = User_cursor.fetchone()
+    User_db.close()
+
+    if table_exists:
+        return False
+    else:
+        return True
+
 def create_temp_attendance(U_id, fin_timetable_list):
     User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
     User_cursor = User_db.cursor()
@@ -107,15 +123,16 @@ def remove_temp_attendance(U_id, Course_id, class_type):
     User_cursor = User_db.cursor()
 
     User_cursor.execute("DELETE FROM temp_attendance WHERE Course_id = ? AND class_type = ?", (Course_id, class_type))
-
+    User_db.commit()
+    
     if len(read_temp_attendance(U_id)) == 0:
         User_cursor.execute('''DROP TABLE temp_attendance''')
+        User_db.commit()
+        User_db.close()
+        ans = ["Marked"]
+    else:
+        ans = read_temp_attendance(U_id)
 
-
-    User_db.commit()
-    User_db.close()
-
-    ans = read_temp_attendance(U_id)
     return ans
 
 def give_day_code():
@@ -429,9 +446,8 @@ def Mark_Attendance():
         if i['day'] == fin_day_name:
             fin_timetables_list_test.append(i)
     
-    if 'ANS' not in session:
+    if if_table_exist(session['U_id']):
         fin_timetables_list = create_temp_attendance(session['U_id'], fin_timetables_list_test)
-        session['ANS'] = "DONE"
     else:
         fin_timetables_list = read_temp_attendance(session['U_id'])
 

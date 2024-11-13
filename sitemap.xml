@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+   <!-- Home page -->
+   <url>
+       <loc>https://yourwebsite.com/</loc>
+       <priority>1.0</priority>
+       <changefreq>daily</changefreq>
+   </url>
+
+   <!-- Sign-In page -->
+   <url>
+       <loc>https://yourwebsite.com/Sign-In</loc>
+       <priority>0.8</priority>
+       <changefreq>monthly</changefreq>
+   </url>
+
+   <!-- Home (main web) page for logged-in users -->
+   <url>
+       <loc>https://yourwebsite.com/Home</loc>
+       <priority>1.0</priority>
+       <changefreq>daily</changefreq>
+   </url>
+
+   <!-- Sign-Up page -->
+   <url>
+       <loc>https://yourwebsite.com/Sign-Up</loc>
+       <priority>0.8</priority>
+       <changefreq>monthly</changefreq>
+   </url>
+
+   <!-- Verify OTP page -->
+   <url>
+       <loc>https://yourwebsite.com/Verify-OTP</loc>
+       <priority>0.7</priority>
+       <changefreq>monthly</changefreq>
+   </url>
+
+   <!-- Add Course page -->
+   <url>
+       <loc>https://yourwebsite.com/Add-Course</loc>
+       <priority>0.8</priority>
+       <changefreq>weekly</changefreq>
+   </url>
+
+   <!-- Mark Attendance page -->
+   <url>
+       <loc>https://yourwebsite.com/Mark-Attendance</loc>
+       <priority>0.9</priority>
+       <changefreq>daily</changefreq>
+   </url>
+
+   <!-- Today’s Schedule page -->
+   <url>
+       <loc>https://yourwebsite.com/Today-Schedule</loc>
+       <priority>0.8</priority>
+       <changefreq>daily</changefreq>
+   </url>
+
+   <!-- Course Analytics page -->
+   <url>
+       <loc>https://yourwebsite.com/Analytics</loc>
+       <priority>0.8</priority>
+       <changefreq>weekly</changefreq>
+   </url>
+
+   <!-- Grades page -->
+   <url>
+       <loc>https://yourwebsite.com/Grades</loc>
+       <priority>0.7</priority>
+       <changefreq>monthly</changefreq>
+   </url>
+
+   <!-- User Profile page -->
+   <url>
+       <loc>https://yourwebsite.com/User-Profile</loc>
+       <priority>0.8</priority>
+       <changefreq>weekly</changefreq>
+   </url>
+
+   <!-- Log-Out page -->
+   <url>
+       <loc>https://yourwebsite.com/Log-Out</loc>
+       <priority>0.5</priority>
+       <changefreq>monthly</changefreq>
+   </url>
+
+</urlset>

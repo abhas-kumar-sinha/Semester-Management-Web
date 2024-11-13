@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for, json
+from flask import Flask, render_template, request, redirect, session, url_for, json, send_from_directory
 from flask_mail import Mail, Message
 import sqlite3
 from datetime import datetime
@@ -609,6 +609,10 @@ def User_Profile():
 def Logout():
     session.clear()
     return redirect("Sign-In")
+
+@app.route("/sitemap.xml", methods = ['GET', 'POST'])
+def Sitemap():
+    return send_from_directory('static', 'sitemap.xml')
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)

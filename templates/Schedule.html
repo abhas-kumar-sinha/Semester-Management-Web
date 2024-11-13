@@ -20,7 +20,7 @@
         <div id="timetables_list" style="display: none;">{{ timetables_list | tojson }}</div>
     </div>
 
-    {% if read_data_user[0][5] != 0 %}
+    {% if read_data_user[0][5] == 0 %}
         <div class="alert-div">
             <h1>No Courses Added Yet. </h1>
             <a href="Add-Course" class="sub-alert-div">

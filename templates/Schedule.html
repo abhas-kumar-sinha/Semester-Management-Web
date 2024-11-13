@@ -20,103 +20,114 @@
         <div id="timetables_list" style="display: none;">{{ timetables_list | tojson }}</div>
     </div>
 
-    <div class="all-courses">
-        <div id="back-calendar" class="back-calendar">
-            <table border="1">
-                <tr>
-                    <th></th>
-                    <th>8:00 AM - 9:00 AM</th>
-                    <th>9:00 AM - 10:00 AM</th>
-                    <th>10:00 AM - 11:00 AM</th>
-                    <th>11:00 AM - 12:00 PM</th>
-                    <th>12:00 PM - 1:00 PM</th>
-                    <th>1:00 PM - 2:00 PM</th>
-                    <th>2:00 PM - 3:00 PM</th>
-                    <th>3:00 PM - 4:00 PM</th>
-                    <th>4:00 PM - 5:00 PM</th>
-                    <th>5:00 PM - 6:00 PM</th>
-                </tr>
+    {% if read_data_user[0][5] != 0 %}
+        <div class="alert-div">
+            <h1>No Courses Added Yet. </h1>
+            <a href="Add-Course" class="sub-alert-div">
+                <i class='bx bx-book-add'></i>
+                <p>Add course</p>
+            </a>
+        </div>
+    {% else %}
+        <div class="all-courses">
+            <div id="back-calendar" class="back-calendar">
+                <table border="1">
+                    <tr>
+                        <th></th>
+                        <th>8:00 AM - 9:00 AM</th>
+                        <th>9:00 AM - 10:00 AM</th>
+                        <th>10:00 AM - 11:00 AM</th>
+                        <th>11:00 AM - 12:00 PM</th>
+                        <th>12:00 PM - 1:00 PM</th>
+                        <th>1:00 PM - 2:00 PM</th>
+                        <th>2:00 PM - 3:00 PM</th>
+                        <th>3:00 PM - 4:00 PM</th>
+                        <th>4:00 PM - 5:00 PM</th>
+                        <th>5:00 PM - 6:00 PM</th>
+                    </tr>
 
-                <tr>
-                    <th>MON</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <tr>
+                        <th>MON</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
 
-                <tr>
-                    <th>TUE</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <tr>
+                        <th>TUE</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
 
-                <tr>
-                    <th>WED</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <tr>
+                        <th>WED</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
 
-                <tr>
-                    <th>THUR</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <tr>
+                        <th>THUR</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
 
-                <tr>
-                    <th>FRI</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
+                    <tr>
+                        <th>FRI</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="front-view">
+            </div>
         </div>
 
-        <div class="front-view">
-        </div>
-    </div>
-
-    <button class="add-button">
-        <i class='bx bx-calendar'></i>
-        <p>Add Timetable</p>
-    </button>
+        <button class="add-button">
+            <i class='bx bx-calendar'></i>
+            <p>Add Timetable</p>
+        </button>
+        
+    {% endif %}
 
 </div>
 

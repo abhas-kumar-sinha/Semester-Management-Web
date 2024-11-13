@@ -67,7 +67,8 @@ def create_User(U_id):
                     user_name TEXT ,
                     user_email TEXT ,
                     joined_date TEXT ,
-                    profile_image_url TEXT)''')
+                    profile_image_url TEXT, 
+                    courses_registered INT)''')
     
     insert_details = read_User_table()
     for i in insert_details:
@@ -76,8 +77,8 @@ def create_User(U_id):
             joined_date = i[3]
     
     User_cursor.execute('''INSERT INTO userDetails 
-                        (U_id, user_name, user_email, joined_date, profile_image_url) 
-                        VALUES(?, "", ?, ?, "")''', (U_id, user_email, joined_date))
+                        (U_id, user_name, user_email, joined_date, profile_image_url, courses_registered) 
+                        VALUES(?, "", ?, ?, "", 0)''', (U_id, user_email, joined_date))
     
     User_db.commit()
     User_db.close()
@@ -108,7 +109,17 @@ def update_userDetails(U_id, user_name, profile_image_url):
                     (profile_image_url, U_id)) 
     
     User_db.commit()
-    User_db.close()  
+    User_db.close() 
+
+def update_course_number(U_id):
+    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
+    User_cursor = User_db.cursor()
+
+    query = f"UPDATE userDetails SET courses_registered = courses_registered + 1 WHERE U_id = ?"
+    User_cursor.execute(query, (U_id,))
+
+    User_db.commit()
+    User_db.close()
 
 def if_table_exist(U_id):
     User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
@@ -336,7 +347,6 @@ def write_User_attendance(U_id, attendance, Course_id):
     User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
     User_cursor = User_db.cursor()
 
-    # Using placeholders for Course_id and dynamic column name substitution
     query = f"UPDATE attendance SET {attendance} = {attendance} + 1 WHERE Course_id = ?"
     User_cursor.execute(query, (Course_id,))
 
@@ -473,6 +483,7 @@ def Add_Course():
 
         if write_User(session['U_id'], course_id, course_name, course_credits, course_details, course_website, Instructor_name, Instructor_email):
             print("success")
+            update_course_number(session['U_id'])
             return redirect("Add-Course")
         else:
             return "Error. Course already exists."

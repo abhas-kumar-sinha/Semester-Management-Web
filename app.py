@@ -114,12 +114,23 @@ def update_userDetails(U_id, user_name, profile_image_url):
 def update_course_number(U_id):
     User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
     User_cursor = User_db.cursor()
-
+    
     query = f"UPDATE userDetails SET courses_registered = courses_registered + 1 WHERE U_id = ?"
     User_cursor.execute(query, (U_id,))
 
     User_db.commit()
     User_db.close()
+
+def read_courses(U_id):
+    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
+    User_cursor = User_db.cursor()
+
+    User_cursor.execute('''SELECT * FROM courses''') 
+    read_data = User_cursor.fetchall()
+    ans = 0
+    for i in read_data:
+        ans+=1
+    return ans
 
 def if_table_exist(U_id):
     User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
@@ -149,7 +160,9 @@ def create_temp_attendance(U_id, fin_timetable_list):
                     end_time TEXT )''')
 
     for i in fin_timetable_list:
-        User_cursor.execute('''INSERT INTO temp_attendance (course_id, class_type, day, start_time, end_time) VALUES(?, ?, ?, ?, ?)''', (i['course_id'], i['class_type'], i['day'], i['start_time'],i['end_time']))
+        User_cursor.execute('''INSERT INTO temp_attendance 
+                            (course_id, class_type, day, start_time, end_time) 
+                            VALUES(?, ?, ?, ?, ?)''', (i['course_id'], i['class_type'], i['day'], i['start_time'],i['end_time']))
         User_db.commit()
 
     User_db.close()
@@ -174,7 +187,6 @@ def read_temp_attendance(U_id):
         ans.append(temp_dict)
 
     User_db.close()
-    print(ans)
     return ans
 
 def remove_temp_attendance(U_id, Course_id, class_type):
@@ -482,7 +494,6 @@ def Add_Course():
         Instructor_email = request.form.get('form-instructor-email')
 
         if write_User(session['U_id'], course_id, course_name, course_credits, course_details, course_website, Instructor_name, Instructor_email):
-            print("success")
             update_course_number(session['U_id'])
             return redirect("Add-Course")
         else:
@@ -507,9 +518,15 @@ def Mark_Attendance():
     for i in timetables_list:
         if i['day'] == fin_day_name:
             fin_timetables_list_test.append(i)
-    
-    if if_table_exist(session['U_id']):
+
+    if 'course_number_MA' not in session:
+        session['course_number_MA'] = 0
+
+    if if_table_exist(session['U_id']) or session['course_number_MA'] < read_courses(session['U_id']):
+        session['course_number_MA'] = read_courses(session['U_id'])
         fin_timetables_list = create_temp_attendance(session['U_id'], fin_timetables_list_test)
+    elif session['course_number_MA']==0:
+        fin_timetables_list=[]
     else:
         fin_timetables_list = read_temp_attendance(session['U_id'])
 

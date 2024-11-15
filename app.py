@@ -1,32 +1,63 @@
 from flask import Flask, render_template, request, redirect, session, url_for, json, send_from_directory
 from flask_mail import Mail, Message
-import sqlite3
+from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
 from random import randint
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
+import sqlite3
 import os
+import atexit
+
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+def update_day_tracker():
+    users = read_User_table()
+    for i in users:
+        if i[0] != 1001:
+            User_db = sqlite3.connect(f"Databases/Users/{i[0]}_data.db")
+            User_cursor = User_db.cursor()
+            date = datetime.today().date()
+            day = give_day_code()
+
+            User_cursor.execute('''INSERT INTO day_tracker (day, date, attendance) VALUES (?, ?, ?)''', (day, date, ""))
+
+            User_cursor.execute(f"""CREATE TABLE IF NOT EXISTS '{date}' (
+                                course_id TEXT,
+                                class_type TEXT ,
+                                day TEXT ,
+                                start_time TEXT ,
+                                end_time TEXT)""")
+            
+            User_db.commit()
+            User_db.close()
+
+def setup_scheduler():
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(func=update_day_tracker, trigger="cron", hour=0, minute=1)
+    scheduler.start()
+    atexit.register(lambda: scheduler.shutdown(wait=False))
+    return scheduler
+
+scheduler = setup_scheduler()
+
 def create_connect_db(): 
     User_login_db = sqlite3.connect("Databases/System/User_data.db")
     User_db_cursor = User_login_db.cursor()
-    User_db_cursor.execute('''
-    CREATE TABLE IF NOT EXISTS users (
-        U_id INTEGER NOT NULL,
-        email TEXT PRIMARY KEY,
-        password INTEGER NOT NULL,
-        date DATE NOT NULL
-    )
-''')
-    
-    try:
-        User_db_cursor.execute('''INSERT INTO users (U_id, email, password, date) VALUES (1001, "abhas@example.com", 987654321, "2024-10-31")''')
-    except:
-        pass
+    User_db_cursor.execute('''CREATE TABLE IF NOT EXISTS users (
+                            U_id INTEGER NOT NULL,
+                            email TEXT PRIMARY KEY,
+                            password INTEGER NOT NULL,
+                            date DATE NOT NULL
+                            )
+                            ''')
+    User_db_cursor.execute('''INSERT OR IGNORE INTO users 
+                           (U_id, email, password, date) 
+                           VALUES (1001, "abc@example.com", 987654321, "2024-10-15")''')
+
     User_login_db.commit()
     User_login_db.close()
 
@@ -44,24 +75,28 @@ def create_User(U_id):
                         Website TEXT,
                         Instructor_Name TEXT,
                         Instructor_Email TEXT )''')
-    
+    User_db.commit()
+
     User_cursor.execute('''CREATE TABLE IF NOT EXISTS attendance (
                         Course_id TEXT PRIMARY KEY,
                         Present INT NOT NULL,
                         Absent INT NOT NULL,
                         medical_leave INT NOT NULL)''')
-    
+    User_db.commit()
+
     User_cursor.execute('''CREATE TABLE IF NOT EXISTS timetable (
                     monday TEXT ,
                     tuesday TEXT ,
                     wednesday TEXT ,
                     thursday TEXT ,
                     friday TEXT)''')
-    
+    User_db.commit()
+
     User_cursor.execute('''INSERT INTO timetable 
                         (monday, tuesday, wednesday, thursday, friday) 
-                        VALUES(" ", " ", " ", " ", " ")''')
-    
+                        VALUES("A", "A", "A", "A", "A")''')
+    User_db.commit()
+
     User_cursor.execute('''CREATE TABLE IF NOT EXISTS userDetails (
                     U_id TEXT PRIMARY KEY,
                     user_name TEXT ,
@@ -69,17 +104,101 @@ def create_User(U_id):
                     joined_date TEXT ,
                     profile_image_url TEXT, 
                     courses_registered INT)''')
+    User_db.commit()
+
+    days_list = ['MON', 'TUE', 'WED', 'THUR', 'FRI']
+
+    for i in days_list:
+        User_cursor.execute(f"""CREATE TABLE IF NOT EXISTS {i} (
+                course_id TEXT,
+                class_type TEXT ,
+                day TEXT ,
+                start_time TEXT ,
+                end_time TEXT)""")
+        User_db.commit()
+
+    User_cursor.execute('''CREATE TABLE IF NOT EXISTS day_tracker (
+                        day TEXT,
+                        date TEXT,
+                        attendance TEXT)''')
+    User_db.commit()
     
+    update_day_tracker()
+
     insert_details = read_User_table()
     for i in insert_details:
         if i[0] == U_id:
             user_email = i[1]
             joined_date = i[3]
-    
+
     User_cursor.execute('''INSERT INTO userDetails 
                         (U_id, user_name, user_email, joined_date, profile_image_url, courses_registered) 
                         VALUES(?, "", ?, ?, "", 0)''', (U_id, user_email, joined_date))
-    
+
+    User_db.commit()
+    User_db.close()
+
+def read_date_table(U_id):
+    date = datetime.today().date()
+    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
+    User_cursor = User_db.cursor()
+
+    try:
+        User_cursor.execute(f"""SELECT * FROM '{date}'""")  
+        read_data = User_cursor.fetchall()
+    except sqlite3.OperationalError:
+        read_data = []
+
+    User_db.close()
+
+    return read_data  
+
+def drop_table(U_id):
+    date = datetime.today().date()
+    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
+    User_cursor = User_db.cursor()
+
+    User_cursor.execute(f"""DROP TABLE IF EXISTS '{date}'""")
+
+    User_db.commit()
+    User_db.close()
+
+def mark_table(U_id):
+    date = datetime.today().date()
+    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
+    User_cursor = User_db.cursor()
+
+    User_cursor.execute(f"""UPDATE day_tracker
+                        SET attendance = 'MARKED'
+                        WHERE date = ?""", (date,))
+    User_db.commit()
+    User_db.close()
+
+def check_today_attendance(U_id):
+    date = datetime.today().date()
+    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
+    User_cursor = User_db.cursor()
+
+    User_cursor.execute(f"""SELECT * FROM day_tracker""")
+
+    read_data = User_cursor.fetchall()
+
+    User_db.commit()
+    User_db.close() 
+
+    for i in read_data:
+        if i[1] == str(date):
+            ans = i[2]  
+     
+    return ans
+
+def write_date_table(U_id, data):
+    date = datetime.today().date()
+    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
+    User_cursor = User_db.cursor()
+
+    User_cursor.execute(f"""INSERT INTO '{date}' (course_id, class_type, day, start_time, end_time) VALUES ('{data[0]}', '{data[1]}', '{data[2]}', '{data[3]}', '{data[4]}')""")
+
     User_db.commit()
     User_db.close()
 
@@ -111,6 +230,17 @@ def update_userDetails(U_id, user_name, profile_image_url):
     User_db.commit()
     User_db.close() 
 
+def read_day(U_id, day):
+    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
+    User_cursor = User_db.cursor()
+
+    User_cursor.execute(f"""SELECT * from {day}""")
+
+    read_data = User_cursor.fetchall()
+
+    return read_data
+
+
 def update_course_number(U_id):
     User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
     User_cursor = User_db.cursor()
@@ -130,80 +260,6 @@ def read_courses(U_id):
     ans = 0
     for i in read_data:
         ans+=1
-    return ans
-
-def if_table_exist(U_id):
-    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
-    User_cursor = User_db.cursor()
-
-    table_name = 'temp_attendance'
-
-    User_cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}';")
-
-    table_exists = User_cursor.fetchone()
-    User_db.close()
-
-    if table_exists:
-        return False
-    else:
-        return True
-
-def create_temp_attendance(U_id, fin_timetable_list):
-    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
-    User_cursor = User_db.cursor()
-
-    User_cursor.execute('''CREATE TABLE IF NOT EXISTS temp_attendance (
-                    course_id TEXT ,
-                    class_type TEXT,
-                    day TEXT,
-                    start_time TEXT,
-                    end_time TEXT )''')
-
-    for i in fin_timetable_list:
-        User_cursor.execute('''INSERT INTO temp_attendance 
-                            (course_id, class_type, day, start_time, end_time) 
-                            VALUES(?, ?, ?, ?, ?)''', (i['course_id'], i['class_type'], i['day'], i['start_time'],i['end_time']))
-        User_db.commit()
-
-    User_db.close()
-
-    ans = read_temp_attendance(U_id)
-    return ans
-
-def read_temp_attendance(U_id):
-    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
-    User_cursor = User_db.cursor()    
-
-    User_cursor.execute('''SELECT * FROM temp_attendance''')
-    read_data = User_cursor.fetchall()
-    ans = []
-    for i in read_data:
-        temp_dict={}
-        temp_dict['course_id'] = i[0]
-        temp_dict['class_type'] = i[1]
-        temp_dict['day'] = i[2]
-        temp_dict['start_time'] = i[3]
-        temp_dict['end_time'] = i[4]
-        ans.append(temp_dict)
-
-    User_db.close()
-    return ans
-
-def remove_temp_attendance(U_id, Course_id, class_type):
-    User_db = sqlite3.connect(f"Databases/Users/{U_id}_data.db")
-    User_cursor = User_db.cursor()
-
-    User_cursor.execute("DELETE FROM temp_attendance WHERE Course_id = ? AND class_type = ?", (Course_id, class_type))
-    User_db.commit()
-    
-    if len(read_temp_attendance(U_id)) == 0:
-        User_cursor.execute('''DROP TABLE temp_attendance''')
-        User_db.commit()
-        User_db.close()
-        ans = ["Marked"]
-    else:
-        ans = read_temp_attendance(U_id)
-
     return ans
 
 def give_day_code():
@@ -302,6 +358,11 @@ def write_timetable(U_id, timetable_list):
     User_cursor.execute('''DELETE FROM timetable''')
     
     mon, tue, wed, thur, fri = [], [], [], [], []
+    list_days = [mon, tue, wed, thur, fri]
+    list_days_name = ["MON", "TUE", "WED", "THUR", "FRI"]
+
+    for i in list_days_name:
+        User_cursor.execute(f"""DELETE FROM {i}""")
 
     for i in range(0, len(prev_Data)):
         if i == 0:
@@ -330,7 +391,14 @@ def write_timetable(U_id, timetable_list):
     User_cursor.execute('''INSERT INTO timetable 
                         (monday, tuesday, wednesday, thursday, friday) 
                         VALUES(?, ?, ?, ?, ?)''', (f"{mon}", f"{tue}", f"{wed}", f"{thur}", f"{fri}"))
-    
+    idx=0
+    for i in list_days:
+        for j in i:
+            User_cursor.execute(f"""INSERT INTO {list_days_name[idx]}
+                                (course_id, class_type, day, start_time, end_time) 
+                                VALUES(?, ?, ?, ?, ?)""", (j['course_id'], j['class_type'], j['day'], j['start_time'], j['end_time']))
+        idx+=1
+
     User_db.commit()
     User_db.close()
     
@@ -509,38 +577,36 @@ def Add_Course():
 @app.route("/Mark-Attendance", methods = ['GET', 'POST'])
 def Mark_Attendance():
     read_data_user = read_userDetails(session['U_id'])
-    timetables = read_timetable(session['U_id'])
-    timetables_list = [item for sublist in timetables for item in sublist]
     courses = read_User(session['U_id'])
     fin_day_name=give_day_code()
+    date = datetime.today().date()
+    today_attendance = read_day(session['U_id'], fin_day_name)
+    done_attendance = read_date_table(session['U_id'])
 
-    fin_timetables_list_test=[]
-    for i in timetables_list:
-        if i['day'] == fin_day_name:
-            fin_timetables_list_test.append(i)
+    fin_timetables_list = []
+    for i in today_attendance:
+        if i not in done_attendance and check_today_attendance(session['U_id']) != "MARKED":
+            fin_timetables_list.append(i)
 
-    if 'course_number_MA' not in session:
-        session['course_number_MA'] = 0
-
-    if if_table_exist(session['U_id']) or session['course_number_MA'] < read_courses(session['U_id']):
-        session['course_number_MA'] = read_courses(session['U_id'])
-        fin_timetables_list = create_temp_attendance(session['U_id'], fin_timetables_list_test)
-    elif session['course_number_MA']==0:
+    if done_attendance == today_attendance and today_attendance != []:
+        drop_table(session['U_id'])
+        mark_table(session['U_id'])
         fin_timetables_list=[]
-    else:
-        fin_timetables_list = read_temp_attendance(session['U_id'])
 
     if request.method == 'POST':
         course_id = request.form.get("form-course-id")
         class_type = request.form.get("form-class-type")
         attendance = request.form.get("attendance")
-
-        fin_timetables_list = remove_temp_attendance(session['U_id'], course_id, class_type)
+        day = request.form.get("form-day")
+        start_time = request.form.get("form-start-time")
+        end_time = request.form.get("form-end-time")
         
         write_User_attendance(session['U_id'], attendance, course_id)
-        
+        write_date_table(session['U_id'], [course_id, class_type, day, start_time, end_time])
 
-    return render_template('MarkAttendance.html', courses=courses, fin_timetables_list=fin_timetables_list, fin_day_name=fin_day_name, read_data_user = read_data_user)
+        return redirect("Mark-Attendance")
+        
+    return render_template('MarkAttendance.html', courses=courses, fin_timetables_list=fin_timetables_list, fin_day_name=fin_day_name, read_data_user = read_data_user, date = date)
 
 @app.route("/Today-Schedule", methods = ['GET', 'POST'])
 def Schedule():

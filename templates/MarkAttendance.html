@@ -15,10 +15,10 @@
 
     <div class="active-course">
         <div class="head-active">
-            <h2>Today's Classes ({{fin_day_name}})</h2>
+            <h2>Today's Classes ({{fin_day_name}} : {{date}})</h2>
         </div>
 
-        {% if fin_timetables_list[0] == "Marked" %}
+        {% if fin_timetables_list == [] %}
             <div class="attendance-marked">
                 <h1>Today's attendance has been marked</h1>
             </div>
@@ -27,14 +27,17 @@
             {% for timetable in fin_timetables_list %}
                 <button type="button" class="active-class active-now">
                     <div class="active-class-content">
-                        <h2>{{timetable.course_id}}</h2>
-                        <p>{{timetable.class_type}}</p>
-                        <p>{{timetable.start_time}} - {{timetable.end_time}}</p>
+                        <h2>{{timetable[0]}}</h2>
+                        <p>{{timetable[1]}}</p>
+                        <p>{{timetable[3]}} - {{timetable[4]}}</p>
                     </div>
                     <div class="mark-att">
                         <form action="/Mark-Attendance" method="POST">
-                            <input name="form-course-id" style="display: none;" value="{{timetable.course_id}}">
-                            <input name="form-class-type" style="display: none;" value="{{timetable.class_type}}">
+                            <input name="form-course-id" style="display: none;" value="{{timetable[0]}}">
+                            <input name="form-class-type" style="display: none;" value="{{timetable[1]}}">
+                            <input name="form-day" style="display: none;" value="{{timetable[2]}}">
+                            <input name="form-start-time" style="display: none;" value="{{timetable[3]}}">
+                            <input name="form-end-time" style="display: none;" value="{{timetable[4]}}">
                             <h2>Mark Attendance</h2>
                             <table class="ans-input">
                                 <tr>

@@ -181,7 +181,7 @@ def read_date_table(U_id):
     try:
         User_cursor.execute(f'''SELECT * FROM "{U_id}_{date.strftime("%Y-%m-%d").replace("-", "_")}" ''')  
         read_data = User_cursor.fetchall()
-    except sqlite3.OperationalError:
+    except :
         read_data = []
 
 

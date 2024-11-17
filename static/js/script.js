@@ -12,9 +12,6 @@ async function fetchAtData() {
         // Parse JSON data
         attendanceData = JSON.parse(attendanceDataEle);
 
-        // Log the parsed data
-        console.log(attendanceData);
-
         if (attendanceData.length != 0) {
             let num=0
             attendanceData.forEach(course => {
@@ -76,7 +73,7 @@ async function fetchAtData() {
         }
 
     } catch (error) {
-        console.error("Error parsing attendance data:", error);
+        temp=1;
     }
 };
 

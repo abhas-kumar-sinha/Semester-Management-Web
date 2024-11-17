@@ -99,7 +99,7 @@ async function fetchAtData() {
         }
 
     } catch (error) {
-        console.error("Error parsing attendance data:", error);
+        temp=1;
     }
 };
 
@@ -115,8 +115,6 @@ toggle.addEventListener("click", () => {
 })
 
 presenceCalc = document.querySelectorAll(".presence-btn");
-
-console.log(attendanceData);
 
 presenceCalc.forEach(btn => {
     btn.addEventListener('click', () => {

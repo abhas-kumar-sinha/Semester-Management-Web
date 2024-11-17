@@ -3,7 +3,6 @@ listOfButtons = document.querySelectorAll(".button")
 listOfButtons.forEach(button => {
     button.addEventListener('click', () => {
         const req_id = prompt(`Enter your ${button.classList[0]} I'd`);
-        console.log(req_id)
         if (req_id == "") {
             window.alert(`Sign In failed! Invalid ${button.classList[0]} I'd`)
         }

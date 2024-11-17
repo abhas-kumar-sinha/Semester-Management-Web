@@ -131,7 +131,7 @@ def create_User(U_id):
 
     User_cursor.execute(f'''INSERT INTO "{U_id}_timetable" 
                         (monday, tuesday, wednesday, thursday, friday) 
-                        VALUES(' ', ' ', ' ', ' ', ' ')''')
+                        VALUES('[]', '[]', '[]', '[]', '[]')''')
     connection.commit()
 
     User_cursor.execute(f'''CREATE TABLE IF NOT EXISTS "{U_id}_userDetails" (

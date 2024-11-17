@@ -20,7 +20,7 @@ async function fetchAtData() {
         populateCourseOptions2(timetableData);
 
     } catch (error) {
-        console.error("Error parsing attendance data:", error);
+        temp=1;
     }
 };
 

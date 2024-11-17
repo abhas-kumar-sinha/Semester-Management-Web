@@ -323,15 +323,20 @@ def read_User(U_id):
 
 def read_timetable(U_id):
     User_cursor = connection.cursor()
-
-    User_cursor.execute(f'''SELECT * from "{U_id}_timetable"''')
+    User_cursor.execute(f'''SELECT * FROM "{U_id}_timetable"''')
     read_data = User_cursor.fetchall()
+
     try:
-        read_data[0] = tuple(item.replace("'", '"') for item in read_data[0])
-        data_list = [json.loads(item) for item in read_data[0]]
-    except:
-        data_list = [[],[],[],[],[]]
+        read_data_list = list(read_data[0])
+        read_data_list = tuple(
+            item.replace("'", '"') if item.strip() else "[]" for item in read_data[0]
+        )
+        data_list = [json.loads(item) for item in read_data_list]
+    except json.JSONDecodeError:
+        data_list = [[], [], [], [], []]
+
     return data_list
+
 
 def write_timetable(U_id, timetable_list):
     User_cursor = connection.cursor()

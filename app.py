@@ -297,6 +297,7 @@ def write_User_table(U_id, email, password, date):
         connection.commit()
         return True
     except:
+        connection.rollback()
         return False
     
 def write_User(U_id, course_id, course_name, course_credits, course_details, course_website, Instructor_name, Instructor_email):
@@ -309,6 +310,7 @@ def write_User(U_id, course_id, course_name, course_credits, course_details, cou
 
         return True
     except:
+        connection.rollback()
         return False  
 
 def read_User(U_id):
@@ -449,6 +451,7 @@ def Sign_In_Web():
             session['U_id'] = input_id
             return redirect('Home')
         else:
+            connection.rollback()
             return "error! Invalid Credentials"
 
     return render_template('Signin.html')
@@ -516,6 +519,7 @@ def Verify_User():
                 connection.rollback()
                 return "Error! Email already used..."
         else:
+            connection.rollback()
             return "OTP does not match!!!"
     
     return render_template('Signup-OTP.html', email=email)
@@ -539,6 +543,7 @@ def Add_Course():
             update_course_number(session['U_id'])
             return redirect("Add-Course")
         else:
+            connection.rollback()
             return "Error. Course already exists."
         
     if request.method == 'POST' and form_name == "delete-course":

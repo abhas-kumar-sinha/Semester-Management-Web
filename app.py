@@ -182,6 +182,7 @@ def read_date_table(U_id):
         User_cursor.execute(f'''SELECT * FROM "{U_id}_{date.strftime("%Y-%m-%d").replace("-", "_")}" ''')  
         read_data = User_cursor.fetchall()
     except :
+        connection.rollback()
         read_data = []
 
 

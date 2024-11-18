@@ -19,7 +19,7 @@ result = urlparse(database_url)
 connection = pg8000.connect(
     user=result.username,
     password=result.password,
-    host=result.hostname,
+    host="dpg-csrk7jl2ng1s738a9hag-a.oregon-postgres.render.com",
     port=5432,
     database=result.path[1:]
 )
@@ -667,6 +667,11 @@ def User_Profile():
 def Logout():
     session.clear()
     return redirect("Sign-In")
+
+@app.route("/Settings", methods = ['GET', 'POST'])
+def Settings():
+    read_data_user = read_userDetails(session['U_id'])
+    return render_template('settings.html', read_data_user=read_data_user)
 
 @app.route("/sitemap.xml", methods = ['GET', 'POST'])
 def Sitemap():

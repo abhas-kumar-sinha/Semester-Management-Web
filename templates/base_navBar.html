@@ -7,9 +7,15 @@
         {% endif %}
     </div>
     <div class="up-right">
-        <i class='bx bx-plus-circle nav-up-bx'></i>
-        <i class='bx bx-chat nav-up-bx'></i>
-        <i class='bx bx-bell nav-up-bx'></i>
+        <a class="nav-up-bx" href="Settings">
+            <i class='bx bx-cog'></i>
+        </a>
+        <a class="nav-up-bx" href="Settings">
+            <i class='bx bx-chat'></i>
+        </a>
+        <a class="nav-up-bx" href="Settings">
+            <i class='bx bx-bell'></i>
+        </a>
         {% if read_data_user[0][4] == "" %}
             <a href="User-Profile" class="profile-pic" style="background-image: url(../static/Profile-Pic/dummy.jpeg);"></a>
         {% else %}

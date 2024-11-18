@@ -24,6 +24,24 @@ connection = pg8000.connect(
     database=result.path[1:]
 )
 
+def create_connect_db(): 
+    connection_cursor = connection.cursor()
+    connection_cursor.execute('''CREATE TABLE IF NOT EXISTS users (
+                            U_id INTEGER NOT NULL,
+                            email TEXT PRIMARY KEY,
+                            password TEXT NOT NULL,
+                            date DATE NOT NULL
+                            )
+                            ''')
+    connection_cursor.execute('''INSERT INTO users 
+                            (U_id, email, password, date) 
+                            VALUES (1001, 'abc@example.com', 987654321, '2024-10-15')
+                            ON CONFLICT (email) DO NOTHING;''')
+
+    connection.commit()
+
+create_connect_db()
+
 def give_day_code():
     today = datetime.today()
     day_name = today.strftime("%A")
@@ -71,24 +89,6 @@ def update_day_tracker(U_id):
                         end_time TEXT)''')
     
     connection.commit()
-
-def create_connect_db(): 
-    connection_cursor = connection.cursor()
-    connection_cursor.execute('''CREATE TABLE IF NOT EXISTS users (
-                            U_id INTEGER NOT NULL,
-                            email TEXT PRIMARY KEY,
-                            password TEXT NOT NULL,
-                            date DATE NOT NULL
-                            )
-                            ''')
-    connection_cursor.execute('''INSERT INTO users 
-                            (U_id, email, password, date) 
-                            VALUES (1001, 'abc@example.com', 987654321, '2024-10-15')
-                            ON CONFLICT (email) DO NOTHING;''')
-
-    connection.commit()
-
-create_connect_db()
 
 def create_User(U_id):
     User_cursor = connection.cursor()

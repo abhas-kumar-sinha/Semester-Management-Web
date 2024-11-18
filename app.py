@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, url_for, json, send_from_directory
 from flask_mail import Mail, Message
-from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
 from random import randint
 from dotenv import load_dotenv
@@ -8,7 +7,6 @@ from werkzeug.utils import secure_filename
 from urllib.parse import urlparse
 import pg8000
 import os
-import atexit
 
 load_dotenv()
 
@@ -21,7 +19,7 @@ result = urlparse(database_url)
 connection = pg8000.connect(
     user=result.username,
     password=result.password,
-    host=result.hostname,
+    host="dpg-csrk7jl2ng1s738a9hag-a.oregon-postgres.render.com",
     port=5432,
     database=result.path[1:]
 )
@@ -54,34 +52,25 @@ def read_User_table():
     read_data = connection_cursor.fetchall()
     return read_data
 
-def update_day_tracker():
-    users = read_User_table()
-    for i in users:
-        if i[0] != 1001:
-            User_cursor = connection.cursor()
-            date = datetime.today().date()
-            day = give_day_code()
+def update_day_tracker(U_id):
+    User_cursor = connection.cursor()
+    date = datetime.today().date()
+    day = give_day_code()
 
-            User_cursor.execute(f'''INSERT INTO "{i[0]}_day_tracker" (day, date, attendance) VALUES (%s, %s, %s)''', (day, date, ""))
+    try:
+        User_cursor.execute(f'''INSERT INTO "{U_id}_day_tracker" (day, date, attendance) VALUES (%s, %s, %s)''', (day, date, ""))
+        connection.commit()
+    except:
+        connection.rollback()
 
-            User_cursor.execute(f'''CREATE TABLE IF NOT EXISTS "{i[0]}_{date.strftime("%Y-%m-%d").replace("-", "_")}" (
-                                course_id TEXT,
-                                class_type TEXT ,
-                                day TEXT ,
-                                start_time TEXT ,
-                                end_time TEXT)''')
-            
-            connection.commit()
+    User_cursor.execute(f'''CREATE TABLE IF NOT EXISTS "{U_id}_{date.strftime("%Y-%m-%d").replace("-", "_")}" (
+                        course_id TEXT,
+                        class_type TEXT ,
+                        day TEXT ,
+                        start_time TEXT ,
+                        end_time TEXT)''')
     
-
-def setup_scheduler():
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(func=update_day_tracker, trigger="cron", hour=0, minute=1)
-    scheduler.start()
-    atexit.register(lambda: scheduler.shutdown(wait=False))
-    return scheduler
-
-scheduler = setup_scheduler()
+    connection.commit()
 
 def create_connect_db(): 
     connection_cursor = connection.cursor()
@@ -156,11 +145,11 @@ def create_User(U_id):
 
     User_cursor.execute(f'''CREATE TABLE IF NOT EXISTS "{U_id}_day_tracker" (
                         day TEXT,
-                        date TEXT,
+                        date TEXT PRIMARY KEY,
                         attendance TEXT)''')
     connection.commit()
     
-    update_day_tracker()
+    update_day_tracker(U_id)
 
     insert_details = read_User_table()
     for i in insert_details:
@@ -217,7 +206,7 @@ def check_today_attendance(U_id):
 
     for i in read_data:
         if i[1] == str(date):
-            ans = i[2]  
+            ans = i 
      
     return ans
 
@@ -561,16 +550,18 @@ def Add_Course():
 
 @app.route("/Mark-Attendance", methods = ['GET', 'POST'])
 def Mark_Attendance():
+    update_day_tracker(session['U_id'])
     read_data_user = read_userDetails(session['U_id'])
     courses = read_User(session['U_id'])
     fin_day_name=give_day_code()
     date = datetime.today().date()
     today_attendance = read_day(session['U_id'], fin_day_name)
     done_attendance = read_date_table(session['U_id'])
+    attendance_status = check_today_attendance(session['U_id'])
 
     fin_timetables_list = []
     for i in today_attendance:
-        if i not in done_attendance and check_today_attendance(session['U_id']) != "MARKED":
+        if i not in done_attendance and attendance_status[2] != "MARKED":
             fin_timetables_list.append(i)
 
     if done_attendance == today_attendance and today_attendance != []:

@@ -76,17 +76,16 @@ def update_day_tracker(U_id):
     day = give_day_code()
 
     try:
-        User_cursor.execute(f'''INSERT INTO "{U_id}_day_tracker" (day, date, attendance) VALUES (%s, %s, %s)''', (day, date, ""))
+        User_cursor.execute(f'''INSERT INTO "{U_id}_day_tracker" (day, date, attendance) VALUES (%s, %s, %s)''', (day, date, "UNMARKED"))
+        User_cursor.execute(f'''CREATE TABLE IF NOT EXISTS "{U_id}_{date.strftime("%Y-%m-%d").replace("-", "_")}" (
+                    course_id TEXT,
+                    class_type TEXT ,
+                    day TEXT ,
+                    start_time TEXT ,
+                    end_time TEXT)''')
         connection.commit()
     except:
         connection.rollback()
-
-    User_cursor.execute(f'''CREATE TABLE IF NOT EXISTS "{U_id}_{date.strftime("%Y-%m-%d").replace("-", "_")}" (
-                        course_id TEXT,
-                        class_type TEXT ,
-                        day TEXT ,
-                        start_time TEXT ,
-                        end_time TEXT)''')
     
     connection.commit()
 
@@ -564,7 +563,7 @@ def Mark_Attendance():
         if i not in done_attendance and attendance_status[2] != "MARKED":
             fin_timetables_list.append(i)
 
-    if done_attendance == today_attendance and today_attendance != []:
+    if done_attendance == today_attendance and len(today_attendance) != 0:
         drop_table(session['U_id'])
         mark_table(session['U_id'])
         fin_timetables_list=[]

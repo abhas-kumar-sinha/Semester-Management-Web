@@ -1,6 +1,137 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Poppins:wght@300;400;500;600;700&display=swap');
 
+.hero-section{
+    position: absolute;
+    z-index: 9;
+}
+
+.delete-conf{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.conf-box{
+    padding: 0 1.5vw;
+    height: 45vw;
+    width: 40vw;
+    border-radius: 1vw;
+    border: 1.5px solid red;
+    background-color: white;
+}
+
+.conf-box h1{
+    font-size: 2vw;
+    font-family: "Cedarville Cursive", cursive;
+    padding-left: 11vw;
+}
+
+.alert-conf{
+    height: 4vw;
+    width: 100%;
+    background-color: #FFEBE9;
+    display: flex;
+    align-items: center;
+    font-size: 1.3vw;
+    color: red;
+    font-size: 1.2vw;
+    color: #1F2328;
+}
+
+.hide{
+    visibility: hidden;
+}
+
+.toblur{
+    filter: blur(4px);
+}
+
+.alert-conf i{
+    font-size: 2.2vw;
+    color: #F85149;
+    margin: 0 1vw;
+}
+
+.alert-content{
+    margin: 2.25vw 0;
+}
+
+.alert-content p{
+    margin-top: -2.25%;
+}
+
+.alert-content a{
+    font-size: 1.1vw;
+    color: #1B74DD;
+}
+
+.line-div{
+    height: 1px;
+    width: 100%;
+    margin-bottom: 1vw;
+    background-color: #707070;
+}
+
+.form-label{
+    width: 100%;
+    letter-spacing: 0.25vw;
+}
+
+.form-input{
+    width: 100%;
+    height: 2.4vw;
+    margin: 0.6vw 0;
+    outline: none;
+    padding: 0 1vw;
+    font-size: 1.3vw;
+    letter-spacing: 0.15vw;
+}
+
+.form-submit{
+    margin-top: 0.5vw;
+    width: 70%;
+    height: 2.8vw;
+    border: 1.5px solid red;
+    border-radius: 1vw;
+    margin-left: 5.5vw;
+    background-color: transparent;
+    font-size: 1.3vw;
+    color: red;
+    transition: 0.2s scale, 0.2s background-color, 0.2s color;
+}
+
+.form-submit:hover{
+    scale: 1.05;
+    background-color: red;
+    color: white;
+}
+
+.close-form{
+    margin-left: 3%;
+    text-decoration: none;
+    transition: 0.2s scale;
+}
+
+.close-form:hover{
+    scale: 1.2;
+}
+
+.close-form i{
+    font-size: 2.35vw;
+    color: red;
+    border-radius: 50%;
+    transition: 0.2s scale;
+}
+
+.close-form i:hover{
+    scale: 1.2;
+}
+
 .user-details{
     height: 80vh;
     width: 100%;
@@ -75,8 +206,8 @@ form table{
     margin-right: 1vw;
 }
 
-#profile-update{
-    margin-left: 10.5vw;
+.profile-in-botton{
+    margin-left: 4vw;
     padding: 0.7vw 2.5vw;
     border-radius: 2vw;
     border: 1.5px solid #695cfe;
@@ -84,9 +215,25 @@ form table{
     transition: 0.2s;
 }
 
-#profile-update:hover{
-    scale: 1.1;
+.profile-in-botton:hover{
+    scale: 1.06;
     background-color: #695cfe;
+    color: white;
+}
+
+.profile-in-botton-1{
+    margin-left: 4vw;
+    padding: 0.7vw 2.5vw;
+    border-radius: 2vw;
+    border: 1.5px solid red;
+    background-color: transparent;
+    transition: 0.2s;
+    color: red;
+}
+
+.profile-in-botton-1:hover{
+    scale: 1.06;
+    background-color: red;
     color: white;
 }
 

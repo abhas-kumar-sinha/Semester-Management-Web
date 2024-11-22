@@ -19,7 +19,7 @@ result = urlparse(database_url)
 connection = pg8000.connect(
     user=result.username,
     password=result.password,
-    host="dpg-csrk7jl2ng1s738a9hag-a.oregon-postgres.render.com",
+    host=result.hostname,
     port=5432,
     database=result.path[1:]
 )
@@ -37,6 +37,15 @@ def create_connect_db():
                             (U_id, email, password, date) 
                             VALUES (1001, 'abc@example.com', 987654321, '2024-10-15')
                             ON CONFLICT (email) DO NOTHING;''')
+    
+    connection_cursor.execute('''CREATE TABLE IF NOT EXISTS deleted_users (
+                            U_id INTEGER NOT NULL,
+                            email TEXT,
+                            password TEXT NOT NULL,
+                            date DATE NOT NULL,
+                            deleting_date DATE NOT NULL
+                            )
+                            ''')
 
     connection.commit()
 
@@ -62,6 +71,23 @@ def give_day_code():
         fin_day_name = "SUN"
 
     return fin_day_name
+
+def update_deleted_users(U_id, email, password, date):
+    connection_cursor = connection.cursor()
+    deleting_date =datetime.today().date()
+    connection_cursor.execute(f'''INSERT INTO deleted_users 
+                            (U_id, email, password, date, deleting_date) 
+                            VALUES (%s, %s, %s, %s, %s);''', (U_id, email, password, date, deleting_date))
+
+    connection.commit()
+
+def read_deleted_users():
+    connection_cursor = connection.cursor()
+
+    connection_cursor.execute("SELECT * FROM deleted_users")
+    read_data = connection_cursor.fetchall()
+
+    return read_data
 
 def read_User_table():
     connection_cursor = connection.cursor()
@@ -280,7 +306,6 @@ def auth_user(input_id, password):
 
 def write_User_table(U_id, email, password, date):
     connection_cursor = connection.cursor()
-    print(U_id, email, password, date)
     try:
         connection_cursor.execute(f'''INSERT INTO users (U_id, email, password, date) Values (%s, %s, %s, %s)''', (U_id, email, password, date))
         connection.commit()
@@ -288,6 +313,15 @@ def write_User_table(U_id, email, password, date):
     except:
         connection.rollback()
         return False
+    
+def delete_User_table(U_id):
+    connection_cursor = connection.cursor()
+
+    connection_cursor.execute(f'''DELETE FROM users
+                                WHERE U_id = %s ''', (U_id,))
+    
+    connection.commit()
+
     
 def write_User(U_id, course_id, course_name, course_credits, course_details, course_website, Instructor_name, Instructor_email):
     User_cursor = connection.cursor()
@@ -440,6 +474,7 @@ def Sign_In_Web():
     if request.method == 'POST':
         input_id = request.form["signin-i'd"]
         password = request.form['signin-password']
+
         if auth_user(input_id, password):
             session.clear()
             session['U_id'] = input_id
@@ -665,8 +700,26 @@ def User_Profile():
 
 @app.route("/Log-Out", methods = ['GET', 'POST'])
 def Logout():
-    session.clear()
-    return redirect("Sign-In")
+    if request.method == 'POST':
+        U_id = request.form.get('delete-Uid')
+        password = request.form.get('delete-password')
+        confirmation = request.form.get('delete-verify')
+        existingUsers = read_User_table()
+
+        if confirmation == "DELETE":
+            for i in existingUsers:
+                if str(i[0]) == str(U_id) and str(U_id) == str(session['U_id']):
+                    if str(i[2]) == str(password):
+                        session.clear()
+                        update_deleted_users(U_id, i[1], password, i[3])
+                        delete_User_table(U_id)
+                        return redirect('Sign-In')
+                    else:
+                        return "Incorrect Password"
+        else:
+            return "type DELETE carefully"
+        
+    return render_template('Signup.html')
 
 @app.route("/Settings", methods = ['GET', 'POST'])
 def Settings():

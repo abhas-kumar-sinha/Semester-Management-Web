@@ -2,6 +2,10 @@
 const imageInput = document.getElementById('imageInput');
 const fileText = document.getElementById('fileText');
 const imagePreview = document.querySelector('.img-container');
+const deleteBtn = document.querySelector('.profile-in-botton-1');
+const closeDeleteBtn = document.querySelector('.close-form');
+const heroSection = document.querySelector('.hero-section');
+const deleteForm = document.querySelector('.delete-conf');
 
 // Update text and preview when file is chosen
 imageInput.addEventListener('change', function(event) {
@@ -22,3 +26,13 @@ imageInput.addEventListener('change', function(event) {
         imagePreview.style.backgroundImage = 'none';
     }
 });
+
+deleteBtn.addEventListener('click', () => {
+    heroSection.classList.toggle('toblur')
+    deleteForm.classList.toggle('hide')
+})
+
+closeDeleteBtn.addEventListener('click', () => {
+    heroSection.classList.toggle('toblur')
+    deleteForm.classList.toggle('hide')
+})

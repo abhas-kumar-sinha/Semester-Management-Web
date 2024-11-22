@@ -48,12 +48,36 @@
                         <td><input class="profile-input" type="text" name="User-courses" id="User-courses" placeholder="{{read_data_user[0][5]}}" readonly></td> 
                     </tr>
                     <tr style="height: 6vw;">
-                        <td colspan="2"><button id="profile-update" type="submit">Update Details</button></td>
+                        <td colspan="2"><button id="profile-update" class="profile-in-botton" type="submit">Update Details</button> <button id="profile-delete" class="profile-in-botton-1" type="button">Delete Account</button></td>
                     </tr>
                 </table>
             </div>
         </div>
     </form>
+</div>
+
+<div class="delete-conf hide">
+    <div class="conf-box">
+        <h1>Delete Confirmation &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="User-Profile" class="close-form"><i class='bx bx-x'></i></a></h1>
+        <div class="alert-conf">
+            <i class='bx bx-error'></i><span>This is extremely important.</span>
+        </div>
+        <div class="alert-content">
+            <p>We will immediately <b>delete all of your Data</b>, along with all of your courses, email, schedule, grades.</p><br>
+            <p>You will no longer be able to login, and after 9 hours your username will be unavailable to anyone on AtTracker.</p><br>
+            <p>For more help, read our article <a href="#">"Deleting your user account"</a>.</p>
+        </div>
+        <div class="line-div"></div>
+        <form action="/Log-Out" method="POST">
+            <label class="form-label" for="delete-Uid">Your User I'D:</label>
+            <input class="form-input" type="text" id="delete-Uid" name="delete-Uid" required>
+            <label class="form-label" for="delete-Uid">To verify,type <b>DELETE</b> below:</label>
+            <input class="form-input" type="text" id="delete-Uid" name="delete-verify" required>
+            <label class="form-label" for="delete-password">Confirm your password:</label>
+            <input class="form-input" type="password" id="delete-Uid" name="delete-password" required>
+            <button class="form-submit" type="submit">Delete My Account</button>
+        </form>
+    </div>
 </div>
 
 <script src="{{ url_for('static', filename='js/U_P_script.js') }}"></script>

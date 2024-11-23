@@ -28,7 +28,7 @@
                 <h1>User Details</h1>
                 <table>
                     <tr>
-                        <td><label class="profile-label" for="User-Name">User Name</label></td>
+                        <td><label class="profile-label" for="User-Name">User Name <span style="color: red; margin-left: -5%;" >*</span></label></td>
                         {% if read_data_user[0][1] == "" %}
                         <td><input class="profile-input" type="text" name="User-Name" id="User-Name" required></td>                            
                         {% else %}

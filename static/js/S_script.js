@@ -134,6 +134,18 @@ function populateCourseOptions2(timetableData) {
         endSpan = parseInt(timeMap[endTime]);
         finalEndSpan = String(endSpan)
         newDiv.innerHTML+= `
+        <div class="delete-course-form hide">
+            <form action="/Today-Schedule" method='POST'>
+                <input style="display:none;" name="form-name" value="delete-course">
+                <input style="display:none;" name="course-id" value="${timetable.course_id}">
+                <input style="display:none;" name="class-type" value="${timetable.class_type}">
+                <input style="display:none;" name="day" value="${timetable.day}">
+
+                <button class="delete-course" type="submit">
+                    <i class='bx bx-trash'></i>
+                </button>
+            </form>
+        </div>
         <h2>${timetable.course_id}</h2>
         <p style="font-size:1vw;">${timetable.class_type}</p>`
         newDiv.style.gridRow = `${dayMap[day]}`;
@@ -224,3 +236,10 @@ document.addEventListener('DOMContentLoaded', function() {
         updateEndTimeOptions(startTimeSelect, endTimeSelect);
     });
 });
+
+editBtn.addEventListener('click', () => {
+    deleteCourseFormAll = document.querySelectorAll(".delete-course-form")
+    deleteCourseFormAll.forEach(ele => {
+        ele.classList.toggle('hide')
+    });
+})

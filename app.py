@@ -359,6 +359,56 @@ def read_timetable(U_id):
 
     return data_list
 
+def delete_timetable(U_id, C_id, class_type, day):
+    User_cursor = connection.cursor()
+    prev_Data = read_timetable(U_id)
+
+    User_cursor.execute(f'''DELETE FROM "{U_id}_timetable"''')
+    
+    mon, tue, wed, thur, fri = [], [], [], [], []
+    list_days = [mon, tue, wed, thur, fri]
+    list_days_name = ["MON", "TUE", "WED", "THUR", "FRI"]
+
+    day_idx = list_days_name.index(day)
+
+    for i in list_days_name:
+        User_cursor.execute(f'''DELETE FROM "{U_id}_{i}"''')
+
+    for i in range(0, len(prev_Data)):
+        if i == 0:
+            if day_idx == i:
+                prev_Data[i] = [d for d in prev_Data[i] if d["course_id"] != C_id and d["class_type"] != class_type]
+            mon+=prev_Data[i]
+        elif i == 1:
+            if day_idx == i:
+                prev_Data[i] = [d for d in prev_Data[i] if d["course_id"] != C_id and d["class_type"] != class_type]
+            tue+=prev_Data[i]
+        elif i== 2:
+            if day_idx == i:
+                prev_Data[i] = [d for d in prev_Data[i] if d["course_id"] != C_id and d["class_type"] != class_type]
+            wed+=prev_Data[i]
+        elif i==3:
+            if day_idx == i:
+                prev_Data[i] = [d for d in prev_Data[i] if d["course_id"] != C_id and d["class_type"] != class_type]
+            thur+=prev_Data[i]
+        elif i==4:
+            if day_idx == i:
+                prev_Data[i] = [d for d in prev_Data[i] if d["course_id"] != C_id and d["class_type"] != class_type]
+            fri+=prev_Data[i]
+
+    User_cursor.execute(f'''INSERT INTO "{U_id}_timetable" 
+                        (monday, tuesday, wednesday, thursday, friday) 
+                        VALUES(%s, %s, %s, %s, %s)''', (f'{mon}', f'{tue}', f'{wed}', f'{thur}', f'{fri}'))
+    idx=0
+    for i in list_days:
+        for j in i:
+            User_cursor.execute(f'''INSERT INTO "{U_id}_{list_days_name[idx]}"
+                                (course_id, class_type, day, start_time, end_time) 
+                                VALUES(%s, %s, %s, %s, %s)''', (j['course_id'], j['class_type'], j['day'], j['start_time'], j['end_time']))
+        idx+=1
+
+    connection.commit()
+
 
 def write_timetable(U_id, timetable_list):
     User_cursor = connection.cursor()
@@ -651,8 +701,12 @@ def Schedule():
         courses = read_User(session['U_id'])
         
     if request.method == 'POST' and form_name == "delete-course":
-        C_id = request.form.get("C_id")
-        del_User(session['U_id'], C_id)
+        C_id = request.form.get("course-id")
+        class_type = request.form.get("class-type")
+        day = request.form.get("day")
+
+        delete_timetable(session['U_id'], C_id, class_type, day)
+
         timetables = read_timetable(session['U_id'])
         timetables_list = [item for sublist in timetables for item in sublist]
         courses = read_User(session['U_id'])

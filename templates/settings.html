@@ -1,17 +1,145 @@
 {% extends 'base.html' %}
 
 {% block main %}
+
+{% block head %}
+    {{ super() }} <!-- This includes all content from the base template's head block -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Settings_style.css') }}">
+{% endblock %}
             
 <div class="hero-section">
 
     {% include 'base_navBar.html' %}
 
+    <div class="search-bar-wrapper">
+        <div class="bar-left">
+            <h2>Account Settings</h2>
+        </div>
+        <div class="bar-right">
+            <div class="search-bar">
+                <input class="search-input" type="TEXT" placeholder="Search settings" autocomplete="off">
+                <i class='bx bx-search-alt-2'></i>
+            </div>
+            <div class="result-box">
+
+            </div>
+        </div>
+    </div>
+
     <div class="settings-content">
+        <div class="show-user-details">
+            <div class="details-left">
+                <a href="User-Profile">
+                    {% if read_data_user[0][4] == "" %}
+                        <div class="user-photo" style="background-image: url(../static/Profile-Pic/dummy.jpeg);"></div>
+                    {% else %}
+                        <div class="user-photo" style="background-image: url({{read_data_user[0][4]}});"></div>
+                    {% endif %}
+                </a>
+                <div class="user-details">
+                    <h2>{{read_data_user[0][1]}}</h2>
+                    <p>User I'D: {{U_id}}</p>
+                    <div class="inp-btns">
+                        <a href="User-Profile"><button><p>Change</p> Name</button></a>
+                        <a href="User-Profile"><button><p>Change</p> Password</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="details-right">
+                <div class="link-box">
+                    <div class="logo" style="background-image: url(../static/logo/Gmail.png);"></div>
+                    <div class="details">
+                        <h5 style="font-size: 1.175vw;">Email Verification</h5>
+                        <p style="font-size: 0.7vw;">{{read_data_user[0][2]}} <i class='bx bx-check-double' ></i></p>
+                    </div>
+                </div>
+                <div class="link-box">
+                    <div class="logo" style="background-image: url(../static/logo/IIT_D.png); background-size: cover; height: 5vw"></div>
+                    <div class="details">
+                        <h5 style="font-size: 1.175vw;">Kerberos Verification</h5>
+                        <p style="font-size: 0.7vw;">Unverified</p> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="line-div"></div>
+
         <div class="acc-settings">
-            
+            <a href="User-Profile">
+                <div class="acc-box">
+                    <i class='bx bxs-user-detail'></i>
+                    <div class="about">
+                        <h3>Account Details</h3>
+                        <p>Profile Photo, Username, Email, Number of courses</p>
+                    </div>
+                    <i class='bx bx-chevron-right'></i>
+                </div>
+            </a>
+            <a>
+                <div class="acc-box">
+                    <i class='bx bxs-palette' ></i>
+                    <div class="about">
+                        <h3>Theme</h3>
+                        <p>Appearance, Dark Mode, Light Mode</p>
+                    </div>
+                    <i class='bx bx-chevron-right'></i>
+                </div>
+            </a>
+            <a>
+                <div class="acc-box">
+                    <i class='bx bxs-bell'></i>
+                    <div class="about">
+                        <h3>Notifications</h3>
+                        <p>Customize, Ring, Silent, Emails</p>
+                    </div>
+                    <i class='bx bx-chevron-right'></i>
+                </div>
+            </a>
+            <a>
+                <div class="acc-box">
+                    <i class='bx bxs-time-five'></i>
+                    <div class="about">
+                        <h3>Reminders</h3>
+                        <p>Set reminder,Reminders for important classes, Silent, Emails</p>
+                    </div>
+                    <i class='bx bx-chevron-right'></i>
+                </div>
+            </a>
+            <a>
+                <div class="acc-box">
+                    <i class='bx bxs-info-circle'></i>
+                    <div class="about">
+                        <h3>Info</h3>
+                        <p>About me, How to use, FAQ's</p>
+                    </div>
+                    <i class='bx bx-chevron-right'></i>
+                </div>
+            </a>
+            <a>
+                <div class="acc-box-1">
+                    <i class='bx bx-reset'></i>
+                    <div class="about">
+                        <h3>Reset Data</h3>
+                        <p>Reset all data, eg. for new semester</p>
+                    </div>
+                    <i class='bx bx-chevron-right'></i>
+                </div>
+            </a>
+            <a href="User-Profile">
+                <div  border: 1px solid red; class="acc-box-1">
+                    <i class='bx bx-error-alt'></i>
+                    <div class="about">
+                        <h3>Delete Account</h3>
+                        <p>Removing all the data from the server</p>
+                    </div>
+                    <i class='bx bx-chevron-right'></i>
+                </div>
+            </a>
         </div>
     </div>
 
 </div>
 
+<script src="{{ url_for('static', filename='js/Settings_script.js') }}"></script>
 {% endblock main %}

@@ -778,7 +778,7 @@ def Logout():
 @app.route("/Settings", methods = ['GET', 'POST'])
 def Settings():
     read_data_user = read_userDetails(session['U_id'])
-    return render_template('settings.html', read_data_user=read_data_user)
+    return render_template('settings.html', read_data_user=read_data_user, U_id = session['U_id'])
 
 @app.route("/sitemap.xml", methods = ['GET', 'POST'])
 def Sitemap():

@@ -1,0 +1,291 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.search-bar-wrapper{
+    height: 4.5vw;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 1.5vw;
+    margin-top: 1vw;
+    border: 1.5px solid #695cfe;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2vw;
+}
+
+.bar-left h2{
+    font-family: "Cedarville Cursive", cursive;
+    color: #707070;
+}
+
+.search-bar{
+    height: 2.5vw;
+    width: 23vw;
+    border-radius: 1vw;
+    border: 1.5px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 1vw;
+}
+
+.search-bar i{
+    margin-top: 0.2vw;
+    font-size: 1.5vw;
+    color: #695cfe;
+    transition: 0.2s scale;
+    background-color: #fff;
+}
+
+.search-bar i:hover{
+    scale: 1.2;
+}
+
+.search-input{
+    height: 2.3vw;
+    width: 21vw;
+    border-radius: 1vw;
+    padding: 0 1vw;
+    border: none;
+    outline: none;
+}
+
+.result-box{
+    position: absolute;
+    background-color: #fff;
+    border-bottom-left-radius: .5vw;
+    border-bottom-right-radius: .5vw;
+    border: 0.5px solid black;
+    margin-left: 1vw;
+    overflow: hidden;
+    padding: 0 0.5vw;
+    
+    ul{
+        padding: 0.5vw 0;
+    }
+
+    ul li{
+        height: 2.5vw;
+        width: 20vw;
+        display: flex;
+        align-items: center;
+        border-radius: .5vw;
+        padding: 0 1vw;
+    }
+
+    ul li:hover{
+        background-color: #e9f3ff;
+    }
+}
+
+.settings-content{
+    min-height: 40vh;
+    width: 100%;
+    background-color: #fff;
+    border: 1.5px solid #695cfe;
+    margin-top: 1vw;
+    border-radius: 1.5vw;
+    padding: 1vw;
+}
+
+.show-user-details{
+    height: 30vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.details-left{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.user-details{
+    height: 100%;
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    h2{
+        font-family: "Cedarville Cursive", cursive;
+    }
+
+    .inp-btns{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-left: -5%;
+    }
+
+    .inp-btns a button{
+        background-color: transparent;
+        padding: 0 2vw;
+        border-radius: 50px;
+        border: 1px solid #695cfe;
+        margin-top: 0.75vw;
+        transition: 0.2s;
+        color: #695cfe;
+    }
+
+    .inp-btns a button:hover{
+        scale: 1.1;
+        background-color: #695cfe;
+        color: white;
+    }
+}
+
+.user-photo{
+    height: 13vw;
+    width: 13vw;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid black;
+    border-radius: 50%;
+    transition: var(--tran-03);
+}
+
+.user-photo:hover{
+    cursor: pointer;
+    scale: 1.05;
+    transition: var(--tran-03);
+}
+
+.details-right{
+    height: 100%;
+    width: 50%;  
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.link-box{
+    height: 5.5vw;
+    width: 42%;
+    border-radius: .5vw;
+    border: 1px solid #695cfe;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5vw;
+
+    .logo{
+        height: 4.3vw;
+        width: 20%;
+        background-position: center;
+        background-size: contain;
+        mask-repeat: no-repeat;
+    }
+    transition: 0.2s;
+}
+
+.link-box:hover{
+    scale: 1.05;
+    opacity: 0.8;
+}
+
+.details{
+    margin-left: 0.75vw;
+}
+
+.line-div{
+    height: 0.5px;
+    width: 100%;
+    margin: 1.5vw 0vw 3vw 0;
+}
+
+.acc-box{
+    height: 6vw;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 1vw;
+    margin-bottom: 0.75vw;
+    display: flex;
+    i {
+        height: 100%;
+        width: 5%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5vw;  
+        margin-right: 1vw;      
+    }
+
+    .about{
+        line-height: 3vw;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        h3{
+            font-size: 1.4vw;
+            margin-bottom: -2%;
+        }
+
+        p{
+            font-size: 1vw;
+        }
+    }
+    transition: 0.2s;
+}
+
+.acc-box-1{
+    height: 6vw;
+    width: 100%;
+    border: 1px solid red;
+    border-radius: 1vw;
+    margin-bottom: 0.75vw;
+    display: flex;
+    i {
+        height: 100%;
+        width: 5%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5vw;  
+        margin-right: 1vw;   
+        color: red;   
+    }
+
+    .about{
+        line-height: 3vw;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        h3{
+            font-size: 1.4vw;
+            margin-bottom: -2%;
+            color: red;
+        }
+
+        p{
+            font-size: 1vw;
+            color: red;
+        }
+    }
+    transition: 0.2s;
+}
+
+.acc-box:hover{
+    scale: 1.01;
+    opacity: 0.7;
+}
+
+.acc-box-1:hover{
+    scale: 1.01;
+    opacity: 0.7;
+}
+
+.acc-settings{
+    a{
+        text-decoration: none;
+        color: black;
+    }
+}

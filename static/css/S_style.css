@@ -6,7 +6,7 @@
     width: 100%;
     border-radius: 1.5vw;
     background-color: white;
-    margin-top: 2vw;
+    margin-top: 1vw;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -397,11 +397,12 @@ td{
 }
 
 .all-courses{
+    display: flex;
     position: relative;
 }
 
 .back-calendar{
-    height: 90vh;
+    height: 44.5vw;
     width: 89vw;
     background-color: #fff;
     border-radius: 1vw;
@@ -428,7 +429,7 @@ th{
 }
 
 .front-view{
-    height: 90vh;
+    height: 44.5vw;
     width: 89vw;
     border-radius: 2vw;
     position: absolute;

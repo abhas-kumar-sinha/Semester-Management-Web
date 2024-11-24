@@ -544,6 +544,8 @@ def update_databases():
     existingUsers = read_User_table()
     for i in existingUsers:
         update_day_tracker(i[0])
+    
+    return "Success"
 
 @app.route('/', methods=['GET', 'POST'])
 def home():

@@ -539,6 +539,12 @@ app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 
 mail = Mail(app)
 
+@app.route('/Update-Databases', methods=['GET', 'POST'])
+def update_databases():
+    existingUsers = read_User_table()
+    for i in existingUsers:
+        update_day_tracker(i[0])
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':

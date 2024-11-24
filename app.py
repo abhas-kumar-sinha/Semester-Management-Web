@@ -188,6 +188,36 @@ def create_User(U_id):
 
     connection.commit()
 
+def reset_User(U_id):
+    User_cursor = connection.cursor()
+
+    User_cursor.execute(f'''DELETE FROM "{U_id}_courses"''')
+    connection.commit()
+
+    User_cursor.execute(f'''DELETE FROM "{U_id}_attendance"''')
+    connection.commit()
+
+    User_cursor.execute(f'''DELETE FROM "{U_id}_timetable"''')
+    connection.commit()
+
+    User_cursor.execute(f'''INSERT INTO "{U_id}_timetable" 
+                        (monday, tuesday, wednesday, thursday, friday) 
+                        VALUES('[]', '[]', '[]', '[]', '[]')''')
+    connection.commit()
+
+    days_list = ['MON', 'TUE', 'WED', 'THUR', 'FRI', 'SAT', 'SUN']
+
+    for i in days_list:
+        User_cursor.execute(f'''DELETE FROM "{U_id}_{i}"''')
+        connection.commit()
+
+    User_cursor.execute(f'''DELETE FROM "{U_id}_day_tracker"''')
+    connection.commit()
+    
+    update_day_tracker(U_id)
+
+    connection.commit()
+
 def read_date_table(U_id):
     date = datetime.today().date()
     User_cursor = connection.cursor()
@@ -509,8 +539,12 @@ app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 
 mail = Mail(app)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        reset_User(session['U_id'])
+        return redirect('Home')
+
     return redirect('Sign-In')
 
 @app.route("/Home", methods=['GET', 'POST'])

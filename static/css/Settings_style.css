@@ -289,3 +289,36 @@
         color: black;
     }
 }
+
+.acc-box h3, .acc-box p::selection{
+    user-select: none;
+}
+
+.acc-box-1 h3, .acc-box-1 p::selection{
+    user-select: none;
+}
+
+.btn{
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    .about{
+        line-height: 3vw;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+
+        h3{
+            font-size: 1.4vw;
+            margin-bottom: -2%;
+            color: red;
+        }
+
+        p{
+            font-size: 1vw;
+            color: red;
+        }
+    }
+}

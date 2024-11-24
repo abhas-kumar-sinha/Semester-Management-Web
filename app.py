@@ -543,6 +543,7 @@ mail = Mail(app)
 def update_databases():
     existingUsers = read_User_table()
     for i in existingUsers:
+        print(i)
         update_day_tracker(i[0])
     
     return "Success"

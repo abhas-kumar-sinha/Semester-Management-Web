@@ -79,14 +79,6 @@ def update_deleted_users(U_id, email, password, date):
 
     connection.commit()
 
-def read_deleted_users():
-    connection_cursor = connection.cursor()
-
-    connection_cursor.execute("SELECT * FROM deleted_users")
-    read_data = connection_cursor.fetchall()
-
-    return read_data
-
 def read_User_table():
     connection_cursor = connection.cursor()
 
@@ -263,6 +255,17 @@ def check_today_attendance(U_id):
             ans = i 
      
     return ans
+
+def check_attendance(U_id):
+    User_cursor = connection.cursor()
+
+    User_cursor.execute(f'''SELECT * FROM "{U_id}_day_tracker"''')
+
+    read_data = User_cursor.fetchall()
+
+    connection.commit() 
+
+    return read_data
 
 def write_date_table(U_id, data):
     date = datetime.today().date()

@@ -548,6 +548,7 @@ def update_databases():
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    create_connect_db()
     if request.method == 'POST':
         reset_User(session['U_id'])
         return redirect('Home')
@@ -827,4 +828,3 @@ def Sitemap():
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)
-    create_connect_db()

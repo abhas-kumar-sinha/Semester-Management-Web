@@ -538,7 +538,7 @@ app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 
 mail = Mail(app)
 
-@app.route('/Update-Databases', methods=['GET', 'POST'])
+@app.route('/Update-Databases', methods=['GET', 'POST', 'HEAD'])
 def update_databases():
     existingUsers = read_User_table()
     for i in existingUsers:
@@ -546,7 +546,7 @@ def update_databases():
     
     return "Success"
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST', 'HEAD'])
 def home():
     create_connect_db()
     if request.method == 'POST':
@@ -555,13 +555,13 @@ def home():
 
     return redirect('Sign-In')
 
-@app.route("/Home", methods=['GET', 'POST'])
+@app.route("/Home", methods=['GET', 'POST', 'HEAD'])
 def main_Web():
     read_data_user = read_userDetails(session['U_id'])
     attendance = read_User_attendance(session['U_id'])
     return render_template('index.html', attendance = attendance, read_data_user=read_data_user)
 
-@app.route("/Sign-In", methods=['GET', 'POST'])
+@app.route("/Sign-In", methods=['GET', 'POST', 'HEAD'])
 def Sign_In_Web():
     if request.method == 'POST':
         input_id = request.form["signin-i'd"]
@@ -577,7 +577,7 @@ def Sign_In_Web():
 
     return render_template('Signin.html')
 
-@app.route("/Sign-Up", methods=['GET', 'POST'])
+@app.route("/Sign-Up", methods=['GET', 'POST', 'HEAD'])
 def Sign_Up_Web():
     if request.method == 'POST':
         email = request.form['signup-email']
@@ -591,7 +591,7 @@ def Sign_Up_Web():
         
     return render_template('Signup.html')
 
-@app.route("/Verify-OTP", methods=['GET', 'POST'])
+@app.route("/Verify-OTP", methods=['GET', 'POST', 'HEAD'])
 def Verify_User():
     U_id = create_U_id()
     email = session.get('email')
@@ -645,7 +645,7 @@ def Verify_User():
     
     return render_template('Signup-OTP.html', email=email)
 
-@app.route("/Add-Course", methods = ['GET', 'POST'])
+@app.route("/Add-Course", methods=['GET', 'POST', 'HEAD'])
 def Add_Course():
     read_data_user = read_userDetails(session['U_id'])
     courses = read_User(session['U_id'])
@@ -674,7 +674,7 @@ def Add_Course():
 
     return render_template('AddCourse.html', courses = courses, read_data_user=read_data_user)
 
-@app.route("/Mark-Attendance", methods = ['GET', 'POST'])
+@app.route("/Mark-Attendance", methods=['GET', 'POST', 'HEAD'])
 def Mark_Attendance():
     update_day_tracker(session['U_id'])
     read_data_user = read_userDetails(session['U_id'])
@@ -710,7 +710,7 @@ def Mark_Attendance():
         
     return render_template('MarkAttendance.html', courses=courses, fin_timetables_list=fin_timetables_list, fin_day_name=fin_day_name, read_data_user = read_data_user, date = date)
 
-@app.route("/Today-Schedule", methods = ['GET', 'POST'])
+@app.route("/Today-Schedule", methods=['GET', 'POST', 'HEAD'])
 def Schedule():
     read_data_user = read_userDetails(session['U_id'])
     timetables = read_timetable(session['U_id'])
@@ -755,18 +755,18 @@ def Schedule():
 
     return render_template('Schedule.html', timetables_list=timetables_list, courses=courses, read_data_user=read_data_user)
 
-@app.route("/Analytics", methods = ['GET', 'POST'])
+@app.route("/Analytics", methods=['GET', 'POST', 'HEAD'])
 def Course_Analytics():
     read_data_user = read_userDetails(session['U_id'])
     attendance = read_User_attendance(session['U_id'])
     return render_template('Analytics-web.html', attendance=attendance, read_data_user=read_data_user)
 
-@app.route("/Grades", methods = ['GET', 'POST'])
+@app.route("/Grades", methods=['GET', 'POST', 'HEAD'])
 def Grades():
     read_data_user = read_userDetails(session['U_id'])
     return render_template('Grades.html', read_data_user=read_data_user)
 
-@app.route("/User-Profile", methods = ['GET', 'POST'])
+@app.route("/User-Profile", methods=['GET', 'POST', 'HEAD'])
 def User_Profile():
     read_data_user = read_userDetails(session['U_id'])
 
@@ -794,7 +794,7 @@ def User_Profile():
 
     return render_template('UserProfile.html', read_data_user=read_data_user)
 
-@app.route("/Log-Out", methods = ['GET', 'POST'])
+@app.route("/Log-Out", methods=['GET', 'POST', 'HEAD'])
 def Logout():
     if request.method == 'POST':
         U_id = request.form.get('delete-Uid')
@@ -817,12 +817,12 @@ def Logout():
         
     return render_template('Signup.html')
 
-@app.route("/Settings", methods = ['GET', 'POST'])
+@app.route("/Settings", methods=['GET', 'POST', 'HEAD'])
 def Settings():
     read_data_user = read_userDetails(session['U_id'])
     return render_template('settings.html', read_data_user=read_data_user, U_id = session['U_id'])
 
-@app.route("/sitemap.xml", methods = ['GET', 'POST'])
+@app.route("/sitemap.xml", methods=['GET', 'POST', 'HEAD'])
 def Sitemap():
     return send_from_directory('static', 'sitemap.xml')
 

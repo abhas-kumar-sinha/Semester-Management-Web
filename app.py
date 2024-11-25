@@ -49,8 +49,6 @@ def create_connect_db():
 
     connection.commit()
 
-create_connect_db()
-
 def give_day_code():
     today = datetime.today()
     day_name = today.strftime("%A")
@@ -109,6 +107,7 @@ def update_day_tracker(U_id):
                     day TEXT ,
                     start_time TEXT ,
                     end_time TEXT)''')
+        
         connection.commit()
     except:
         connection.rollback()
@@ -543,7 +542,6 @@ mail = Mail(app)
 def update_databases():
     existingUsers = read_User_table()
     for i in existingUsers:
-        print(i)
         update_day_tracker(i[0])
     
     return "Success"
@@ -829,3 +827,4 @@ def Sitemap():
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)
+    create_connect_db()

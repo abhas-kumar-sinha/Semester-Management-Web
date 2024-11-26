@@ -20,7 +20,7 @@
             </div>
             <div class="form">
                 <form action="/Sign-In" method="POST">
-                    <legend>Please enter your details to sign in.</legend>
+                    <legend class="signin-legend">Please enter your details to sign in.</legend>
                     <fieldset class="short-signin">
                         <button class="Google button" type="button"><i class='bx bxl-google'></i></button>
                         <button class="Apple button" type="button"><i class='bx bxl-apple'></i></button>
@@ -37,7 +37,10 @@
                         <label for="signin-i'd">User I'd</label>
                         <input type="text" class="form-input" name="signin-i'd" required placeholder="Enter your User I'd...">
                         <label for="signin-password">Password</label>
-                        <input type="password" class="form-input form-password" name="signin-password" required placeholder="••••••••">
+                        <div class="form-input-password-div" id="hidden">
+                            <input type="password" class="form-password" name="signin-password" required placeholder="••••••••">
+                            <div class="show-hide-password"><i class='bx bx-hide' ></i></div>
+                        </div>
                         <div class="form-features">
                             <div class="features-1">
                                 <label for="remember-me">Remember me</label>

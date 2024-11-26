@@ -21,8 +21,8 @@
             </div>
             <div class="form">
                 <form action="/Sign-Up" method="POST">
-                    <legend>Please enter your details to sign up.</legend>
-                    <fieldset class="short-signin">
+                    <legend class="signup-legend">Please enter your details to sign up.</legend>
+                    <fieldset class="short-signup">
                         <button class="Google button" type="button"><i class='bx bxl-google'></i></button>
                         <button class="Apple button" type="button"><i class='bx bxl-apple'></i></button>
                         <button class="LinkedIn button" type="button"><i class='bx bxl-linkedin'></i></button>
@@ -34,12 +34,25 @@
                         <div class="line right-side"></div>
                     </div>
 
-                    <fieldset class="normal-signin">
+                    <fieldset style="margin-top: -.25vw;" class="normal-signin">
+                        <div class="personal-details">
+                            <div class="details-left">
+                                <label style="display: block;" for="signin-name">Name</label>
+                                <input style="margin-bottom: .75vw; width: 100%;" type="text" class="form-input" name="signup-name" required placeholder="Enter your full name...">
+                            </div>
+                            <div class="details-right">
+                                <label style="display: block;" for="signin-year">Enrollment Year</label>
+                                <input style="margin-bottom: .75vw; width: 100%;" type="number" class="form-input" min="2020" id="year-of-joining" name="signup-year" maxlength="4" required placeholder="Year of joining IIT D...">
+                            </div>
+                        </div>
                         <label for="signin-email">E-Mail Address</label>
-                        <input type="email" class="form-input" name="signup-email" required placeholder="Enter your email...">
-                        <label for="signin-password">Password</label>
-                        <input type="password" class="form-input form-password" name="signup-password" minlength="8" required placeholder="••••••••">
-                        <button type="submit" class="sign-btn">Sign Up</button>
+                        <input style="margin-bottom: .75vw;" type="email" class="form-input" name="signup-email" required placeholder="Enter your email...">
+                        <label for="signup-password">Password</label>                        
+                        <div class="form-input-password-div" id="hidden">
+                            <input style="margin-bottom: .75vw;" type="password" class="form-password" name="signup-password" required placeholder="••••••••">
+                            <div class="show-hide-password"><i class='bx bx-hide' ></i></div>
+                        </div>
+                        <button style="margin-top: -.25vw;" type="submit" class="sign-btn">Sign Up</button>
                     </fieldset>
                 </form>
                 <div class="redirect-signup">

@@ -30,12 +30,13 @@ def create_connect_db():
                             U_id INTEGER NOT NULL,
                             email TEXT PRIMARY KEY,
                             password TEXT NOT NULL,
-                            date DATE NOT NULL
+                            date DATE NOT NULL,
+                            login_U_id TEXT NOT NULL
                             )
                             ''')
     connection_cursor.execute('''INSERT INTO users 
-                            (U_id, email, password, date) 
-                            VALUES (1001, 'abc@example.com', 987654321, '2024-10-15')
+                            (U_id, email, password, date, login_U_id)
+                            VALUES (1001, 'abc@example.com', 987654321, '2024-10-15', '2024abhas1001')
                             ON CONFLICT (email) DO NOTHING;''')
     
     connection_cursor.execute('''CREATE TABLE IF NOT EXISTS deleted_users (
@@ -331,15 +332,15 @@ def auth_user(input_id, password):
     all_User_data = read_User_table()
     Ans = False
     for i in all_User_data:
-        if str(i[0]) == input_id and str(i[2]) == str(password):
+        if str(i[4]) == input_id and str(i[2]) == str(password):
             Ans = True
             break
     return Ans
 
-def write_User_table(U_id, email, password, date):
+def write_User_table(U_id, email, password, date, login_U_id):
     connection_cursor = connection.cursor()
     try:
-        connection_cursor.execute(f'''INSERT INTO users (U_id, email, password, date) Values (%s, %s, %s, %s)''', (U_id, email, password, date))
+        connection_cursor.execute(f'''INSERT INTO users (U_id, email, password, date, login_U_id) Values (%s, %s, %s, %s, %s)''', (U_id, email, password, date, login_U_id))
         connection.commit()
         return True
     except:
@@ -529,6 +530,12 @@ def create_U_id():
     
     return gen_U_id
 
+def Gen_login_U_id(U_id, name, joining_year):
+    name_list = name.split()
+    ans = str(joining_year) + name_list[0].lower() + str(U_id)
+
+    return ans
+
 def generate_otp():
     return str(randint(100000, 999999))
 
@@ -585,10 +592,15 @@ def Sign_Up_Web():
     if request.method == 'POST':
         email = request.form['signup-email']
         password = request.form['signup-password']
+        name = request.form['signup-name']
+        joining_year = request.form['signup-year']
         session.clear()
 
         session['email'] = email
         session['password'] = password
+        session['name'] = name
+        session['joining_year'] = joining_year
+
         session.pop('OTP', None)
         return redirect("/Verify-OTP")
         
@@ -596,9 +608,11 @@ def Sign_Up_Web():
 
 @app.route("/Verify-OTP", methods=['GET', 'POST', 'HEAD'])
 def Verify_User():
-    U_id = create_U_id()
     email = session.get('email')
     password = session.get('password')
+    name = session.get('name')
+    joining_year = session.get('joining_year')
+
     date = datetime.today().date()
     if 'OTP' not in session:
         OTP = generate_otp()
@@ -621,12 +635,16 @@ def Verify_User():
         OTP = session.get('OTP')
         
         if entered_OTP == OTP:
-            if write_User_table(U_id, email, password, date):
+            U_id = create_U_id()
+            login_U_id = Gen_login_U_id(U_id, name, joining_year)
+            if write_User_table(U_id, email, password, date, login_U_id):
                 msg_sender = os.getenv('MAIL_USERNAME')
                 new_msg = Message('Account Created', sender=msg_sender, recipients=[email])
-                new_msg.body = f"This is a system generated Mail. Please Do not reply. \nYour Login Credentials \nKeep Your Credentials safe and avoid sharing with others. \nUser I'd: {U_id}\nPassword: {password} \nThank you for chosing us ❤️."
+                new_msg.body = f"This is a system generated Mail. Please Do not reply. \nYour Login Credentials \nKeep Your Credentials safe and avoid sharing with others. \nUser I'd: {login_U_id}\nPassword: {password} \nThank you for chosing us ❤️."
                 session.pop('OTP', None)
                 create_User(U_id)
+                name = name.title()
+                update_userDetails(U_id, name, "")
             
                 try:
                     mail.send(new_msg)
@@ -635,6 +653,7 @@ def Verify_User():
                 
                 session.pop('email', None)
                 session.pop('password', None)
+                session.pop('joining_year', None)
 
                 session['U_id'] = U_id
                 

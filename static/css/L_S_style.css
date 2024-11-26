@@ -58,11 +58,18 @@ body{
     margin-top: -4%;
 }
 
-.form legend{
+.signin-legend{
     margin-top: -3%;
     margin-bottom: 2.25vw;
     color: #707070;
     font-size: 1.25vw;
+}
+
+.signup-legend{
+    margin-top: -5%;
+    margin-bottom: 2.25vw;
+    color: #707070;
+    font-size: 1.25vw; 
 }
 
 .form fieldset{
@@ -71,6 +78,12 @@ body{
 }
 
 .short-signin{
+    display: flex;
+    justify-content: space-between;
+}
+
+.short-signup{
+    margin-top: -1vw;
     display: flex;
     justify-content: space-between;
 }
@@ -124,7 +137,6 @@ form{
 }
 
 .normal-signin{
-    margin-top: 0.8vw;
     height: 52vw;
     display: flex;
     flex-direction: column;
@@ -139,9 +151,33 @@ form{
     padding: 0.5vw;
 }
 
+.form-input-password-div{
+    height: 3vw;
+    margin: 0.5vw 0 1.5vw 0;
+    border-radius: 0.5vw;
+    border: 1px solid #707070;
+    font-size: 1.2vw;
+    display: flex;
+}
+
 .form-password{
-    font-size: 1.5vw;
+    font-size: 1.2vw;
     letter-spacing: 1vw;
+    height: 100%;
+    width: 90%;
+    border: none;
+    border-radius: 0.5vw;
+    padding: 0.5vw;
+}
+
+.show-hide-password{
+    height: 100%;
+    width: 10%;
+    font-size: 1.75vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #707070;
 }
 
 #signin-password{
@@ -150,6 +186,10 @@ form{
 }
 
 .form-input:focus{
+    outline: none;
+}
+
+.form-password:focus{
     outline: none;
 }
 
@@ -173,7 +213,7 @@ form{
 }
 
 .sign-btn{
-    margin-top: 0.6vw;
+    margin-top: 1vw;
     height: 3.2vw;
     background-color: black;
     color: white;
@@ -200,6 +240,19 @@ form{
     text-decoration: none;
     font-weight: 550;
     color: black;
+}
+
+.personal-details{
+    display: flex;
+    justify-content: space-between;
+}
+
+.details-left{
+    width: 47%;
+}
+
+.details-right{
+    width: 47%;
 }
 
 @media only screen and (max-width: 655px){
@@ -253,11 +306,18 @@ form{
     height: 2.8vh;
 }
 
-.form legend{
+.signin-legend{
     margin-top: -3%;
-    margin-bottom: 2.25vh;
+    margin-bottom: 2.25vw;
     color: #707070;
-    font-size: 1.25vh;
+    font-size: 1.25vw;
+}
+
+.signup-legend{
+    margin-top: -5%;
+    margin-bottom: 3.25vh;
+    color: #707070;
+    font-size: 1.5vh; 
 }
 
 .form fieldset{
@@ -266,6 +326,12 @@ form{
 }
 
 .short-signin{
+    display: flex;
+    justify-content: space-between;
+}
+
+.short-signup{
+    margin-top: -1vh;
     display: flex;
     justify-content: space-between;
 }
@@ -334,9 +400,32 @@ form{
     padding: 0.5vh;
 }
 
+.form-input-password-div{
+    height: 4vh;
+    margin: 1vh 0 2vh 0;
+    border-radius: 0.5vh;
+    border: 1px solid #707070;
+    display: flex;
+}
+
 .form-password{
+    letter-spacing: 1vw;
+    height: 100%;
+    width: 90%;
+    border: none;
     font-size: 1.5vh;
-    letter-spacing: 1vh;
+    padding: 0.5vh;
+    border-radius: 0.5vw;
+}
+
+.show-hide-password{
+    height: 100%;
+    width: 10%;
+    font-size: 1.75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 
 #signin-password{
@@ -395,5 +484,17 @@ form{
     text-decoration: none;
     font-weight: 550;
     color: black;
+}
+.personal-details{
+    display: flex;
+    justify-content: space-between;
+}
+
+.details-left{
+    width: 47%;
+}
+
+.details-right{
+    width: 47%;
 }
 }

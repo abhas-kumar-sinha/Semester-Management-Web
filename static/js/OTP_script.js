@@ -17,8 +17,4 @@ inputField.addEventListener("input", () => {
         // Revert to previous valid state if invalid character entered
         inputField.value = previousValue;
     }
-
-    if (inputField.value.length == 6) {
-        inputField.style.paddingRight = "1.5vw"
-    }
 });

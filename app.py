@@ -19,7 +19,7 @@ result = urlparse(database_url)
 connection = pg8000.connect(
     user=result.username,
     password=result.password,
-    host="dpg-csrk7jl2ng1s738a9hag-a.oregon-postgres.render.com",
+    host=result.hostname,
     port=5432,
     database=result.path[1:]
 )

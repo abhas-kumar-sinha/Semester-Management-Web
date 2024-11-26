@@ -820,6 +820,7 @@ def User_Profile():
 def Logout():
     if request.method == 'POST':
         U_id = request.form.get('delete-Uid')
+        U_id = U_id[-4:]
         password = request.form.get('delete-password')
         confirmation = request.form.get('delete-verify')
         existingUsers = read_User_table()

@@ -517,9 +517,9 @@ th{
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-top: -7.5%;
-    margin-right: 5%;
-    margin-bottom: -5%;
+    margin-top: -1.4vw;
+    margin-right: 1vw;
+    margin-bottom: -0.7vw;
 }
 
 .alert-div{

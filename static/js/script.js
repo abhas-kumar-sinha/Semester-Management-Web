@@ -107,3 +107,15 @@ toggle.addEventListener("click", () => {
     logout.classList.toggle("close")
     toggle.classList.toggle("close")
 })
+
+sidebar.addEventListener('mouseenter', () => {
+    sidebar.classList.toggle("close")
+    logout.classList.toggle("close")
+    toggle.classList.toggle("close") 
+})
+
+sidebar.addEventListener('mouseleave', () => {
+    sidebar.classList.toggle("close")
+    logout.classList.toggle("close")
+    toggle.classList.toggle("close") 
+})

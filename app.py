@@ -841,8 +841,14 @@ def Logout():
 
 @app.route("/Settings", methods=['GET', 'POST', 'HEAD'])
 def Settings():
+    all_User_data = read_User_table()
     read_data_user = read_userDetails(session['U_id'])
-    return render_template('settings.html', read_data_user=read_data_user, U_id = session['U_id'])
+    for i in all_User_data:
+        if str(i[0]) == session['U_id']:
+            Ans = str(i[4])
+            break
+
+    return render_template('settings.html', read_data_user=read_data_user, U_id = Ans)
 
 @app.route("/sitemap.xml", methods=['GET', 'POST', 'HEAD'])
 def Sitemap():

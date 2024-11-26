@@ -109,7 +109,7 @@ function populateCourseOptions1(coursesData) {
 }
 
 function populateCourseOptions2(timetableData) {
-    timeMap = {"8:00 AM" : "2", "9:00 AM" : "3", "10:00 AM" : "4", "11:00 AM" : "5", "12:00 AM" : "6", "1:00 PM" : "7", "2:00 PM" : "8", "3:00 PM" : "9", "4:00 PM" : "10", "5:00 PM" : "11", "6:00 PM" : "12"}
+    timeMap = {"8:00 AM" : "2", "9:00 AM" : "3", "10:00 AM" : "4", "11:00 AM" : "5", "12:00 PM" : "6", "1:00 PM" : "7", "2:00 PM" : "8", "3:00 PM" : "9", "4:00 PM" : "10", "5:00 PM" : "11", "6:00 PM" : "12"}
 
     dayMap = {"MON" : "2", "TUE" : "3", "WED" : "4", "THUR" : "5", "FRI" : "6"}
     timetableData.forEach(timetable => {

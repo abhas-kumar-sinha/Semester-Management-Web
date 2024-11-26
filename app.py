@@ -579,7 +579,7 @@ def Sign_In_Web():
 
         if auth_user(input_id, password):
             session.clear()
-            session['U_id'] = input_id
+            session['U_id'] = input_id[-4:]
             return redirect('Home')
         else:
             connection.rollback()

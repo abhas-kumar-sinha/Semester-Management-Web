@@ -845,7 +845,7 @@ def Settings():
     all_User_data = read_User_table()
     read_data_user = read_userDetails(session['U_id'])
     for i in all_User_data:
-        if str(i[0]) == session['U_id']:
+        if str(i[0]) == str(session['U_id']):
             Ans = str(i[4])
             break
 

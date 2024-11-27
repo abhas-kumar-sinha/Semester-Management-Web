@@ -122,9 +122,9 @@ def create_User(U_id):
 
     User_cursor.execute(f'''CREATE TABLE IF NOT EXISTS "{U_id}_attendance" (
                         Course_id TEXT PRIMARY KEY,
-                        Present INT NOT NULL,
-                        Absent INT NOT NULL,
-                        medical_leave INT NOT NULL)''')
+                        Present JSONB NOT NULL,
+                        Absent JSONB NOT NULL,
+                        medical_leave JSONB NOT NULL)''')
     connection.commit()
 
     User_cursor.execute(f'''CREATE TABLE IF NOT EXISTS "{U_id}_timetable" (
@@ -360,8 +360,18 @@ def write_User(U_id, course_id, course_name, course_credits, course_details, cou
     User_cursor = connection.cursor()
 
     try:
-        User_cursor.execute(f'''INSERT INTO "{U_id}_courses" (Course_id, Name, Credits, Details, Website, Instructor_Name, Instructor_Email) Values (%s, %s, %s, %s, %s, %s, %s)''', (course_id, course_name, course_credits, course_details, course_website, Instructor_name, Instructor_email))
-        User_cursor.execute(f'''INSERT INTO "{U_id}_attendance" (Course_id, Present, Absent, medical_leave) Values (%s, %s, %s, %s)''', (course_id, 0, 0, 0))
+        User_cursor.execute(f'''INSERT INTO "{U_id}_courses"
+                            (Course_id, Name, Credits, Details, Website, Instructor_Name, Instructor_Email) 
+                            Values (%s, %s, %s, %s, %s, %s, %s)''', 
+                            (course_id, course_name, course_credits, course_details, course_website, Instructor_name, Instructor_email))
+
+        default_data = {"LECTURE" : 0, "TUTORIAL" : 0, "LAB" : 0, "INTRODUCTION" : 0}
+
+        User_cursor.execute(f'''INSERT INTO "{U_id}_attendance" 
+                            (Course_id, Present, Absent, medical_leave) 
+                            VALUES(%s, %s, %s, %s)''', 
+                            (course_id, default_data, default_data, default_data))
+
         connection.commit()
 
         return True
@@ -511,11 +521,31 @@ def read_User_attendance(U_id):
     read_data = User_cursor.fetchall()
     return read_data
 
-def write_User_attendance(U_id, attendance, Course_id):
+def write_User_attendance(U_id, attendance, Course_id, class_type):
+    req_data = read_User_attendance(U_id)
     User_cursor = connection.cursor()
 
-    query = f'UPDATE "{U_id}_attendance" SET {attendance} = {attendance} + 1 WHERE Course_id = %s'
-    User_cursor.execute(query, (Course_id,))
+    class_attendance_map = {"Present": 1, "Absent": 2, "medical_leave": 3}
+
+    class_attendance_value = class_attendance_map[str(attendance)]
+
+    for i in req_data:
+        if str(i[0]) == str(Course_id):
+            req_ans = i
+            break
+
+    req_attendance = req_ans[class_attendance_value]
+
+    req_attendance[str(class_type)] += 1
+
+    attendance = attendance.lower()
+    req_attendance_json = json.dumps(req_attendance)
+
+    User_cursor.execute(f'''
+        UPDATE "{U_id}_attendance" 
+        SET "{attendance}" = %s 
+        WHERE Course_id = %s
+    ''', (req_attendance_json, Course_id))
 
     connection.commit()
 
@@ -725,7 +755,7 @@ def Mark_Attendance():
         start_time = request.form.get("form-start-time")
         end_time = request.form.get("form-end-time")
         
-        write_User_attendance(session['U_id'], attendance, course_id)
+        write_User_attendance(session['U_id'], attendance, course_id, class_type)
         write_date_table(session['U_id'], [course_id, class_type, day, start_time, end_time])
 
         return redirect("Mark-Attendance")

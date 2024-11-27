@@ -370,10 +370,14 @@ header .img-text .header-text {
 
 .nav-up-bx{
     font-size: 2vw;
-    margin: 0 1vw;
     padding: 0.5vw;
     border-radius: 50%;
     transition: var(--tran-03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #707070;
 }
 
 .nav-up-bx:hover{

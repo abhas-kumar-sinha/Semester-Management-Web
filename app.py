@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, url_for, json, send_from_directory
 from flask_mail import Mail, Message
-from datetime import datetime
+from datetime import datetime, timedelta, time
 from random import randint
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
@@ -50,9 +50,7 @@ def create_connect_db():
 
     connection.commit()
 
-def give_day_code():
-    today = datetime.today()
-    day_name = today.strftime("%A")
+def give_day_code(day_name):
 
     if day_name == "Monday":
         fin_day_name = "MON"
@@ -87,10 +85,19 @@ def read_User_table():
     read_data = connection_cursor.fetchall()
     return read_data
 
+def drop_table(U_id, date):
+    User_cursor = connection.cursor()
+
+    User_cursor.execute(f'''DROP TABLE IF EXISTS "{U_id}_{date.strftime("%Y-%m-%d").replace("-", "_")}"''')
+
+    connection.commit()
+
 def update_day_tracker(U_id):
     User_cursor = connection.cursor()
     date = datetime.today().date()
-    day = give_day_code()
+    day = give_day_code(date.strftime("%A"))
+    yesterday_date = date - timedelta(days = 1)
+    yesterday_day = give_day_code(yesterday_date.strftime('%A'))
 
     try:
         User_cursor.execute(f'''INSERT INTO "{U_id}_day_tracker" (day, date, attendance) VALUES (%s, %s, %s)''', (day, date, "UNMARKED"))
@@ -100,8 +107,15 @@ def update_day_tracker(U_id):
                     day TEXT ,
                     start_time TEXT ,
                     end_time TEXT)''')
-        
+        drop_table(U_id, yesterday_date)
+
         connection.commit()
+        all_courses_of_the_day = read_day(U_id, yesterday_day)
+        
+        for i in all_courses_of_the_day:
+            write_User_attendance(U_id, "Absent", i[0], i[1])
+            connection.commit()
+        
     except:
         connection.rollback()
     
@@ -221,16 +235,7 @@ def read_date_table(U_id):
         connection.rollback()
         read_data = []
 
-
     return read_data  
-
-def drop_table(U_id):
-    date = datetime.today().date()
-    User_cursor = connection.cursor()
-
-    User_cursor.execute(f'''DROP TABLE IF EXISTS "{U_id}_{date.strftime("%Y-%m-%d").replace("-", "_")}"''')
-
-    connection.commit()
 
 def mark_table(U_id):
     date = datetime.today().date()
@@ -580,11 +585,19 @@ mail = Mail(app)
 
 @app.route('/Update-Databases', methods=['GET', 'POST', 'HEAD'])
 def update_databases():
-    existingUsers = read_User_table()
-    for i in existingUsers:
-        update_day_tracker(i[0])
-    
-    return "Success"
+    current_time = datetime.now().time()
+
+    start_time = time(6, 25)
+    end_time = time(6, 35)
+
+    if start_time <= current_time <= end_time:
+        existingUsers = read_User_table()
+        for user in existingUsers:
+            update_day_tracker(user[0])
+        
+        return "Successful"
+    else:
+        return "Unsuccessful"
 
 @app.route('/', methods=['GET', 'POST', 'HEAD'])
 def home():
@@ -731,8 +744,8 @@ def Mark_Attendance():
     update_day_tracker(session['U_id'])
     read_data_user = read_userDetails(session['U_id'])
     courses = read_User(session['U_id'])
-    fin_day_name=give_day_code()
     date = datetime.today().date()
+    fin_day_name=give_day_code(date.strftime("%A"))
     today_attendance = read_day(session['U_id'], fin_day_name)
     done_attendance = read_date_table(session['U_id'])
     attendance_status = check_today_attendance(session['U_id'])
@@ -743,7 +756,7 @@ def Mark_Attendance():
             fin_timetables_list.append(i)
 
     if done_attendance == today_attendance and len(today_attendance) != 0:
-        drop_table(session['U_id'])
+        drop_table(session['U_id'], date)
         mark_table(session['U_id'])
         fin_timetables_list=[]
 

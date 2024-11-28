@@ -47,6 +47,13 @@ def create_connect_db():
                             deleting_date DATE NOT NULL
                             )
                             ''')
+    
+    connection_cursor.execute('''CREATE TABLE IF NOT EXISTS grades_users (
+                        U_id INTEGER NOT NULL,
+                        sgpa TEXT,
+                        permission TEXT NOT NULL
+                        )
+                        ''')
 
     connection.commit()
 
@@ -141,6 +148,12 @@ def create_User(U_id):
                         medical_leave JSONB NOT NULL)''')
     connection.commit()
 
+    User_cursor.execute(f'''CREATE TABLE IF NOT EXISTS "{U_id}_grades" (
+                        Course_id TEXT PRIMARY KEY,
+                        grades_overview JSONB NOT NULL,
+                        user_grades JSONB NOT NULL)''')
+    connection.commit()
+
     User_cursor.execute(f'''CREATE TABLE IF NOT EXISTS "{U_id}_timetable" (
                     monday TEXT ,
                     tuesday TEXT ,
@@ -201,6 +214,9 @@ def reset_User(U_id):
     connection.commit()
 
     User_cursor.execute(f'''DELETE FROM "{U_id}_attendance"''')
+    connection.commit()
+
+    User_cursor.execute(f'''DELETE FROM "{U_id}_grades"''')
     connection.commit()
 
     User_cursor.execute(f'''DELETE FROM "{U_id}_timetable"''')
@@ -277,7 +293,9 @@ def write_date_table(U_id, data):
     date = datetime.today().date()
     User_cursor = connection.cursor()
 
-    User_cursor.execute(f'''INSERT INTO "{U_id}_{date.strftime("%Y-%m-%d").replace("-", "_")}" (course_id, class_type, day, start_time, end_time) VALUES ('{data[0]}', '{data[1]}', '{data[2]}', '{data[3]}', '{data[4]}')''')
+    User_cursor.execute(f'''INSERT INTO "{U_id}_{date.strftime("%Y-%m-%d").replace("-", "_")}" 
+                        (course_id, class_type, day, start_time, end_time) 
+                        VALUES ('{data[0]}', '{data[1]}', '{data[2]}', '{data[3]}', '{data[4]}')''')
 
     connection.commit()
 
@@ -554,6 +572,44 @@ def write_User_attendance(U_id, attendance, Course_id, class_type):
 
     connection.commit()
 
+def read_User_grades(U_id):
+    User_cursor = connection.cursor()
+
+    User_cursor.execute(f'''SELECT * from "{U_id}_grades"
+                        ORDER BY Course_id ASC ''')
+    read_data = User_cursor.fetchall()
+
+    return read_data
+
+def write_User_grades(U_id, Course_id, course_dict):
+    User_cursor = connection.cursor()
+
+    default_user_grades={}
+
+    for keys in course_dict:
+        default_user_grades[keys] = 0
+
+    course_dict_json = json.dumps(course_dict)
+    default_user_grades_json = json.dumps(default_user_grades)
+    try:
+        User_cursor.execute(f'''INSERT INTO "{U_id}_grades" 
+                            (Course_id, grades_overview, user_grades)
+                            VALUES (%s, %s, %s)''', 
+                            (Course_id, course_dict_json, default_user_grades_json))
+        connection.commit()
+    except:
+        connection.rollback()
+
+def update_user_grades(U_id, final_ans):
+    User_cursor = connection.cursor()
+
+    final_ans_json = json.dumps(final_ans[2])
+    User_cursor.execute(f'''UPDATE "{U_id}_grades" 
+                        SET user_grades = %s
+                        WHERE Course_id = %s''', 
+                        (final_ans_json, final_ans[0]))
+    connection.commit()
+
 def create_U_id():
     existing_U_id = []
     for i in read_User_table():
@@ -828,8 +884,52 @@ def Course_Analytics():
 
 @app.route("/Grades", methods=['GET', 'POST', 'HEAD'])
 def Grades():
+    read_grades_user = read_User_grades(session['U_id'])
     read_data_user = read_userDetails(session['U_id'])
-    return render_template('Grades.html', read_data_user=read_data_user)
+    courses = read_User(session['U_id'])
+    form_name = request.form.get('form-name')
+
+    if request.method == 'POST' and form_name=="add-course":
+        form_data = request.form
+        all_forms_data = []
+        Course_id = form_data.get('course-id')
+        for key, value in form_data.items():
+        # Extract the form index (e.g., from form-course-name-123, we extract 123)
+            if key.startswith('assesment-type-'):
+                form_index = key.split('-')[-1]
+                # Now create a dictionary for this form's data
+                form_dict = {
+                    form_data.get(f'assesment-type-{form_index}'): form_data.get(f'assesment-weightage-{form_index}')
+                }
+                all_forms_data.append(form_dict)
+        
+        final_dict = {}
+        for i in all_forms_data:
+            final_dict.update(i)
+
+        write_User_grades(session['U_id'], Course_id, final_dict)
+        read_grades_user = read_User_grades(session['U_id'])
+
+        return redirect('Grades')
+    
+    if request.method == 'POST' and form_name == "update-grades":
+        course_id = request.form.get("course-id")
+        for i in read_grades_user:
+            if str(i[0]) == str(course_id):
+                for key,value in i[2].items():
+                    user_input = request.form.get(f"{key}")
+                    if user_input != "":
+                        i[2][f'{key}'] = user_input
+                    else:
+                        i[2][f'{key}'] = i[2][f'{key}']
+                final_ans = i
+                break
+        update_user_grades(session['U_id'], final_ans)
+        read_grades_user = read_User_grades(session['U_id'])
+
+        return redirect('Grades')
+
+    return render_template('Grades.html', read_data_user=read_data_user, courses= courses, read_grades_user=read_grades_user)
 
 @app.route("/User-Profile", methods=['GET', 'POST', 'HEAD'])
 def User_Profile():

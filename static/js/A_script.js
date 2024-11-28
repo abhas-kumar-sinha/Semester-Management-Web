@@ -181,3 +181,15 @@ presenceCalc.forEach(btn => {
                In INTRODUCTION              :  ${ans_introduction} |     ${attendanceData[i][1]['INTRODUCTION']}/${sum_introduction}`)
     })
 });
+
+sidebar.addEventListener('mouseenter', () => {
+    sidebar.classList.toggle("close")
+    logout.classList.toggle("close")
+    toggle.classList.toggle("close") 
+})
+
+sidebar.addEventListener('mouseleave', () => {
+    sidebar.classList.toggle("close")
+    logout.classList.toggle("close")
+    toggle.classList.toggle("close") 
+})

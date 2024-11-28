@@ -291,7 +291,7 @@ table tr td button:hover{
     font-size: 2vw;
     border: none;
     margin-top: -10%;
-    transition: scale background-color color 0.2s;
+    transition: scale 0.2s, background-color 0.2s, color 0.2s;
     text-decoration: none;
 }
 
@@ -346,7 +346,7 @@ td{
     background-color: #695cfe;
     color: white;
     border: none;
-    transition: scale background-color color 0.2s;
+    transition: scale 0.2s;
     font-size: 1.2vw;
     text-decoration: none;
 }

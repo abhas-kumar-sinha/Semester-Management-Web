@@ -35,7 +35,7 @@
                             </tr>
                             <tr>
                                 <td>Instructor</td>
-                                <td>{{course[5]}}(<a href="mailto:{{course[6]}}">{{course[6]}}</a>)</td>
+                                <td>{{course[5]}}(<a href="mailto:{{course[6]}}" target="_blank">{{course[6]}}</a>)</td>
                             </tr>
                             <tr>
                                 <td>Course Credits</td>
@@ -43,7 +43,7 @@
                             </tr>
                             <tr>
                                 <td>Links</td>
-                                <td><button><a href="{{course[3]}}">Course Details</a></button><button><a href="{{course[4]}}">Course Website</a></button></td>
+                                <td><button><a href="{{course[3]}}" target="_blank">Course Details</a></button><button><a href="{{course[4]}}" target="_blank">Course Website</a></button></td>
                             </tr>
                         </table>
                     </div>
@@ -59,7 +59,7 @@
                     </button>
                 </form>
                 <button type="button" class="feature-btn"><a href='Analytics#course-{{loop.index0}}'>Attendance</a></button>
-                <button type="button" class="feature-btn"><a href="#">Grades</a></button>
+                <button type="button" class="feature-btn"><a href="Grades">Grades</a></button>
             </div>
         </div>
         {% endfor %}

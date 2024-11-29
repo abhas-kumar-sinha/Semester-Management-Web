@@ -222,6 +222,11 @@ def reset_User(U_id):
                         WHERE U_id = %s''', (U_id,))
     connection.commit()
 
+    User_cursor.execute(f'''UPDATE "{U_id}_Userdetails"
+                        SET courses_registered = 0
+                        WHERE U_id = %s''', (U_id,))
+    connection.commit()
+
     User_cursor.execute(f'''DELETE FROM "{U_id}_courses"''')
     connection.commit()
 
@@ -691,7 +696,11 @@ def calculate_sgpa(grades_data, courses_data):
                 your_total += float(data[2][key])
                 final_total += float(data[1][key])
 
-        expected_grade = give_grade_value(your_total, final_total)
+        if final_total == 0:
+            expected_grade = 0
+            credits = 0
+        else:
+            expected_grade = give_grade_value(your_total, final_total)
         net_user_total += expected_grade * credits
         net_final_total += credits
 

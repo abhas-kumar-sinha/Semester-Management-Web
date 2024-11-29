@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, url_for, json, send_from_directory
 from flask_mail import Mail, Message
-from datetime import datetime, timedelta, time
+from datetime import datetime, timedelta, time, timezone
 from random import randint
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
@@ -641,7 +641,8 @@ mail = Mail(app)
 
 @app.route('/Update-Databases', methods=['GET', 'POST', 'HEAD'])
 def update_databases():
-    current_time = datetime.now().time()
+    local_time = datetime.now(timezone.utc) + timedelta(hours=5, minutes=30)
+    current_time = local_time.time()
     start_time = time(6, 15)
     end_time = time(6, 45)
 
@@ -654,6 +655,7 @@ def update_databases():
             return "", 200 
         
         return "Successful"
+    
     else:
 
         return "Unsuccessful"

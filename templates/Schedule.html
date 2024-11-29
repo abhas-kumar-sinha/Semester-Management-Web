@@ -149,7 +149,7 @@
                         <tr>
                             <td><label class="form-label" for="form-course-name">Course Id</label></td>
                             <td><select class="form-input" name="course-id-0" id="form-course-name" required>
-                                <option value="none">—————SELECT—————</option>
+                                <option value="none" disabled selected>—————SELECT—————</option>
                                 {% for course in courses %}
                                     <option value="{{course[0]}}">{{course[0]}}</option>
                                 {% endfor %}
@@ -158,7 +158,7 @@
                         <tr>
                             <td><label class="form-label" for="form-course-name">Class Type</label></td>
                             <td><select class="form-input" name="class-type-0" id="form-course-name" required>
-                                <option value="none">—————SELECT—————</option>
+                                <option value="none" disabled selected>—————SELECT—————</option>
                                 <option value="LECTURE">LECTURE</option>
                                 <option value="TUTORIAL">TUTORIAL</option>
                                 <option value="INTRODUCTION">INTRODUCTION</option>
@@ -169,7 +169,7 @@
                         <tr>
                             <td><label class="form-label" for="form-course-name">Day</label></td>
                             <td><select class="form-input" name="day-0" id="form-course-name" required>
-                                <option value="none">—————SELECT—————</option>
+                                <option value="none" disabled selected>—————SELECT—————</option>
                                 <option value="MON">MON</option>
                                 <option value="TUE">TUE</option>
                                 <option value="WED">WED</option>
@@ -181,7 +181,7 @@
                         <tr>
                             <td><label class="form-label" for="form-course-name">Class Start Time</label></td>
                             <td><select class="form-input start-time" name="class-start-time-0" id="form-course-name" required>
-                                <option value="none">—————SELECT—————</option>
+                                <option value="none" disabled selected>—————SELECT—————</option>
                                 <option value="8:00 AM">8:00 AM</option>
                                 <option value="9:00 AM">9:00 AM</option>
                                 <option value="10:00 AM">10:00 AM</option>

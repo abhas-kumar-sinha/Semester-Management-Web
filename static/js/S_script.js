@@ -53,14 +53,14 @@ function populateCourseOptions1(coursesData) {
                 <tr>
                     <td><label class="form-label" for="form-course-name">Course Name</label></td>
                     <td><select class="form-input" name="course-id-${idx}" id="form-course-name" required>
-                        <option value="none">—————SELECT—————</option>
+                        <option value="none" disabled selected>—————SELECT—————</option>
                         ${courseOptions}  <!-- Dynamically added options here -->
                     </select></td>
                 </tr>
                 <tr>
                     <td><label class="form-label" for="form-course-type">Class Type</label></td>
                     <td><select class="form-input" name="class-type-${idx}" id="form-course-type" required>
-                        <option value="none">—————SELECT—————</option>
+                        <option value="none" disabled selected>—————SELECT—————</option>
                         <option value="LECTURE">LECTURE</option>
                         <option value="TUTORIAL">TUTORIAL</option>
                         <option value="INTRODUCTION">INTRODUCTION</option>
@@ -70,7 +70,7 @@ function populateCourseOptions1(coursesData) {
                 <tr>
                     <td><label class="form-label" for="form-day">Day</label></td>
                     <td><select class="form-input" name="day-${idx}" id="form-day" required>
-                        <option value="none">—————SELECT—————</option>
+                        <option value="none" disabled selected>—————SELECT—————</option>
                         <option value="MON">MON</option>
                         <option value="TUE">TUE</option>
                         <option value="WED">WED</option>
@@ -81,7 +81,7 @@ function populateCourseOptions1(coursesData) {
                 <tr>
                     <td><label class="form-label" for="form-start-time">Class Start Time</label></td>
                     <td><select class="form-input start-time" name="class-start-time-${idx}" id="form-start-time" required>
-                        <option value="none">—————SELECT—————</option>
+                        <option value="none" disabled selected>—————SELECT—————</option>
                         <option value="8:00 AM">8:00 AM</option>
                         <option value="9:00 AM">9:00 AM</option>
                         <option value="10:00 AM">10:00 AM</option>

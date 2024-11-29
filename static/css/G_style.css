@@ -95,6 +95,7 @@ body {
     padding: 1.5vw;
     transition: var(--tran-05);
     z-index: 100;
+    border-right: 1px solid #695cfe;
 }
 
 .side-bar header .img-text{
@@ -434,6 +435,78 @@ header .img-text .header-text {
     padding: 0 1vw;
 }
 
+.leaderboard-wrapper{
+    min-height: 19vw;
+    max-height: 38vw;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.give-permission{
+    height: 85%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    h1{
+        font-family: "Cedarville Cursive", cursive;
+        margin-top: -2.5vw;
+    }
+    a button{
+        height: 3vw;
+        width: 14vw;
+        border-radius: 1vw;
+        background-color: #695cfe;
+        color: white;
+        font-size: 1.2vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    a{
+        text-decoration: none;
+    }
+}
+
+.leaderboard-wrapper::-webkit-scrollbar{
+    width: 1px;
+}
+
+.leaderboard-wrapper table{
+    margin-top: 1vw;
+    border-collapse: collapse;
+}
+
+.leaderboard-wrapper table tr th{
+    font-family: "Poppins", sans-serif;
+}
+
+.leaderboard-wrapper table tr td{
+    font-size: 1.2vw;
+    padding: 0.5vw 0;
+    background-color: rgb(219, 217, 217);
+    p{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.user-photo{
+    height: 2vw;
+    width: 2vw;
+    border-radius: 50%;
+    margin-left: 1vw;
+    background-size: contain;
+    background-position: center;
+    transition: 0.2s;
+}
+
+.user-photo:hover{
+    scale: 2;
+}
+
 .add-button{
     margin-top: 0.5vw;
     height: 25vh;
@@ -469,6 +542,7 @@ header .img-text .header-text {
     width: 96%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     font-size: 1.6vw;
     color: #707070;
 }
@@ -807,9 +881,9 @@ table tr td button:hover{
     justify-content: center;
 }
 
-.grade-table table tr td input{
-    margin: 0.5vw 5%;
-    height: 2.5vw;
+.grade-input{
+    margin: 0.2vw 5%;
+    height: 2.3vw;
     width: 90%;
     border-radius: 1vw;
     padding: 0 1vw;
@@ -817,16 +891,22 @@ table tr td button:hover{
     outline: none;
 }
 
-.grade-input{
-    width: 11vw;
+.grade-input-1{
+    margin: 0.2vw 5%;
+    height: 2.3vw;
+    width: 37%;
+    border-radius: 1vw;
+    padding: 0 4%;
+    border: 1px solid #695cfe;
+    outline: none;
 }
 
 .grade-submissions{
     width: 100%;
     display: flex;
     justify-content: space-evenly;
-    margin-bottom: 0.5vw;
-    margin-top: -0.75vw;
+    margin-bottom: 0.25vw;
+    margin-top: -0.25vw;
 }
 
 .add-course-grades{

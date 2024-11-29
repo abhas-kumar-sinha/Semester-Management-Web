@@ -92,6 +92,13 @@ def read_User_table():
     read_data = connection_cursor.fetchall()
     return read_data
 
+def read_grades_table():
+    connection_cursor = connection.cursor()
+
+    connection_cursor.execute("SELECT * from grades_users")
+    read_data = connection_cursor.fetchall()
+    return read_data
+
 def drop_table(U_id, date):
     User_cursor = connection.cursor()
 
@@ -209,6 +216,11 @@ def create_User(U_id):
 
 def reset_User(U_id):
     User_cursor = connection.cursor()
+
+    User_cursor.execute(f'''UPDATE grades_users
+                        SET sgpa = 0
+                        WHERE U_id = %s''', (U_id,))
+    connection.commit()
 
     User_cursor.execute(f'''DELETE FROM "{U_id}_courses"''')
     connection.commit()
@@ -363,7 +375,16 @@ def auth_user(input_id, password):
 def write_User_table(U_id, email, password, date, login_U_id):
     connection_cursor = connection.cursor()
     try:
-        connection_cursor.execute(f'''INSERT INTO users (U_id, email, password, date, login_U_id) Values (%s, %s, %s, %s, %s)''', (U_id, email, password, date, login_U_id))
+        connection_cursor.execute(f'''INSERT INTO users 
+                                  (U_id, email, password, date, login_U_id) 
+                                  Values (%s, %s, %s, %s, %s)''', 
+                                  (U_id, email, password, date, login_U_id))
+        
+        connection_cursor.execute(f'''INSERT INTO grades_users 
+                                  (U_id, sgpa, permission) 
+                                  Values (%s, %s, %s)''', 
+                                  (U_id, 0, "NO"))
+
         connection.commit()
         return True
     except:
@@ -374,6 +395,10 @@ def delete_User_table(U_id):
     connection_cursor = connection.cursor()
 
     connection_cursor.execute(f'''DELETE FROM users
+                                WHERE U_id = %s ''', (U_id,))
+    
+
+    connection_cursor.execute(f'''DELETE FROM grades_users
                                 WHERE U_id = %s ''', (U_id,))
     
     connection.commit()
@@ -587,7 +612,7 @@ def write_User_grades(U_id, Course_id, course_dict):
     default_user_grades={}
 
     for keys in course_dict:
-        default_user_grades[keys] = 0
+        default_user_grades[keys] = "-"
 
     course_dict_json = json.dumps(course_dict)
     default_user_grades_json = json.dumps(default_user_grades)
@@ -609,6 +634,70 @@ def update_user_grades(U_id, final_ans):
                         WHERE Course_id = %s''', 
                         (final_ans_json, final_ans[0]))
     connection.commit()
+
+def update_concent(U_id, concent_value):
+    User_cursor = connection.cursor()
+
+    User_cursor.execute(f'''UPDATE grades_users 
+                        SET permission = %s
+                        WHERE U_id = %s''', 
+                        (concent_value, U_id))
+    connection.commit()
+
+def update_user_grades_table(U_id, sgpa):
+    User_cursor = connection.cursor()
+
+    User_cursor.execute(f'''UPDATE grades_users 
+                        SET sgpa = %s
+                        WHERE U_id = %s''', 
+                        (sgpa, U_id))
+    connection.commit()
+
+def give_grade_value(your_total, final_total):
+    temp = (your_total / final_total) * 100
+    if temp > 80 and temp < 100:
+        return 10
+    elif temp > 70 and temp < 80:
+        return 9
+    elif temp > 60 and temp < 70:
+        return 8
+    elif temp > 50 and temp < 60:
+        return 7
+    elif temp > 40 and temp < 50:
+        return 6
+    elif temp > 30 and temp < 40:
+        return 5
+    elif temp > 20 and temp < 30:
+        return 4
+    elif temp > 10 and temp < 20:
+        return 2
+    elif temp > 0 and temp < 10:
+        return 0
+    else:
+        return 0
+
+def calculate_sgpa(grades_data, courses_data):
+    net_user_total = 0
+    net_final_total = 0
+    for data in grades_data:
+        for course in courses_data:
+            if str(data[0]) == str(course[0]):
+                credits = int(course[2])
+
+        your_total = 0
+        final_total = 0
+        for key,value in data[1].items():
+            if data[2][key] != "-":
+                your_total += float(data[2][key])
+                final_total += float(data[1][key])
+
+        expected_grade = give_grade_value(your_total, final_total)
+        net_user_total += expected_grade * credits
+        net_final_total += credits
+
+    final_sgpa = net_user_total / net_final_total
+    fin_ans = round(final_sgpa, 2)
+    return fin_ans
 
 def create_U_id():
     existing_U_id = []
@@ -779,6 +868,16 @@ def Add_Course():
 
     if request.method == 'POST' and form_name == "add-course":
         course_id = request.form.get('form-course-id')
+        check = course_id.split(" ")
+        if len(check) > 1:
+            course_name_id = check[0]
+            course_level = check[1]
+            course_id = course_name_id.upper()+" "+course_level
+        else:
+            course_name_id = course_id[0:3]
+            course_level = course_id[3:6]
+            course_id = course_name_id.upper()+" "+course_level
+
         course_name = request.form.get('form-course-name')
         course_credits = request.form.get('form-course-credits')
         course_details = request.form.get('form-course-details')
@@ -893,6 +992,23 @@ def Grades():
     read_data_user = read_userDetails(session['U_id'])
     courses = read_User(session['U_id'])
     form_name = request.form.get('form-name')
+    allPermissions = read_grades_table()
+
+    grnated_list = []
+    for i in allPermissions:
+        if i[2] == "YES":
+            grnated_list.append(i)
+
+    grnated_users=[]
+    for i in grnated_list:
+        temp = read_userDetails(i[0])
+        grnated_users.append(temp[0])
+
+    to_show = False
+    for i in grnated_list:
+        if str(i[0]) == str(session['U_id']):
+            to_show = True
+            break
 
     if request.method == 'POST' and form_name=="add-course":
         form_data = request.form
@@ -922,19 +1038,22 @@ def Grades():
         for i in read_grades_user:
             if str(i[0]) == str(course_id):
                 for key,value in i[2].items():
-                    user_input = request.form.get(f"{key}")
-                    if user_input != "":
-                        i[2][f'{key}'] = user_input
+                    user_input_num = request.form.get(f"{key}-num")
+                    user_input_den = request.form.get(f"{key}-den")
+                    if user_input_den != "":
+                        i[2][f'{key}'] = str((float(user_input_num)/float(user_input_den))*float(i[1][f'{key}']))
                     else:
                         i[2][f'{key}'] = i[2][f'{key}']
                 final_ans = i
                 break
         update_user_grades(session['U_id'], final_ans)
         read_grades_user = read_User_grades(session['U_id'])
+        sgpa = calculate_sgpa(read_grades_user, courses)
+        update_user_grades_table(session['U_id'], sgpa)
 
         return redirect('Grades')
 
-    return render_template('Grades.html', read_data_user=read_data_user, courses= courses, read_grades_user=read_grades_user)
+    return render_template('Grades.html', read_data_user=read_data_user, courses= courses, read_grades_user=read_grades_user, grnated_list=grnated_list, grnated_users=grnated_users, to_show=to_show)
 
 @app.route("/User-Profile", methods=['GET', 'POST', 'HEAD'])
 def User_Profile():
@@ -992,12 +1111,23 @@ def Logout():
 def Settings():
     all_User_data = read_User_table()
     read_data_user = read_userDetails(session['U_id'])
+    all_user_concent = read_grades_table()
+    user_concent = ""
+    for i in all_user_concent:
+        if str(i[0]) == str(session['U_id']):
+            user_concent = i[2]
+
     for i in all_User_data:
         if str(i[0]) == str(session['U_id']):
             Ans = str(i[4])
             break
 
-    return render_template('settings.html', read_data_user=read_data_user, U_id = Ans)
+    if request.method == "POST" :
+        concent_value = request.form.get("consent")
+        update_concent(session['U_id'], concent_value)
+        return redirect('Grades')
+
+    return render_template('settings.html', read_data_user=read_data_user, U_id = Ans, user_concent = user_concent)
 
 @app.route("/sitemap.xml", methods=['GET', 'POST', 'HEAD'])
 def Sitemap():

@@ -95,6 +95,7 @@ body {
     padding: 1.5vw;
     transition: var(--tran-05);
     z-index: 100;
+    border-right: 1px solid #695cfe;
 }
 
 .side-bar header .img-text{

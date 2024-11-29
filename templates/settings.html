@@ -67,7 +67,7 @@
 
         <div class="acc-settings">
             <a href="User-Profile">
-                <div class="acc-box">
+                <div class="acc-box" id="Account Details">
                     <i class='bx bxs-user-detail'></i>
                     <div class="about">
                         <h3>Account Details</h3>
@@ -77,47 +77,93 @@
                 </div>
             </a>
             <a>
-                <div class="acc-box">
-                    <i class='bx bxs-palette' ></i>
-                    <div class="about">
-                        <h3>Theme</h3>
-                        <p>Appearance, Dark Mode, Light Mode</p>
+                <div class="acc-box down-opening" id="Theme">
+                    <div class="box-top" id="Theme">
+                        <i class='bx bxs-palette' ></i>
+                        <div class="about">
+                            <h3>Theme</h3>
+                            <p>Appearance, Dark Mode, Light Mode</p>
+                        </div>
+                        <i class='bx bx-chevron-right'></i>
                     </div>
-                    <i class='bx bx-chevron-right'></i>
                 </div>
             </a>
             <a>
-                <div class="acc-box">
-                    <i class='bx bxs-bell'></i>
-                    <div class="about">
-                        <h3>Notifications</h3>
-                        <p>Customize, Ring, Silent, Emails</p>
+                <div class="acc-box down-opening" id="Grades">
+                    <div class="box-top" id="Grades">
+                        <i class='bx bxs-notepad'></i>
+                        <div class="about">
+                            <h3>Grades</h3>
+                            <p>SGPA leaderboard consent</p>
+                        </div>
+                        <i class='bx bx-chevron-right'></i>
                     </div>
-                    <i class='bx bx-chevron-right'></i>
+                    <div class="Grades-dd">
+                        <div class="separator">
+                            <div class="line"></div>
+                            <span>SGPA leaderboard consent</span>
+                            <div class="line"></div>
+                        </div>
+                        <div class="consent-form-wrapper">
+                            <form action="/Settings" method="POST">
+                                <legend>NOTE - By accepting, you agree to share your Profile photo, name and SGPA with other students.</legend>
+                                <div class="form-content">
+                                    <label for="consent">Consent: </label>
+                                    <div class="input-options">
+                                        {% if user_concent == "YES" %}
+                                            <div class="input-part"><input type="radio" name="consent" id="consent" value="YES" checked>ACCEPT</div>
+                                            <div class="input-part"><input type="radio" name="consent" id="consent" value="NO">REJECT</div>
+                                        {% else %}
+                                            <div class="input-part"><input type="radio" name="consent" id="consent" value="YES">ACCEPT</div>
+                                            <div class="input-part"><input type="radio" name="consent" id="consent" value="NO" checked>REJECT</div>
+                                        {% endif %}
+
+                                    </div>
+                                    <button class="consent-submit" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </a>
             <a>
-                <div class="acc-box">
-                    <i class='bx bxs-time-five'></i>
-                    <div class="about">
-                        <h3>Reminders</h3>
-                        <p>Set reminder,Reminders for important classes, Silent, Emails</p>
+                <div class="acc-box down-opening" id="Notifications">
+                    <div class="box-top" id="Notifications">
+                        <i class='bx bxs-bell'></i>
+                        <div class="about">
+                            <h3>Notifications</h3>
+                            <p>Customize, Ring, Silent, Emails</p>
+                        </div>
+                        <i class='bx bx-chevron-right'></i>
                     </div>
-                    <i class='bx bx-chevron-right'></i>
                 </div>
             </a>
             <a>
-                <div class="acc-box">
-                    <i class='bx bxs-info-circle'></i>
-                    <div class="about">
-                        <h3>Info</h3>
-                        <p>About me, How to use, FAQ's</p>
+                <div class="acc-box down-opening" id="Reminders">
+                    <div class="box-top" id="Reminders">
+                        <i class='bx bxs-time-five'></i>
+                        <div class="about">
+                            <h3>Reminders</h3>
+                            <p>Set reminder,Reminders for important classes, Silent, Emails</p>
+                        </div>
+                        <i class='bx bx-chevron-right'></i>
                     </div>
-                    <i class='bx bx-chevron-right'></i>
+                </div>
+            </a>
+            <a>
+                <div class="acc-box down-opening" id="Info">
+                    <div class="box-top" id="Info">
+                        <i class='bx bxs-info-circle'></i>
+                        <div class="about">
+                            <h3>Info</h3>
+                            <p>About me, How to use, FAQ's</p>
+                        </div>
+                        <i class='bx bx-chevron-right'></i>
+                    </div>
                 </div>
             </a>
             <form action="/" method="POST">
-                <button class="acc-box-1 btn">
+                <button class="acc-box-1 btn" id="Reset Data">
                     <i class='bx bx-reset'></i>
                     <div class="about">
                         <h3>Reset Data</h3>
@@ -127,7 +173,7 @@
                 </button>
             </form>
             <a href="User-Profile">
-                <div  border: 1px solid red; class="acc-box-1">
+                <div class="acc-box-1" id="Delete Account">
                     <i class='bx bx-error-alt'></i>
                     <div class="about">
                         <h3>Delete Account</h3>

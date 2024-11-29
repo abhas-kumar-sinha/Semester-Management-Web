@@ -26,11 +26,16 @@
                     </div>
                 {% else %}
                     {% for grade_list in read_grades_user %}
-                        <form action="/Grades" method="POST">
-                            <input name="form-name" value="update-grades" style="display: none;">
-                            <input name="course-id" value="{{grade_list[0]}}" style="display: none;">
-                            <div class="grade-content">
-                                <p class="content-heading">{{grade_list[0]}}</p>
+                        <div class="grade-content">
+                            <form action="/Grades" method="POST">
+                                <input name="form-name" value="delete-marks" style="display: none;">
+                                <input name="course-id" value="{{grade_list[0]}}" style="display: none;">
+                                <p class="content-heading">{{grade_list[0]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button><i class='bx bx-trash deleteBtn'></i></button>
+                                </p>
+                            </form>
+                            <form action="/Grades" method="POST" class="grades-input-form">
+                                <input name="form-name" value="update-grades" style="display: none;">
+                                <input name="course-id" value="{{grade_list[0]}}" style="display: none;">
                                 <div class="grade-table">
                                     <table>
                                         <tr>

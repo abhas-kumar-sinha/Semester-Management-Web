@@ -485,7 +485,9 @@ header .img-text .header-text {
 .leaderboard-wrapper table tr td{
     font-size: 1.2vw;
     padding: 0.5vw 0;
-    background-color: rgb(219, 217, 217);
+    background-color: rgba(232, 230, 230, 0.823);
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
     p{
         width: 100%;
         display: flex;
@@ -841,19 +843,39 @@ table tr td button:hover{
     margin-bottom: 1.5vw;
     border: 1.5px solid #695cfe;
     padding: 0.75vw 1.25vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .content-heading{
     font-size: 2vw;
     font-weight: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin-left: 25vw;
     font-family: "Cedarville Cursive", cursive;
+    margin-bottom: -2vw;
+    margin-top: -0.5vw;
+    height: 2.5vw;
+    i{
+        font-size: 1.5vw;
+        color: red;
+    }
+    i:hover{
+        animation: wobble 0.5s ease-in-out infinite;
+    }
+    button{
+        background-color: transparent;
+        border: none;
+    }
+}
+
+@keyframes wobble {
+    0% { transform: rotate(-5deg) scale(1); }
+    25% { transform: rotate(5deg) scale(1.02); }
+    50% { transform: rotate(-5deg) scale(1); }
+    75% { transform: rotate(5deg) scale(1.02); }
+    100% { transform: rotate(-5deg) scale(1); }
+}
+
+.grades-input-form{
+    margin-top: 5vw;
 }
 
 .grade-table{
@@ -906,7 +928,7 @@ table tr td button:hover{
     display: flex;
     justify-content: space-evenly;
     margin-bottom: 0.25vw;
-    margin-top: -0.25vw;
+    margin-top: 0.25vw;
 }
 
 .add-course-grades{

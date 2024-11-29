@@ -95,7 +95,8 @@ def read_User_table():
 def read_grades_table():
     connection_cursor = connection.cursor()
 
-    connection_cursor.execute("SELECT * from grades_users")
+    connection_cursor.execute(f'''SELECT * from grades_users
+                              ORDER BY sgpa ASC;''')
     read_data = connection_cursor.fetchall()
     return read_data
 
@@ -658,6 +659,14 @@ def update_user_grades_table(U_id, sgpa):
                         (sgpa, U_id))
     connection.commit()
 
+def delete_user_grades_table(U_id, course_id):
+    User_cursor = connection.cursor()
+
+    User_cursor.execute(f'''DELETE FROM "{U_id}_grades"
+                        WHERE course_id = %s''', 
+                        (course_id,))
+    connection.commit()
+
 def give_grade_value(your_total, final_total):
     temp = (your_total / final_total) * 100
     if temp > 80 and temp < 100:
@@ -1057,6 +1066,14 @@ def Grades():
                 break
         update_user_grades(session['U_id'], final_ans)
         read_grades_user = read_User_grades(session['U_id'])
+        sgpa = calculate_sgpa(read_grades_user, courses)
+        update_user_grades_table(session['U_id'], sgpa)
+
+        return redirect('Grades')
+
+    if request.method == 'POST' and form_name == "delete-marks":
+        course_id = request.form.get("course-id")
+        delete_user_grades_table(session['U_id'], course_id)
         sgpa = calculate_sgpa(read_grades_user, courses)
         update_user_grades_table(session['U_id'], sgpa)
 

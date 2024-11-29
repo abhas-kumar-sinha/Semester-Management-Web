@@ -130,12 +130,12 @@ function populategradesData(gradesData, coursesData) {
                 }
             }
             
-            if (final_total == 0){
-                expected_grade = 0
+            if (FinalTotal == 0){
+                expectedGrade = 0
                 credits = 0
             }
             else{
-                expected_grade = give_grade_value(your_total, final_total)
+                expectedGrade = give_grade_value(yourTotal, finalTotal)
             }
             
             netUserTotal+=expectedGrade*credits

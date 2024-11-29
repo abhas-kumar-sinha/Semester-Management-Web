@@ -130,7 +130,7 @@ function populategradesData(gradesData, coursesData) {
                 }
             }
             
-            if (FinalTotal == 0){
+            if (finalTotal == 0){
                 expectedGrade = 0
                 credits = 0
             }

@@ -642,17 +642,20 @@ mail = Mail(app)
 @app.route('/Update-Databases', methods=['GET', 'POST', 'HEAD'])
 def update_databases():
     current_time = datetime.now().time()
-
-    start_time = time(6, 25)
-    end_time = time(6, 35)
+    start_time = time(6, 15)
+    end_time = time(6, 45)
 
     if start_time <= current_time <= end_time:
         existingUsers = read_User_table()
         for user in existingUsers:
             update_day_tracker(user[0])
+
+        if request.method == 'HEAD':
+            return "", 200 
         
         return "Successful"
     else:
+
         return "Unsuccessful"
 
 @app.route('/', methods=['GET', 'POST', 'HEAD'])

@@ -96,3 +96,108 @@
 .attendance-marked h1{
     font-family: "Cedarville Cursive", cursive;
 }
+
+@media only screen and (max-width: 655px){
+    .active-course{
+        width: 100%;
+        min-height: 30vh;
+        background-color: white;
+        border-radius: 2vh;
+        border: 1.5px solid #695cfe;
+        margin-top: 1vw;
+        padding: 1.25vh 2vh;
+        position: relative;
+    }
+    
+    .head-active{
+        height: 4vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        color: #707070;
+        margin-bottom: 1.5vh;
+        h2{
+            font-size: 1.8vh;
+        }
+    }
+    
+    .active-class{
+        height: 12vw;
+        width: 20vw;
+        border-radius: 1vw;
+        margin: 0.45vw;
+        border: 1.5px solid #695cfe;
+        background-color: transparent;
+        transition: scale 0.2s, color 0.2s, background-color 0.2s;
+        overflow: hidden;
+    }
+    
+    .active-class-content{
+        height: 12vw;
+        width: 20vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .active-now:hover{
+        scale: 1.05;
+        color: white;
+        .mark-att {
+            transform: translateY(-100%);
+            color: #2228312a;
+        }
+    }
+    
+    .mark-att{
+        height: 12vw;
+        width: 20vw;
+        background-color: #e4e9f75b;
+        border-radius: 1vw;
+        transition: 0.2s;
+        white-space: wrap;
+    }
+    
+    .ans-input{
+        height: 80%;
+        width: 100%;
+        color: black;
+        margin-left: -15%;
+    }
+    
+    .submit-td{
+        padding-left: 5vw;
+    }
+    
+    .marked-att{
+        width: 80%;
+    }
+    
+    .marked-att{
+        background-color: transparent;
+        border: 1px solid #695cfe;
+        border-radius: 1vw;
+        transition: scale 0.2s, background-color 0.2s, color 0.2s;
+    }
+    
+    .marked-att:hover{
+        scale: 1.05;
+        background-color: #695cfe;
+        color: white;
+    }
+    
+    .attendance-marked{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 6.5vh;
+    }
+    
+    .attendance-marked h1{
+        font-family: "Cedarville Cursive", cursive;
+        font-size: 2.65vh;
+    }
+}

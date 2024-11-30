@@ -1058,7 +1058,7 @@ def Grades():
                 for key,value in i[2].items():
                     user_input_num = request.form.get(f"{key}-num")
                     user_input_den = request.form.get(f"{key}-den")
-                    if user_input_den != "":
+                    if user_input_den != "" and user_input_den != "0":
                         i[2][f'{key}'] = str((float(user_input_num)/float(user_input_den))*float(i[1][f'{key}']))
                     else:
                         i[2][f'{key}'] = i[2][f'{key}']

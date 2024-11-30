@@ -152,7 +152,7 @@
                     {% for i in ["1", "2", "3", "4"] %}
                         <tr>
                             <td><select class="form-input" name="assesment-type-{{i}}" id="form-course-type" required>
-                                <option value="none">—————TYPE—————</option>
+                                <option value="none" selected disabled>—————TYPE—————</option>
                                 <option value="QUIZ - 1">QUIZ - 1</option>
                                 <option value="QUIZ - 2">QUIZ - 2</option>
                                 <option value="MINOR">MINOR</option>
@@ -162,7 +162,7 @@
                                 <option value="ASSIGNMENTS">ASSIGNMENTS</option>
                             </select></td>
 
-                            <td><input type="text" class="form-input" name="assesment-weightage-{{i}}" id="form-course-name" required placeholder="Weightage (Out of 100)"></td>
+                            <td><input type="text" class="form-input special-input-weightage" name="assesment-weightage-{{i}}" id="form-course-name" required placeholder="Weightage (Out of 100)"></td>
                         </tr>
                     {% endfor %}
 

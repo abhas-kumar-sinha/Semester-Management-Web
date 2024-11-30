@@ -214,9 +214,33 @@ addFieldBtn.addEventListener("click", () => {
     );
 });
 
-const inputFieldAll = document.querySelectorAll(".grade-input-1");
-let previousValue = ""; // Store the last valid value
-let previousCursorPosition = 0; // Store the last valid cursor position
+inputFieldAll = document.querySelectorAll(".grade-input-1");
+previousValue = ""; // Store the last valid value
+previousCursorPosition = 0; // Store the last valid cursor position
+
+inputFieldAll.forEach(inputField => {
+    inputField.addEventListener("input", () => {
+        const value = inputField.value;
+        const cursorPosition = inputField.selectionStart;
+
+        // Allow numbers with optional decimal points
+        const isValid = /^-?\d*(\.\d*)?$/.test(value);
+
+        if (isValid) {
+            // Update previous values if valid character entered
+            previousValue = value;
+            previousCursorPosition = cursorPosition;
+        } else {
+            // Revert to previous valid state if invalid character entered
+            inputField.value = previousValue;
+            inputField.setSelectionRange(previousCursorPosition, previousCursorPosition);
+        }
+    });
+});
+
+inputFieldAll = document.querySelectorAll(".special-input-weightage");
+previousValue = ""; // Store the last valid value
+previousCursorPosition = 0; // Store the last valid cursor position
 
 inputFieldAll.forEach(inputField => {
     inputField.addEventListener("input", () => {

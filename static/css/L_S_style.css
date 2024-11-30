@@ -498,3 +498,22 @@ form{
     width: 47%;
 }
 }
+
+/* For username (email or user ID) input */
+input[type="text"]:-webkit-autofill, 
+input[type="email"]:-webkit-autofill {
+  background-color: #ffffff !important;  /* Change to your desired background */
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  color: black !important; /* Ensures text color is visible */
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+/* For password input */
+input[type="password"]:-webkit-autofill {
+  background-color: #ffffff !important;  /* Change to your desired background */
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  color: black !important; /* Ensures text color is visible */
+  transition: background-color 5000s ease-in-out 0s !important;
+}

@@ -1131,7 +1131,7 @@ def Logout():
         else:
             return "type DELETE carefully"
         
-    return render_template('Signup.html')
+    return render_template('Signin.html')
 
 @app.route("/Settings", methods=['GET', 'POST', 'HEAD'])
 def Settings():

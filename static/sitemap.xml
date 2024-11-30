@@ -3,84 +3,91 @@
 
    <!-- Home page -->
    <url>
-       <loc>https://attendance-tracker-dk20.onrender.com/</loc>
+       <loc>https://semester-management-web.onrender.com/</loc>
        <priority>1.0</priority>
        <changefreq>daily</changefreq>
    </url>
 
    <!-- Sign-In page -->
    <url>
-       <loc>https://attendance-tracker-dk20.onrender.com/Sign-In</loc>
+       <loc>https://semester-management-web.onrender.com/Sign-In</loc>
        <priority>0.8</priority>
        <changefreq>monthly</changefreq>
    </url>
 
    <!-- Home (main web) page for logged-in users -->
    <url>
-       <loc>https://attendance-tracker-dk20.onrender.com/Home</loc>
+       <loc>https://semester-management-web.onrender.com/Home</loc>
        <priority>1.0</priority>
        <changefreq>daily</changefreq>
    </url>
 
    <!-- Sign-Up page -->
    <url>
-       <loc>https://attendance-tracker-dk20.onrender.com/Sign-Up</loc>
+       <loc>https://semester-management-web.onrender.com/Sign-Up</loc>
        <priority>0.8</priority>
        <changefreq>monthly</changefreq>
    </url>
 
    <!-- Verify OTP page -->
    <url>
-       <loc>https://attendance-tracker-dk20.onrender.com/Verify-OTP</loc>
+       <loc>https://semester-management-web.onrender.com/Verify-OTP</loc>
        <priority>0.7</priority>
        <changefreq>monthly</changefreq>
    </url>
 
    <!-- Add Course page -->
    <url>
-       <loc>https://attendance-tracker-dk20.onrender.com/Add-Course</loc>
+       <loc>https://semester-management-web.onrender.com/Add-Course</loc>
        <priority>0.8</priority>
        <changefreq>weekly</changefreq>
    </url>
 
    <!-- Mark Attendance page -->
    <url>
-       <loc>https://attendance-tracker-dk20.onrender.com/Mark-Attendance</loc>
+       <loc>https://semester-management-web.onrender.com/Mark-Attendance</loc>
        <priority>0.9</priority>
        <changefreq>daily</changefreq>
    </url>
 
    <!-- Today’s Schedule page -->
    <url>
-       <loc>https://attendance-tracker-dk20.onrender.com/Today-Schedule</loc>
+       <loc>https://semester-management-web.onrender.com/Today-Schedule</loc>
        <priority>0.8</priority>
        <changefreq>daily</changefreq>
    </url>
 
    <!-- Course Analytics page -->
    <url>
-       <loc>https://attendance-tracker-dk20.onrender.com/Analytics</loc>
+       <loc>https://semester-management-web.onrender.com/Analytics</loc>
        <priority>0.8</priority>
        <changefreq>weekly</changefreq>
    </url>
 
    <!-- Grades page -->
    <url>
-       <loc>https://attendance-tracker-dk20.onrender.com/Grades</loc>
+       <loc>https://semester-management-web.onrender.com/Grades</loc>
        <priority>0.7</priority>
        <changefreq>monthly</changefreq>
    </url>
 
    <!-- User Profile page -->
    <url>
-       <loc>https://attendance-tracker-dk20.onrender.com/User-Profile</loc>
+       <loc>https://semester-management-web.onrender.com/User-Profile</loc>
+       <priority>0.8</priority>
+       <changefreq>weekly</changefreq>
+   </url>
+
+   <!-- Settings page -->
+   <url>
+       <loc>https://semester-management-web.onrender.com/Settings</loc>
        <priority>0.8</priority>
        <changefreq>weekly</changefreq>
    </url>
 
    <!-- Log-Out page -->
    <url>
-       <loc>https://attendance-tracker-dk20.onrender.com/Log-Out</loc>
+       <loc>https://semester-management-web.onrender.com/Log-Out</loc>
        <priority>0.5</priority>
        <changefreq>monthly</changefreq>
    </url>

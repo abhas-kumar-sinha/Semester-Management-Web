@@ -223,7 +223,7 @@ def reset_User(U_id):
                         WHERE U_id = %s''', (U_id,))
     connection.commit()
 
-    User_cursor.execute(f'''UPDATE "{U_id}_UserDetails"
+    User_cursor.execute(f'''UPDATE "{U_id}_userDetails"
                         SET courses_registered = 0
                         WHERE U_id = %s''', (U_id,))
     connection.commit()

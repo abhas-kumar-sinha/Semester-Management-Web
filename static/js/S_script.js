@@ -127,7 +127,7 @@ function populateCourseOptions2(timetableData) {
         else if(timetable.class_type == "LAB"){
             newDiv.classList.add("LAB");
         }
-
+        newDiv.classList.add("modify-h2")
         day = timetable.day;
         startTime = timetable.start_time;
         endTime = timetable.end_time;

@@ -1153,4 +1153,8 @@ th{
     .sub-alert-div i{
         font-size: 3vw;
     }
+
+    .modify-h2{
+        font-size: 0.6vh;
+    }
 }

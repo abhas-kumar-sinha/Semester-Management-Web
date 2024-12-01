@@ -154,11 +154,14 @@ navBar = document.querySelector(".nav-up")
 courseAnalyticsHead = document.querySelector(".course-analytics-p")
 leaderBoard = document.querySelector(".cg-leaderboard")
 leaderBoardHead = document.querySelector("#leade-board-head")
+photoDiv = document.querySelector(".profile-pic")
+
 function isMobileDevice() {
     return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
 if (isMobileDevice()) {
+    photoDiv.removeAttribute("href");
     leaderBoard.classList.add("cg-leaderboard-close")
     toggle.style.display = "none";
     newMenu = document.createElement('div')
@@ -182,6 +185,17 @@ if (isMobileDevice()) {
     newBtn.innerHTML = `Leaderboard`
     courseAnalyticsHead.append(newBtn)
 
+    newDropDown =document.createElement('div')
+    newDropDown.classList.add('new-drop-down')
+    newDropDown.classList.add('new-drop-down-close')
+    newDropDown.innerHTML = `<ul>
+                                <li><a href="User-Profile">Profile</a></li>
+                                <li><a href="Settings">Settings</a></li>
+                                <li><a href="Settings">Message</a></li>
+                                <li><a href="Settings">Notification</a></li>
+                            </ul>`
+    navBar.append(newDropDown)
+
     newMenu.addEventListener("click", () => {
         sidebar.classList.toggle("close")
         logout.classList.toggle("close")
@@ -201,11 +215,16 @@ if (isMobileDevice()) {
     newBtn.addEventListener('click', () => {
         leaderBoard.classList.toggle("cg-leaderboard-close")
     })
+
+    photoDiv.addEventListener('click', () => {
+        newDropDown.classList.toggle('new-drop-down-close')
+    })
 } else{
     toggle.addEventListener("click", () => {
         sidebar.classList.toggle("close")
         logout.classList.toggle("close")
         toggle.classList.toggle("close")
+    })
 
     sidebar.addEventListener('mouseenter', () => {
         sidebar.classList.toggle("close")
@@ -217,7 +236,6 @@ if (isMobileDevice()) {
         sidebar.classList.toggle("close")
         logout.classList.toggle("close")
         toggle.classList.toggle("close") 
-    })
     })
 }
 

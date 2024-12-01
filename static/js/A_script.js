@@ -186,11 +186,14 @@ presenceCalc.forEach(btn => {
 
 sideBarUpDiv = document.querySelector(".img-text")
 navBar = document.querySelector(".nav-up")
+photoDiv = document.querySelector(".profile-pic")
+
 function isMobileDevice() {
     return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
 if (isMobileDevice()) {
+    photoDiv.removeAttribute("href");
     toggle.style.display = "none";
     newMenu = document.createElement('div')
     newMenu.classList.add('new-menu')
@@ -201,6 +204,17 @@ if (isMobileDevice()) {
     newClose.classList.add('new-close')
     newClose.innerHTML = `<i class='bx bx-x'></i>`
     sideBarUpDiv.append(newClose)
+
+    newDropDown =document.createElement('div')
+    newDropDown.classList.add('new-drop-down')
+    newDropDown.classList.add('new-drop-down-close')
+    newDropDown.innerHTML = `<ul>
+                                <li><a href="User-Profile">Profile</a></li>
+                                <li><a href="Settings">Settings</a></li>
+                                <li><a href="Settings">Message</a></li>
+                                <li><a href="Settings">Notification</a></li>
+                            </ul>`
+    navBar.append(newDropDown)
 
     newMenu.addEventListener("click", () => {
         sidebar.classList.toggle("close")
@@ -213,11 +227,16 @@ if (isMobileDevice()) {
         logout.classList.toggle("close")
         toggle.classList.toggle("close")
     })
+
+    photoDiv.addEventListener('click', () => {
+        newDropDown.classList.toggle('new-drop-down-close')
+    })
 } else{
     toggle.addEventListener("click", () => {
         sidebar.classList.toggle("close")
         logout.classList.toggle("close")
         toggle.classList.toggle("close")
+    })
 
     sidebar.addEventListener('mouseenter', () => {
         sidebar.classList.toggle("close")
@@ -229,6 +248,5 @@ if (isMobileDevice()) {
         sidebar.classList.toggle("close")
         logout.classList.toggle("close")
         toggle.classList.toggle("close") 
-    })
     })
 }

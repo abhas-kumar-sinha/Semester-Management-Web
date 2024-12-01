@@ -1150,4 +1150,36 @@ header .img-text .header-text {
     .fn h6::selection{
         user-select: none;
     }
+
+    .new-drop-down{
+        height: 14.5vh;
+        width: 11vh;
+        background-color: white;
+        position: absolute;
+        top: 7vh;
+        left: 37vh;
+        border-radius: 1vh;
+
+        ul{
+            list-style-type: none;
+        }
+
+        ul li{
+            font-size: 1.65vh;
+            padding: 0.5vh 0.5vh;
+            border: 1px solid #695cfe;
+            border-radius: 0.5vh;
+
+            a{
+                text-decoration: none;
+                color: black;
+            }
+        }
+        transition: var(--tran-03);
+    }
+    .new-drop-down-close{
+        scale: 0;
+        transform-origin: top center;
+        transition: var(--tran-03);
+    }
 }

@@ -613,7 +613,7 @@ th{
     
     .add-button{
         margin-top: 30vh;
-        height: 25vh;
+        height: 20vh;
         width: 100%;
         border: 2px dashed #00BDAE;
         background-color: rgba(255, 255, 255, 0.363);
@@ -624,11 +624,11 @@ th{
     }
     
     .add-button i{
-        font-size: 4vw;
+        font-size: 4vh;
     }
     
     .add-button p{
-        font-size: 2vw;
+        font-size: 3vh;
         font-family: "Cedarville Cursive", cursive;
         margin-top: -0.5%;
     }

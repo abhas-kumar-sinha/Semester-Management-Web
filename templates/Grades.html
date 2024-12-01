@@ -14,8 +14,8 @@
         <div class="hero-analytics" >
             <div id="courses" style="display: none;">{{ courses | tojson }}</div>
             <div id="grades" style="display: none;">{{ read_grades_user | tojson }}</div>
-            <p style="font-size: 1.9vw;" class="course-analytics-p">Grades Overview 
-                <button style="font-size: 1.2vw;" class="btns sgpa-calc" type="button">
+            <p class="course-analytics-p">Grades Overview 
+                <button class="btns sgpa-calc" type="button">
                     Estimate your SGPA
                 </button>
             </p>
@@ -30,7 +30,7 @@
                             <form action="/Grades" method="POST">
                                 <input name="form-name" value="delete-marks" style="display: none;">
                                 <input name="course-id" value="{{grade_list[0]}}" style="display: none;">
-                                <p class="content-heading">{{grade_list[0]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button><i class='bx bx-trash deleteBtn'></i></button>
+                                <p class="content-heading">{{grade_list[0]}}<button><i class='bx bx-trash deleteBtn'></i></button>
                                 </p>
                             </form>
                             <form action="/Grades" method="POST" class="grades-input-form">
@@ -81,7 +81,7 @@
         </div>
     
         <div class="cg-leaderboard">
-            <p class="course-analytics-p">SGPA Leaderboard</p>
+            <p class="course-analytics-p" id="leade-board-head">SGPA Leaderboard</p>
             {% if to_show %}
                 <div class="leaderboard-wrapper">
                     {% if grnated_list | length != 0 %}
@@ -120,6 +120,7 @@
             {% endif %}
         </div>
     </div>
+
     <a href="#">
     <button class="add-button" style="margin-bottom: 1vw;">
         <i class='bx bx-notepad'></i>

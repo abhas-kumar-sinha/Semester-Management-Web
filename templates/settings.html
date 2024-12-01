@@ -49,15 +49,15 @@
                 <div class="link-box">
                     <div class="logo" style="background-image: url(../static/logo/Gmail.png);"></div>
                     <div class="details">
-                        <h5 style="font-size: 1.175vw;">Email Verification</h5>
-                        <p style="font-size: 0.7vw;">{{read_data_user[0][2]}} <i class='bx bx-check-double' ></i></p>
+                        <h5 class="main-up-head">Email Verification</h5>
+                        <p class="main-down-head">{{read_data_user[0][2]}} <i class='bx bx-check-double' ></i></p>
                     </div>
                 </div>
                 <div class="link-box">
-                    <div class="logo" style="background-image: url(../static/logo/IIT_D.png); background-size: cover; height: 5vw"></div>
+                    <div class="logo iitd" style="background-image: url(../static/logo/IIT_D.png); background-size: cover;"></div>
                     <div class="details">
-                        <h5 style="font-size: 1.175vw;">Kerberos Verification</h5>
-                        <p style="font-size: 0.7vw;">Unverified</p> 
+                        <h5 class="main-up-head">Kerberos Verification</h5>
+                        <p class="main-down-head">Unverified</p> 
                     </div>
                 </div>
             </div>
@@ -67,13 +67,15 @@
 
         <div class="acc-settings">
             <a href="User-Profile">
-                <div class="acc-box" id="Account Details">
-                    <i class='bx bxs-user-detail'></i>
-                    <div class="about">
-                        <h3>Account Details</h3>
-                        <p>Profile Photo, Username, Email, Number of courses</p>
+                <div class="acc-box down-opening" id="Account Details">
+                    <div class="box-top">
+                        <i class='bx bxs-user-detail'></i>
+                        <div class="about">
+                            <h3>Account Details</h3>
+                            <p>Profile Photo, Username, Email, Number of courses</p>
+                        </div>
+                        <i class='bx bx-chevron-right'></i>
                     </div>
-                    <i class='bx bx-chevron-right'></i>
                 </div>
             </a>
             <a>
@@ -163,23 +165,27 @@
                 </div>
             </a>
             <form action="/" method="POST">
-                <button class="acc-box-1 btn" id="Reset Data">
-                    <i class='bx bx-reset'></i>
-                    <div class="about">
-                        <h3>Reset Data</h3>
-                        <p>Reset all data, eg. for new semester (There will bo no warning message, Be careful.)</p>
+                <button class="acc-box-1 btn down-opening" id="Reset Data">
+                    <div class="box-top">
+                        <i class='bx bx-reset'></i>
+                        <div class="about">
+                            <h3>Reset Data</h3>
+                            <p>Reset all data, eg. for new semester (There will bo no warning message, Be careful.)</p>
+                        </div>
+                        <i class='bx bx-chevron-right'></i>
                     </div>
-                    <i class='bx bx-chevron-right'></i>
                 </button>
             </form>
             <a href="User-Profile">
-                <div class="acc-box-1" id="Delete Account">
-                    <i class='bx bx-error-alt'></i>
-                    <div class="about">
-                        <h3>Delete Account</h3>
-                        <p>Removing all the data from the server</p>
+                <div class="acc-box-1 down-opening" id="Delete Account">
+                    <div class="box-top">
+                        <i class='bx bx-error-alt'></i>
+                        <div class="about">
+                            <h3>Delete Account</h3>
+                            <p>Removing all the data from the server</p>
+                        </div>
+                        <i class='bx bx-chevron-right'></i>
                     </div>
-                    <i class='bx bx-chevron-right'></i>
                 </div>
             </a>
         </div>

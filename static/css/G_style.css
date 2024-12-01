@@ -847,12 +847,15 @@ table tr td button:hover{
 
 .content-heading{
     font-size: 2vw;
+    width: 32vw;
     font-weight: 1000;
     margin-left: 25vw;
     font-family: "Cedarville Cursive", cursive;
     margin-bottom: -2vw;
     margin-top: -0.5vw;
     height: 2.5vw;
+    display: flex;
+    justify-content: space-between;
     i{
         font-size: 1.5vw;
         color: red;
@@ -949,6 +952,13 @@ table tr td button:hover{
     }
 }
 
+.course-analytics-p{
+    font-size: 1.9vw;
+    button{
+        font-size: 1.2vw;
+    }
+}
+
 @media only screen and (max-width: 655px){
     .image a img {
         width: 6vh;
@@ -1031,6 +1041,17 @@ table tr td button:hover{
         align-items: center;
         justify-content: center;
         margin-left: 9vh;
+        font-size: 3vh;
+    }
+
+    .new-close-LB{
+        height: 3.5vh;
+        width: 3.5vh;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 3vh;
         font-size: 3vh;
     }
     
@@ -1313,185 +1334,6 @@ table tr td button:hover{
         transition: var(--tran-03);
     }
     
-    .hero-analytics{
-        margin-top: 2vh;
-        height: 23vh;
-        width: 100%;
-        background-color: #FFFFFF;
-        border-radius: 2vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        resize: vertical;
-        overflow: auto;
-        border: 1.5px solid #695cfe;
-    }
-    
-    .course-analytics-p {
-        margin-top: 0.5vh;
-        height: 3vh;
-        width: 96%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.8vh;
-        color: #707070;
-    }
-    
-    .course-analytics-p::selection {
-        user-select: none;
-    }
-    
-    .course-analytics{
-        height: 80%;
-        width: 97%;
-        display: flex;
-        align-items: flex-end;
-        overflow-y: scroll;
-        padding-left: 2vw;
-        flex-wrap: wrap;
-    }
-    
-    .course{
-        margin-top: 0.8vh;
-        height: 95%;
-        width: 96%;
-        margin-left: 2%;
-    }
-    
-    .alert-div{
-        height: 95%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        color: #707070;
-    }
-    
-    .sub-alert-div{
-        margin-top: 2vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        color: #707070;
-        border: 1.5px solid #707070;
-        padding: 1vw 0.6vw;
-        padding-bottom: 0.5vw;
-        border-radius: 1vw;
-        transition: 0.2s;
-    }
-    
-    .sub-alert-div p{
-        font-family: "Cedarville Cursive", cursive;
-        font-size: 1.5vw;
-    }
-    
-    .sub-alert-div:hover{
-        scale: 1.05;
-        background-color: #695cfe;
-        color: white;
-        border: none;
-    }
-    
-    .sub-alert-div i{
-        font-size: 3vw;
-    }
-    
-    
-    .analytics-div-head{
-        height: 47.5%;
-        width: 100%;
-        color: #707070;
-        display: flex;
-        align-items: flex-end;
-        justify-content: center;
-    }
-    
-    .analytics-div-para{
-        height: 47.5%;
-        width: 100%;
-        color: #707070;
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-    }
-    
-    .course-analytics::-webkit-scrollbar {
-        width: 8px;
-    }
-    
-    .course-analytics::-webkit-scrollbar-track {
-        background: transparent; 
-        border-radius: 10px;
-    }
-    
-    .course-analytics::-webkit-scrollbar-thumb {
-        background:#707070; 
-        border-radius: 10px;
-    }
-    
-    .course-analytics::-webkit-scrollbar-thumb:hover {
-        opacity: 0.5; 
-    }
-    
-    .hero-bottom{
-        margin-top: 2vh;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: s;
-        justify-content: center;
-        gap: 2vh;
-    }
-    
-    .box{
-        height: 20vh;
-        width: 80%;
-        background-color: #FFFFFF;
-        border-radius: 2vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 8vh;
-        color: #707070;
-        transition: var(--tran-03);
-        flex-wrap: wrap;
-        overflow: hidden;
-        border: 1.5px solid #695cfe;
-    }
-    
-    .box i {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .fn {
-        height: 18.5vh;
-        width: 90%;
-        color:#f6f5ff;
-        background-color: #e4e9f75b;
-        border-top-right-radius: 1vh;
-        border-top-left-radius: 1vh;
-        transition: var(--tran-03);
-        font-size: 5.8vh;
-        line-height: 5vh;
-        padding: 1vh;
-        text-decoration: none;
-    }
-    
-    .box:hover {
-        scale: 1.05;
-        color: white;
-        .fn {
-            transform: translateY(-100%);
-            color: #2228312a;
-        }
-    }
-    
     .is-active{
         background-color: var(--primary-color);
         color: white;
@@ -1502,15 +1344,11 @@ table tr td button:hover{
             color:white;
         }
     }
-    
-    .fn h6::selection{
-        user-select: none;
-    }
 
     .hero-analytics{
         margin: 1vw 0;
-        min-height: 23vw;
-        width: 74.5%;
+        min-height: 30vh;
+        width: 96vw;
         background-color: #FFFFFF;
         border-radius: 2vw;
         display: flex;
@@ -1521,9 +1359,9 @@ table tr td button:hover{
     
     .cg-leaderboard{
         margin: 1vw 0;
-        min-height: 23vw;
-        max-height: 42vw;
-        width: 24.5%;
+        min-height: 30vh;
+        max-height: 60vh;
+        width: 25vh;
         background-color: #FFFFFF;
         border-radius: 2vw;
         display: flex;
@@ -1531,34 +1369,43 @@ table tr td button:hover{
         align-items: center;
         border: 1.5px solid #695cfe;
         padding: 0 1vw;
+        transition: var(--tran-04);
+        position: absolute;
+        margin-left: calc(100% - 25vh);
+    }
+
+    .cg-leaderboard-close{
+        scale: 0;
+        transform-origin: right center;
+        transition: var(--tran-04);
     }
     
     .leaderboard-wrapper{
-        min-height: 19vw;
-        max-height: 38vw;
+        min-height: 28vh;
+        max-height: 58vh;
         overflow: hidden;
         overflow-y: scroll;
     }
     
     .give-permission{
-        height: 85%;
+        height: 24vh;
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         h1{
-            font-size: 1.2vh;
+            font-size: 2.5vh;
             font-family: "Cedarville Cursive", cursive;
             margin-top: -2.5vw;
         }
         a button{
-            height: 3vw;
-            width: 14vw;
-            border-radius: 1vw;
+            height: 3vh;
+            width: 14vh;
+            border-radius: 1vh;
             background-color: #695cfe;
             color: white;
-            font-size: 1.2vw;
+            font-size: 1.5vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1607,25 +1454,29 @@ table tr td button:hover{
     .user-photo:hover{
         scale: 2;
     }
+
+    .hero-section-wrapper{
+        display: flex;
+    }
     
     .add-button{
-        margin-top: 0.5vw;
-        height: 25vh;
+        margin-top: 1vh;
+        height: 20vh;
         width: 100%;
         border: 2px dashed #00BDAE;
         background-color: rgba(255, 255, 255, 0.363);
-        border-radius: 2vw;
+        border-radius: 2vh;
         transition: 0.2s;
         margin-bottom: 0.5vw;
         color: #707070;
     }
     
     .add-button i{
-        font-size: 4vw;
+        font-size: 4vh;
     }
     
     .add-button p{
-        font-size: 2vw;
+        font-size: 3vh;
         font-family: "Cedarville Cursive", cursive;
         margin-top: -0.5%;
     }
@@ -1685,11 +1536,12 @@ table tr td button:hover{
     }
     
     .btns{
-        padding: 0.6vw 1.25vw;
+        padding: 0.6vw 2vw;
         border-radius: 2vw;
         background-color: transparent;
         border: 1px solid #695cfe;
         transition: 0.2s;
+        font-size: 1.25vh;
     }
     
     .btns:hover{
@@ -1773,6 +1625,23 @@ table tr td button:hover{
         position: absolute;
         z-index: 1;
     }
+
+    .course-analytics-p{
+        font-size: 1.5vh;
+        button{
+            font-size: 0.8vh;
+        }
+        margin-top: 1vh;
+    }
+
+    .btns-new{
+        height: 2vh;
+        font-size: 0.9vh;
+        margin-left: -12vh;
+        color: black;
+        display: flex;
+        align-items: center;
+    }
     
     .course-add-form{
         position: absolute;
@@ -1794,16 +1663,17 @@ table tr td button:hover{
     }
     
     .course-form{
-        height: 93%;
-        width: 37.5%;
+        height: 60%;
+        width: 97%;
         margin-left: 10vw;
         background-color: white;
         border-radius: 1.5vw;
         border: 1.5px solid black;
+        margin-left: 1%;
     }
     
     .table-wrapper{
-        height: 27vw;
+        height: 35vh;
         overflow: hidden;
         overflow-y: scroll;
         margin-top: -0.75vw;
@@ -1822,30 +1692,31 @@ table tr td button:hover{
     }
     
     .course-form form legend{
-        font-size: 3vw;
+        font-size: 3.5vh;
         font-family: "Cedarville Cursive", cursive;
-        margin-left: 9.5vw;
-        margin-top: -2%;
-        margin-bottom: -1%;
+        margin-left: 30vw;
+        margin-top: 1vh;
+        margin-bottom: 0.25vh;
         display: flex;
         align-items: center;
         white-space: nowrap;
     }
     
     .close-add-form{
-        height: 2.5vw;
-        width: 2.5vw;
+        height: 3vh;
+        width: 3vh;
         color: red;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         background-color: transparent;
-        font-size: 2vw;
+        font-size: 2.5vh;
         border: none;
         margin-top: -10%;
         transition: scale 0.2s, background-color 0.2s, color 0.2s;
         text-decoration: none;
+        margin-left: 1vh;
     }
     
     .close-add-form:hover{
@@ -1855,16 +1726,16 @@ table tr td button:hover{
     }
     
     .add-submit{
-        width: 90%;
-        height: 2.5vw;
-        margin-top: 0.2vw;
-        margin-left: 5.25%;
+        width: 95%;
+        height: 3vh;
+        margin-top: 1vh;
+        margin-left: 2.25%;
         border-radius: 0.5vw;
         background-color: #695cfe;
         color: white;
         border: none;
         transition: scale 0.2s;
-        font-size: 1.2vw;
+        font-size: 1.4vh;
         text-decoration: none;
         margin-bottom: 1vw;
     }
@@ -1881,13 +1752,13 @@ table tr td button:hover{
     }
     
     .line-div{
-        width: 34%;
+        width: 31%;
         height: 1px;
         background-color: blue;
     }
     
     .form-label{
-        margin: 0.5vw -1vw;
+        margin: 1vh -1vw;
         margin-left: 0vw;
         height: 100%;
         width: 12vw;
@@ -1895,13 +1766,17 @@ table tr td button:hover{
     }
     
     .form-input{
-        margin: 0.5vw 0;
+        margin: 1vh 0;
         margin-left: -1%;
-        height: 2.75vw;
-        width: 14vw;
+        height: 3vh;
+        width: 20vh;
         border-radius: .5vw;
         padding: 0 1vw;
         border: 1px solid black;
+    }
+
+    .special-input-weightage{
+        font-size: 1.2vh;
     }
     
     table{
@@ -1916,7 +1791,7 @@ table tr td button:hover{
     }
     
     table tr td button{
-        height: 4vw;
+        height: 5vh;
         margin-left: -0.75vw;
         width: 100%;
         margin-right: 1vw;
@@ -1925,7 +1800,7 @@ table tr td button:hover{
         border: 1.5px dashed #00BDAE;
         color: #707070;
         i{
-            font-size: 1.5vw;
+            font-size: 2vh;
         }
     }
     
@@ -1936,24 +1811,28 @@ table tr td button:hover{
     }
     
     .grade-content{
-        height: 20vw;
-        width: 60vw;
-        border-radius: 1.5vw;
-        margin-bottom: 1.5vw;
+        height: 20vh;
+        width: 88vw;
+        border-radius: 1.5vh;
+        margin-bottom: 2vh;
         border: 1.5px solid #695cfe;
-        padding: 0.75vw 1.25vw;
+        padding: 0.75vh 1.25vh;
+        margin-top: 1vh;
     }
     
     .content-heading{
-        font-size: 2vw;
+        font-size: 2vh;
+        width: 22.5vh;
         font-weight: 1000;
-        margin-left: 25vw;
+        margin-left: 35vw;
         font-family: "Cedarville Cursive", cursive;
-        margin-bottom: -2vw;
+        margin-bottom: 1vw;
         margin-top: -0.5vw;
-        height: 2.5vw;
+        height: 2.5vh;
+        display: flex;
+        justify-content: space-between;
         i{
-            font-size: 1.5vw;
+            font-size: 1.25vh;
             color: red;
         }
         i:hover{
@@ -1979,7 +1858,7 @@ table tr td button:hover{
     
     .grade-table{
         width: 100%;
-        height: 10vw;
+        height: 10vh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1991,7 +1870,7 @@ table tr td button:hover{
     }
     
     .grade-table table tr td{
-        font-size: 1vw;
+        font-size: 1vh;
         padding: 0.25vw;
         border: 1.5px solid #00BDAE;
     }
@@ -2004,22 +1883,24 @@ table tr td button:hover{
     
     .grade-input{
         margin: 0.2vw 5%;
-        height: 2.3vw;
+        height: 2vh;
         width: 90%;
         border-radius: 1vw;
         padding: 0 1vw;
         border: 1px solid #695cfe;
         outline: none;
+        font-size: 1.2vh;
     }
     
     .grade-input-1{
         margin: 0.2vw 5%;
-        height: 2.3vw;
-        width: 37%;
+        height: 2vh;
+        width: 35%;
         border-radius: 1vw;
         padding: 0 4%;
         border: 1px solid #695cfe;
         outline: none;
+        font-size: 1.2vh;
     }
     
     .grade-submissions{
@@ -2027,7 +1908,7 @@ table tr td button:hover{
         display: flex;
         justify-content: space-evenly;
         margin-bottom: 0.25vw;
-        margin-top: 0.25vw;
+        margin-top: 0.6vh;
     }
     
     .add-course-grades{

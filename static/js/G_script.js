@@ -151,11 +151,15 @@ function populategradesData(gradesData, coursesData) {
 
 sideBarUpDiv = document.querySelector(".img-text")
 navBar = document.querySelector(".nav-up")
+courseAnalyticsHead = document.querySelector(".course-analytics-p")
+leaderBoard = document.querySelector(".cg-leaderboard")
+leaderBoardHead = document.querySelector("#leade-board-head")
 function isMobileDevice() {
     return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
 if (isMobileDevice()) {
+    leaderBoard.classList.add("cg-leaderboard-close")
     toggle.style.display = "none";
     newMenu = document.createElement('div')
     newMenu.classList.add('new-menu')
@@ -167,6 +171,17 @@ if (isMobileDevice()) {
     newClose.innerHTML = `<i class='bx bx-x'></i>`
     sideBarUpDiv.append(newClose)
 
+    newCloseLeaderboard = document.createElement('div')
+    newCloseLeaderboard.classList.add('new-close-LB')
+    newCloseLeaderboard.innerHTML = `<i class='bx bx-x'></i>`
+    leaderBoardHead.append(newCloseLeaderboard)
+
+    newBtn = document.createElement('div')
+    newBtn.classList.add('btns')
+    newBtn.classList.add('btns-new')
+    newBtn.innerHTML = `Leaderboard`
+    courseAnalyticsHead.append(newBtn)
+
     newMenu.addEventListener("click", () => {
         sidebar.classList.toggle("close")
         logout.classList.toggle("close")
@@ -177,6 +192,14 @@ if (isMobileDevice()) {
         sidebar.classList.toggle("close")
         logout.classList.toggle("close")
         toggle.classList.toggle("close")
+    })
+
+    newCloseLeaderboard.addEventListener('click', () => {
+        leaderBoard.classList.toggle("cg-leaderboard-close")
+    })
+
+    newBtn.addEventListener('click', () => {
+        leaderBoard.classList.toggle("cg-leaderboard-close")
     })
 } else{
     toggle.addEventListener("click", () => {

@@ -149,23 +149,54 @@ function populategradesData(gradesData, coursesData) {
     })
 };
 
-toggle.addEventListener("click", () => {
-    sidebar.classList.toggle("close")
-    logout.classList.toggle("close")
-    toggle.classList.toggle("close")
-})
+sideBarUpDiv = document.querySelector(".img-text")
+navBar = document.querySelector(".nav-up")
+function isMobileDevice() {
+    return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
 
-sidebar.addEventListener('mouseenter', () => {
-    sidebar.classList.toggle("close")
-    logout.classList.toggle("close")
-    toggle.classList.toggle("close") 
-})
+if (isMobileDevice()) {
+    toggle.style.display = "none";
+    newMenu = document.createElement('div')
+    newMenu.classList.add('new-menu')
+    newMenu.innerHTML = `<i class='bx bx-menu'></i>`
+    navBar.prepend(newMenu)
 
-sidebar.addEventListener('mouseleave', () => {
-    sidebar.classList.toggle("close")
-    logout.classList.toggle("close")
-    toggle.classList.toggle("close") 
-})
+    newClose = document.createElement('div')
+    newClose.classList.add('new-close')
+    newClose.innerHTML = `<i class='bx bx-x'></i>`
+    sideBarUpDiv.append(newClose)
+
+    newMenu.addEventListener("click", () => {
+        sidebar.classList.toggle("close")
+        logout.classList.toggle("close")
+        toggle.classList.toggle("close")
+    })
+    
+    newClose.addEventListener("click", () => {
+        sidebar.classList.toggle("close")
+        logout.classList.toggle("close")
+        toggle.classList.toggle("close")
+    })
+} else{
+    toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("close")
+        logout.classList.toggle("close")
+        toggle.classList.toggle("close")
+
+    sidebar.addEventListener('mouseenter', () => {
+        sidebar.classList.toggle("close")
+        logout.classList.toggle("close")
+        toggle.classList.toggle("close") 
+    })
+    
+    sidebar.addEventListener('mouseleave', () => {
+        sidebar.classList.toggle("close")
+        logout.classList.toggle("close")
+        toggle.classList.toggle("close") 
+    })
+    })
+}
 
 addCourseBtn = document.querySelector(".add-button")
 heroSection = document.querySelector(".hero-section")

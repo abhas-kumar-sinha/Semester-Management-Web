@@ -24,6 +24,7 @@ async function fetchAtData() {
                 calcDiv.classList.add('calc-div')
                 calcDiv.innerHTML += `
                 <h2>Attenance</h2>
+                <div class="attendance-button-wrapper">
                 <div class='show-attendance'>
                     <div class='present display-attendance'>
                         <p>Present</p>
@@ -42,6 +43,7 @@ async function fetchAtData() {
                     <button class='${course[0].replaceAll(" ", "_")} btns presence-btn'>Presence %</button>
                     <button class='btns leave-btn'>Leave calculator</button>
                 </div>
+                <div>
                 `
                 wrapperDiv.appendChild(calcDiv);
                 courseAnalytics.appendChild(wrapperDiv);
@@ -182,14 +184,51 @@ presenceCalc.forEach(btn => {
     })
 });
 
-sidebar.addEventListener('mouseenter', () => {
-    sidebar.classList.toggle("close")
-    logout.classList.toggle("close")
-    toggle.classList.toggle("close") 
-})
+sideBarUpDiv = document.querySelector(".img-text")
+navBar = document.querySelector(".nav-up")
+function isMobileDevice() {
+    return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
 
-sidebar.addEventListener('mouseleave', () => {
-    sidebar.classList.toggle("close")
-    logout.classList.toggle("close")
-    toggle.classList.toggle("close") 
-})
+if (isMobileDevice()) {
+    toggle.style.display = "none";
+    newMenu = document.createElement('div')
+    newMenu.classList.add('new-menu')
+    newMenu.innerHTML = `<i class='bx bx-menu'></i>`
+    navBar.prepend(newMenu)
+
+    newClose = document.createElement('div')
+    newClose.classList.add('new-close')
+    newClose.innerHTML = `<i class='bx bx-x'></i>`
+    sideBarUpDiv.append(newClose)
+
+    newMenu.addEventListener("click", () => {
+        sidebar.classList.toggle("close")
+        logout.classList.toggle("close")
+        toggle.classList.toggle("close")
+    })
+    
+    newClose.addEventListener("click", () => {
+        sidebar.classList.toggle("close")
+        logout.classList.toggle("close")
+        toggle.classList.toggle("close")
+    })
+} else{
+    toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("close")
+        logout.classList.toggle("close")
+        toggle.classList.toggle("close")
+
+    sidebar.addEventListener('mouseenter', () => {
+        sidebar.classList.toggle("close")
+        logout.classList.toggle("close")
+        toggle.classList.toggle("close") 
+    })
+    
+    sidebar.addEventListener('mouseleave', () => {
+        sidebar.classList.toggle("close")
+        logout.classList.toggle("close")
+        toggle.classList.toggle("close") 
+    })
+    })
+}

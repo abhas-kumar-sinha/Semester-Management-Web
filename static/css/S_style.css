@@ -572,3 +572,585 @@ th{
 .sub-alert-div i{
     font-size: 3vw;
 }
+
+@media only screen and (max-width: 655px){
+    .add-course-container{
+        height: 6vh;
+        width: 100%;
+        border-radius: 1.5vw;
+        background-color: white;
+        margin-top: 2vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 2.5vw;
+    }
+    
+    .course-container-head{
+        height: 6vh;
+        width: 80%;
+        font-size: 2vh;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        color: #707070;
+    }
+    
+    .edit-button{
+        height: 3vh;
+        width: 8vh;
+        border-radius: 1.5vh;
+        border: none;
+        background-color: #695cfe;
+        font-size: 1.5vh;
+        color: white;
+        transition: scale 0.2s;
+    }
+    
+    .edit-button:hover{
+        scale: 1.1;
+    }
+    
+    .add-button{
+        margin-top: 30vh;
+        height: 25vh;
+        width: 100%;
+        border: 2px dashed #00BDAE;
+        background-color: rgba(255, 255, 255, 0.363);
+        border-radius: 2vw;
+        transition: scale 0.2s, cursor 0.2s, background-color 0.2s, color 0.2s;
+        margin-bottom: 1vw;
+        color: #707070;
+    }
+    
+    .add-button i{
+        font-size: 4vw;
+    }
+    
+    .add-button p{
+        font-size: 2vw;
+        font-family: "Cedarville Cursive", cursive;
+        margin-top: -0.5%;
+    }
+    
+    .add-button:hover{
+        scale: 1.01;
+        cursor: pointer;
+        background-color: #00bdad2c;
+        color: black;
+    }
+    
+    .course-div{
+        margin-top: 1.5vw;
+        height: 25vh;
+        width: 100%;
+        border: 2px solid #695cfe;
+        background-color: rgba(255, 255, 255, 0.363);
+        border-radius: 2vw;
+        transition: 0.2s;   
+        display: flex;
+        background-color: #FFFFFF;
+    }
+    
+    .div-left{
+        height: 100%;
+        width: 90%;
+    }
+    
+    .div-right{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 1.5vw;
+        margin-top: 1.5vw;
+    }
+    
+    .div-right form{
+        margin-top: -15%;
+        margin-bottom: -3%;
+        margin-right: -70%;
+    }
+    
+    .feature-btn{
+        height: 3vw;
+        width: 9vw;
+        border-radius: 1.5vw;
+        transition: 0.2s;
+        margin-top: 1vw;
+        background-color: transparent;
+        border: 1.5px solid #695cfe;
+    }
+    
+    .feature-btn a{
+        height:inherit;
+        width: inherit;
+        border-radius: 1.5vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: black;
+        margin-top: -1%;
+        margin-left: -1%;
+    }
+    
+    .feature-btn:hover{
+        scale: 1.08;
+        background-color: #695cfe;
+    }
+    
+    .feature-btn a:hover{
+        color: white;
+    }
+    
+    .course-id-name{
+        height: 30%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: -0.6%;
+        margin-left: 5vw;
+    }
+    
+    .course-content{
+        margin-left: 1vw;
+    }
+    
+    .course-links {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        height: 25%;
+        width: 100%;
+    }
+    
+    table{
+        margin-top: -1.75%;
+    }
+    
+    table tr td{
+        padding: 0.1vw 0.5vw;
+        padding-right: 3vw;
+        padding-left: 2vw;
+    }
+    
+    table tr td button{
+        height: 2vw;
+        width: 10vw;
+        border-radius: 1.5vw;
+        margin-right: 1vw;
+        transition: 0.2s;
+        background-color: transparent;
+        border: 1.5px solid #695cfe;
+    }
+    
+    table tr td button a{
+        height: inherit;
+        width: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: black;
+        margin-top: -1%;
+        margin-left: -1%;
+    }
+    
+    table tr td button a:hover{
+        color: white;
+    }
+    
+    table tr td button:hover{
+        scale: 1.05;
+        background-color: #695cfe;
+    }
+    
+    .course-delete{
+        color: red;
+        height: 2.25vw;
+        width: 2.25vw;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        font-size: 1.8vw;
+        background-color: transparent;
+        border: none;
+    }
+    
+    .course-delete:hover{
+        animation: wobble 0.5s ease-in-out infinite;
+    }
+    
+    .hide{
+        visibility: hidden;
+    }
+    
+    @keyframes wobble {
+        0% { transform: rotate(-3deg) scale(1); }
+        25% { transform: rotate(3deg) scale(1.02); }
+        50% { transform: rotate(-3deg) scale(1); }
+        75% { transform: rotate(3deg) scale(1.02); }
+        100% { transform: rotate(-3deg) scale(1); }
+    }
+    
+    .hero-section{
+        position: absolute;
+        z-index: 1;
+    }
+    
+    .course-add-form{
+        position: absolute;
+        z-index: 2;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .hide-feature{
+        filter: blur(4px);
+        overflow: hidden;
+    }
+    
+    .course-form{
+        height: 60%;
+        width: 96%;
+        margin-left: 1.5%;
+        background-color: white;
+        border-radius: 1.5vw;
+        border: 1.5px solid black;
+    }
+    
+    .course-form form{
+        height: 100%;
+        width: 100%;
+        background-color: white;
+        border-radius: 1.5vw;
+        padding: 1vw;
+    }
+    
+    form legend{
+        font-size: 4vh;
+        font-family: "Cedarville Cursive", cursive;
+        margin-left: 11vh;
+        margin-top: 0.5vh;
+        margin-bottom: -1%;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+    }
+    
+    .form-separator{
+        margin-bottom: 1.5vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    
+    .close-add-form{
+        height: 3vh;
+        width: 3vh;
+        color: red;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        font-size: 2vh;
+        border: none;
+        margin-top: -10%;
+        transition: scale 0.2s, background-color 0.2s, color 0.2s;
+        text-decoration: none;
+        margin-left: -7%;
+    }
+    
+    .close-add-form:hover{
+        scale: 1.1;
+        background-color: red;
+        color: white;
+    }
+    
+    .line-div{
+        width: 31%;
+        height: 1px;
+        background-color: blue;
+    }
+    
+    .form-separator-1{
+        margin-top: 1.5vw;
+        margin-bottom: 1.5vw;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .form-table{
+        margin-left: 0.5vh;
+    }
+    
+    .form-label{
+        margin: 1vh 0;
+    }
+    
+    .form-input{
+        margin: 1vh 0;
+        margin-left: -1%;
+        height: 3vh;
+        width: 22vh;
+        border-radius: 1.25vh;
+        padding: 0 1vw;
+        border: 1px solid black;
+    }
+    
+    .add-in-form-div{
+        width: 97%;
+        padding: 1vh;
+        margin-left: 1.5%;
+        margin-top: 1vh;
+    }
+    
+    .add-in-form p{
+        font-family: "Cedarville Cursive", cursive;
+        font-size: 2vh;
+        margin-top: -3%;
+    }
+    
+    .form-wrapper{
+        height: 60%;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+    
+    .form-wrapper::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .add-in-form{
+        width: 100%;
+        padding: 0.6vh 0 0 0;
+        margin: 1vw 0;
+        margin-bottom: 2vw;
+        background-color: transparent;
+        border: 1.5px dashed #00BDAE;
+        transition: scale 0.2s, background-color 0.2s;
+        margin-left: 0.5vw;
+    }
+    
+    .add-in-form i{
+        font-size: 2vh;
+    }
+    
+    .add-in-form:hover{
+        scale: 1.04;
+        background-color: #BDE2EA;
+    }
+    
+    table{
+        margin-left: -1%;
+    }
+    
+    td{
+        white-space: nowrap;
+    }
+    
+    .add-submit{
+        width: 94%;
+        height: 3vh;
+        margin-left: 3%;
+        border-radius: 0.5vw;
+        background-color: #695cfe;
+        color: white;
+        border: none;
+        transition: scale 0.2s, background-color 0.2s, color 0.2s;
+        font-size: 1.5vh;
+        text-decoration: none;
+    }
+    
+    .add-submit:hover{
+        scale: 1.05;
+    }
+    
+    .all-courses{
+        display: flex;
+        position: relative;
+    }
+    
+    .back-calendar{
+        height: 44.5vw;
+        width: 100%;
+        background-color: #fff;
+        border-radius: 1vw;
+        margin: 2vh 0 1vh 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        z-index: 54;
+    }
+    
+    .back-calendar table{
+        border-radius: 1vw;
+        margin-top: 0.08vw;
+        margin-left: 0.001vw;
+        border-collapse: collapse;
+        border: 2px solid black;
+        overflow: hidden;
+        width: 100%;
+    }
+    
+    th{
+        height: 7.4vw;
+        width: 8.5vw;
+        font-size: 0.825vh;
+    }
+    
+    .front-view{
+        height: 44.5vw;
+        width: 100%;
+        border-radius: 2vw;
+        position: absolute;
+        z-index: 55;
+        margin-top: 2vh;
+        display: grid;
+        grid-template-columns: repeat(11, 8.7vw);
+        grid-template-rows: repeat(6, 7.4125vw);
+    }
+    
+    .LECTURE{
+        height: 100%;
+        width: 100%;
+        border: 1px solid black;
+        background-color: rgb(241, 241, 9);
+        border-radius: 1vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .INTRODUCTION{
+        height: 100%;
+        width: 100%;
+        border: 1px solid black;
+        background-color: rgb(124, 210, 124);
+        border-radius: 1vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .LAB{
+        height: 100%;
+        width: 100%;
+        border: 1px solid black;
+        background-color: peachpuff;
+        border-radius: 1vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .TUTORIAL{
+        height: 100%;
+        width: 100%;
+        border: 1px solid black;
+        background-color: lightblue;
+        border-radius: 1vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .delete-course{
+        height: 2vw;
+        width: 2vw;
+        border-radius: 50%;
+        border: none;
+        background-color: transparent;
+        color: red;
+        display: inline;
+        font-size: 1.35vw;
+        margin-top: -5%;
+        width: 100%;
+    }
+    
+    .delete-course:hover{
+        animation: wobble 0.5s ease-in-out infinite;
+    }
+    
+    @keyframes wobble {
+        0% { transform: rotate(-3deg) scale(1); }
+        25% { transform: rotate(3deg) scale(1.02); }
+        50% { transform: rotate(-3deg) scale(1); }
+        75% { transform: rotate(3deg) scale(1.02); }
+        100% { transform: rotate(-3deg) scale(1); }
+    }
+    
+    .delete-course-form{
+        position: relative;
+        width: 100%;
+        height: 2vw;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: -1.4vw;
+        margin-right: 1vw;
+        margin-bottom: -0.7vw;
+    }
+    
+    .alert-div{
+        height: 40%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #707070;
+        margin-bottom: 7vw;
+        background-color: #fff;
+        margin-top: 2vw;
+        border: 1.5px solid #695cfe;
+        border-radius: 2vw;
+    }
+    
+    .alert-div h1{
+        margin-top: -2%;
+    }
+    
+    .sub-alert-div{
+        box-sizing: border-box;
+        margin-top: 2vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: #707070;
+        border: 2px solid #707070;
+        padding: 0.6vw 1vw;
+        padding-bottom: 0.5vw;
+        border-radius: 1vw;
+        transition: 0.2s;
+    }
+    
+    .sub-alert-div p{
+        font-family: "Cedarville Cursive", cursive;
+        font-size: 1.5vw;
+    }
+    
+    .sub-alert-div:hover{
+        scale: 1.05;
+        background-color: #695cfe;
+        color: white;
+        border: 2px solid transparent;
+    }
+    
+    .sub-alert-div i{
+        font-size: 3vw;
+    }
+}

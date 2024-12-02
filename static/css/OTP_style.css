@@ -146,6 +146,9 @@
 
     .otp-form p{
         font-size: 1.55vh;
+        a{
+            font-size: 1.55vh;
+        }
     }
     
     .otp-submit{

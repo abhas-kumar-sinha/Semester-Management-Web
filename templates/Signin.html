@@ -22,9 +22,9 @@
                 <form action="/Sign-In" method="POST">
                     <legend class="signin-legend">Please enter your details to sign in.</legend>
                     <fieldset class="short-signin">
-                        <button class="Google button" type="button"><i class='bx bxl-google'></i></button>
-                        <button class="Apple button" type="button"><i class='bx bxl-apple'></i></button>
-                        <button class="LinkedIn button" type="button"><i class='bx bxl-linkedin'></i></button>
+                        <a href="{{ url_for('google_login', action = 'signin') }}" class="Google button" type="button"><i class='bx bxl-google'></i></a>
+                        <a class="Apple button" type="button"><i class='bx bxl-apple'></i></a>
+                        <a class="LinkedIn button" type="button"><i class='bx bxl-linkedin'></i></a>
                     </fieldset>
 
                     <div class="partition">

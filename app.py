@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, url_for, json, send_from_directory
 from flask_mail import Mail, Message
+from authlib.integrations.flask_client import OAuth
 from datetime import datetime, timedelta, time, timezone
 from random import randint
 from dotenv import load_dotenv
@@ -11,17 +12,28 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+oauth = OAuth(app)
 
+app.secret_key = os.getenv("SECRET_KEY")
 database_url = os.getenv("DATABASE_URL")
-result = urlparse(database_url)
 
+result = urlparse(database_url)
 connection = pg8000.connect(
     user=result.username,
     password=result.password,
     host=result.hostname,
     port=5432,
     database=result.path[1:]
+)
+
+google = oauth.register(
+    'google',
+    client_id=os.getenv('GOOGLE_CLIENT_ID'),
+    client_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
+    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    access_token_url='https://oauth2.googleapis.com/token',
+    api_base_url='https://www.googleapis.com/oauth2/v1/',
+    client_kwargs={'scope': 'email profile'},
 )
 
 def create_connect_db(): 
@@ -378,6 +390,16 @@ def auth_user(input_id, password):
             break
     return Ans
 
+def auth_user_google(email):
+    all_User_data = read_User_table()
+    Ans = False
+    for i in all_User_data:
+        print(str(i[1]), str(email), str(i[1]) == str(email))
+        if str(i[1]) == str(email) and str(i[2]) == "Google_Login":
+            Ans = True
+            break
+    return Ans
+
 def write_User_table(U_id, email, password, date, login_U_id):
     connection_cursor = connection.cursor()
     try:
@@ -396,6 +418,27 @@ def write_User_table(U_id, email, password, date, login_U_id):
     except:
         connection.rollback()
         return False
+
+def delete_matching_tables(pattern):
+    connection_cursor = connection.cursor()
+
+    try:
+        connection_cursor.execute("""
+                            SELECT tablename 
+                            FROM pg_tables 
+                            WHERE schemaname = 'public' AND tablename LIKE %s
+                            """, (pattern + '%',))
+
+        tables = connection_cursor.fetchall()
+
+        for table in tables:
+            table_name = table[0]
+            connection_cursor.execute(f'''DROP TABLE IF EXISTS "{table_name}" CASCADE''')
+
+        connection.commit()
+    except:
+        connection.rollback()
+
     
 def delete_User_table(U_id):
     connection_cursor = connection.cursor()
@@ -409,6 +452,7 @@ def delete_User_table(U_id):
     
     connection.commit()
 
+    delete_matching_tables(U_id)
     
 def write_User(U_id, course_id, course_name, course_credits, course_details, course_website, Instructor_name, Instructor_email):
     User_cursor = connection.cursor()
@@ -737,6 +781,40 @@ def Gen_login_U_id(U_id, name, joining_year):
 def generate_otp():
     return str(randint(100000, 999999))
 
+def Register_new_User():
+    email = session.get('email')
+    password = session.get('password')
+    name = session.get('name')
+    joining_year = session.get('joining_year')
+    date = datetime.today().date()
+
+    U_id = create_U_id()
+    login_U_id = Gen_login_U_id(U_id, name, joining_year)
+    if write_User_table(U_id, email, password, date, login_U_id):
+        msg_sender = os.getenv('MAIL_USERNAME')
+        new_msg = Message('Account Created', sender=msg_sender, recipients=[email])
+        new_msg.body = f"This is a system generated Mail. Please Do not reply. \nYour Login Credentials \nKeep Your Credentials safe and avoid sharing with others. \nUser I'd: {login_U_id}\nPassword: {password} \nThank you for chosing us ❤️."
+        session.pop('OTP', None)
+        create_User(U_id)
+        name = name.title()
+        update_userDetails(U_id, name, "")
+    
+        try:
+            mail.send(new_msg)
+        except Exception as e:
+            return f'Failed to send OTP: {e}'
+        
+        session.pop('email', None)
+        session.pop('password', None)
+        session.pop('joining_year', None)
+
+        session['U_id'] = U_id
+        return True
+        
+    else:
+        connection.rollback()
+        return False
+
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -817,14 +895,52 @@ def Sign_Up_Web():
         
     return render_template('Signup.html')
 
+@app.route('/Sign-up/Google-Login')
+def google_login():
+    # Redirect to Google OAuth 2.0 consent screen
+    session['action'] = request.args.get('action')
+    redirect_uri = url_for('google_authorized', _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+@app.route('/callback')
+def google_authorized():
+    # Handle the OAuth callback
+    token = google.authorize_access_token()
+    if token is None or token.get('access_token') is None:
+        return 'Access denied: reason={} error={}'.format(
+            request.args['error_reason'],
+            request.args['error_description']
+        )
+
+    action = session.pop('action', 'default')
+    # Store the access token in session
+    session['google_token'] = token
+
+    # Fetch user info
+    user_info = google.get('userinfo')
+    session['name'] = user_info.json().get('name')
+    session['email'] = user_info.json().get('email')
+    session['picture'] = user_info.json().get('picture')
+    session['password'] = "Google_Login"
+    session['joining_year'] = "2024"
+
+    # You can call your custom Register_new_User function here
+    if action == 'signup':
+        if Register_new_User():
+            update_userDetails(session['U_id'], session['name'], session['picture'])
+            return redirect('Home')
+        else:
+            return "Error! Email already used..."
+    else:
+        if auth_user_google(session['email']):
+            return redirect('Home')
+        else:
+            return "Error! Email not registered..."
+
 @app.route("/Verify-OTP", methods=['GET', 'POST', 'HEAD'])
 def Verify_User():
     email = session.get('email')
-    password = session.get('password')
-    name = session.get('name')
-    joining_year = session.get('joining_year')
 
-    date = datetime.today().date()
     if 'OTP' not in session:
         OTP = generate_otp()
         
@@ -846,31 +962,9 @@ def Verify_User():
         OTP = session.get('OTP')
         
         if entered_OTP == OTP:
-            U_id = create_U_id()
-            login_U_id = Gen_login_U_id(U_id, name, joining_year)
-            if write_User_table(U_id, email, password, date, login_U_id):
-                msg_sender = os.getenv('MAIL_USERNAME')
-                new_msg = Message('Account Created', sender=msg_sender, recipients=[email])
-                new_msg.body = f"This is a system generated Mail. Please Do not reply. \nYour Login Credentials \nKeep Your Credentials safe and avoid sharing with others. \nUser I'd: {login_U_id}\nPassword: {password} \nThank you for chosing us ❤️."
-                session.pop('OTP', None)
-                create_User(U_id)
-                name = name.title()
-                update_userDetails(U_id, name, "")
-            
-                try:
-                    mail.send(new_msg)
-                except Exception as e:
-                    return f'Failed to send OTP: {e}'
-                
-                session.pop('email', None)
-                session.pop('password', None)
-                session.pop('joining_year', None)
-
-                session['U_id'] = U_id
-                
+            if Register_new_User():
                 return redirect('Home')
             else:
-                connection.rollback()
                 return "Error! Email already used..."
         else:
             connection.rollback()
@@ -1159,5 +1253,13 @@ def Settings():
 def Sitemap():
     return send_from_directory('static', 'sitemap.xml')
 
+@app.route("/privacy", methods=['GET', 'POST', 'HEAD'])
+def Privacy():
+    return render_template('Privacy.html')
+
+@app.route("/terms", methods=['GET', 'POST', 'HEAD'])
+def Terms():
+    return render_template('Terms.html')
+
 if __name__ == "__main__":
-    app.run(debug=True, port=8000)
+    app.run(debug=True, port=5000)

@@ -179,8 +179,8 @@ presenceCalc.forEach(btn => {
         alert(`Attendance in ${course} is      Percentage     |    Fraction
                In LECTURE                          : ${ans_lecture} |     ${attendanceData[i][1]['LECTURE']}/${sum_lecture}
                In TUTORIAL                        : ${ans_tutorial} |     ${attendanceData[i][1]['TUTORIAL']}/${sum_tutorial}
-               In LAB                                  :  ${ans_lab} |     ${attendanceData[i][1]['LAB']}/${sum_lab}
-               In INTRODUCTION              :  ${ans_introduction} |     ${attendanceData[i][1]['INTRODUCTION']}/${sum_introduction}`)
+               In LAB                                  : ${ans_lab} |     ${attendanceData[i][1]['LAB']}/${sum_lab}
+               In INTRODUCTION              : ${ans_introduction} |     ${attendanceData[i][1]['INTRODUCTION']}/${sum_introduction}`)
     })
 });
 

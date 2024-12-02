@@ -107,10 +107,12 @@
         margin-top: 1vw;
         padding: 1.25vh 2vh;
         position: relative;
+        display: flex;
+        flex-wrap: wrap;
     }
     
     .head-active{
-        height: 4vh;
+        height: 3vh;
         width: 100%;
         display: flex;
         align-items: center;
@@ -122,10 +124,10 @@
     }
     
     .active-class{
-        height: 12vw;
-        width: 20vw;
-        border-radius: 1vw;
-        margin: 0.45vw;
+        height: 13vh;
+        width: 20.25vh;
+        border-radius: 1vh;
+        margin: 0.45vh;
         border: 1.5px solid #695cfe;
         background-color: transparent;
         transition: scale 0.2s, color 0.2s, background-color 0.2s;
@@ -133,8 +135,8 @@
     }
     
     .active-class-content{
-        height: 12vw;
-        width: 20vw;
+        height: 13vh;
+        width: 20.25vh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -142,7 +144,6 @@
     }
     
     .active-now:hover{
-        scale: 1.05;
         color: white;
         .mark-att {
             transform: translateY(-100%);
@@ -151,19 +152,32 @@
     }
     
     .mark-att{
-        height: 12vw;
-        width: 20vw;
+        height: 13vh;
+        width: 20.25vh;
         background-color: #e4e9f75b;
         border-radius: 1vw;
         transition: 0.2s;
         white-space: wrap;
+
+        form h2{
+            font-size: 1.8vh;
+        }
     }
     
     .ans-input{
-        height: 80%;
+        height: 50%;
         width: 100%;
         color: black;
         margin-left: -15%;
+        margin-top: -0.5vh;
+
+        tr td{
+            font-size: 1.2vh;
+            input[type="radio"]{
+                height: 1.3vh;
+                width: 1.3vh;
+            }
+        }
     }
     
     .submit-td{
@@ -172,13 +186,16 @@
     
     .marked-att{
         width: 80%;
-    }
-    
-    .marked-att{
+        margin-left: 3.5vh;
+        height: 1.4vh;
+        font-size: 1.2vh;
         background-color: transparent;
         border: 1px solid #695cfe;
         border-radius: 1vw;
         transition: scale 0.2s, background-color 0.2s, color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .marked-att:hover{

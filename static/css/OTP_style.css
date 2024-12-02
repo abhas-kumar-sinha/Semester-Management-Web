@@ -28,16 +28,21 @@
     border-radius: 2vw;
 }
 
-.otp-form legend{
-    padding-left: 17vw;
+
+.legend-wrapper{
+    width: 37vw;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20vw;
+}
+
+.legend-wrapper legend{
     font-size: 2.5vw;
     font-family: "Cedarville Cursive", cursive;
-    display: flex;
-    align-items: center;
     margin-right: -6%;
 }
 
-.otp-form legend a{
+.legend-wrapper a{
     background-color: transparent;
     font-size: 2.5vw;
     border: none;
@@ -47,13 +52,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: -2%;
     color: red;
     transition: 0.2s;
     text-decoration: none;
 }
 
-.otp-form legend a:hover {
+.legend-wrapper a:hover {
     scale: 1.2;
 }
 
@@ -103,8 +107,15 @@
         width: 100%;
         border-radius: 2vw;
     }
+
+    .legend-wrapper{
+        width: 40vh;
+        display: flex;
+        justify-content: space-between;
+        margin-left: 4vh;
+    }
     
-    .otp-form legend{
+    .legend-wrapper legend{
         padding-left: 17vw;
         font-size: 3vh;
         font-family: "Cedarville Cursive", cursive;
@@ -113,7 +124,7 @@
         margin-right: -6%;
     }
     
-    .otp-form legend a{
+    .legend-wrapper a{
         background-color: transparent;
         font-size: 3vh;
         border: none;
@@ -123,14 +134,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: -5%;
+        margin-top: 1vh;
         color: red;
         transition: 0.2s;
         text-decoration: none;
-    }
-    
-    .otp-form legend a:hover {
-        scale: 1.2;
     }
     
     .otp-form input{
@@ -147,7 +154,8 @@
     .otp-form p{
         font-size: 1.55vh;
         a{
-            font-size: 1.55vh;
+            font-size: 1.25vh;
+            color: rgb(9, 145, 145);
         }
     }
     

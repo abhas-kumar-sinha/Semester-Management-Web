@@ -12,6 +12,7 @@
         {% include 'base_navBar.html' %}
         <div class="user-details">
             <div class="left-photo">
+                <h1>Profile Photo</h1>
                 {% if read_data_user[0][4] == "" %}
                     <div class="img-container" style="background-image: url(../static/Profile-Pic/dummy.jpeg);">
                     </div>
@@ -58,7 +59,10 @@
 
 <div class="delete-conf hide">
     <div class="conf-box">
-        <h1>Delete Confirmation &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="User-Profile" class="close-form"><i class='bx bx-x'></i></a></h1>
+        <div class="conf-box-h1-wrapper">
+            <h1>Delete Confirmation</h1>
+            <a href="User-Profile" class="close-form"><i class='bx bx-x'></i></a>
+        </div>
         <div class="alert-conf">
             <i class='bx bx-error'></i><span>This is extremely important.</span>
         </div>

@@ -52,7 +52,10 @@
         <div class="otp-box-container">
             <div class="otp-box">
                 <form class="otp-form" action="/Verify-OTP" method="POST">
-                    <legend>Verify your Email. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="Sign-Up"><i class='bx bx-x close-otp-box' ></i></a></legend>
+                    <div class="legend-wrapper">
+                        <legend>Verify your Email.</legend>
+                        <a href="Sign-Up"><i class='bx bx-x close-otp-box' ></i></a>
+                    </div>
                     <p>Please enter the OTP sent on {{email}}</p>
                     <input id="otp-input" type="text" name="entered_OTP" maxlength="6" autocomplete="off">
                     <button type="submit" class="otp-submit">Submit</button>

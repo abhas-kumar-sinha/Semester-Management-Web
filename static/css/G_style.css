@@ -1551,18 +1551,22 @@ table tr td button:hover{
     }
     
     .alert-div{
-        height: 95%;
+        height: 55%;
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         color: #707070;
-        margin-bottom: 7vw;
+        margin-top: 10vh;
+
+        h1{
+            font-size: 3vh;
+        }
     }
     
     .sub-alert-div{
         box-sizing: border-box;
-        margin-top: 2vw;
+        margin-top: 2vh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -1570,15 +1574,15 @@ table tr td button:hover{
         text-decoration: none;
         color: #707070;
         border: 2px solid #707070;
-        padding: 0.6vw 1vw;
-        padding-bottom: 0.5vw;
-        border-radius: 1vw;
+        padding: 0.6vh 1vh;
+        padding-bottom: 0.5vh;
+        border-radius: 1vh;
         transition: 0.2s;
     }
     
     .sub-alert-div p{
         font-family: "Cedarville Cursive", cursive;
-        font-size: 1.5vw;
+        font-size: 1.5vh;
     }
     
     .sub-alert-div:hover{
@@ -1589,7 +1593,7 @@ table tr td button:hover{
     }
     
     .sub-alert-div i{
-        font-size: 3vw;
+        font-size: 3vh;
     }
     
     .analytics-div-head{
@@ -1920,11 +1924,11 @@ table tr td button:hover{
         justify-content: center;
         color: black;
         h1{
-            margin-top: -2vw;
+            margin-top: 14vh;
             font-family: "Cedarville Cursive", cursive;
-            font-size: 3vw;
+            font-size: 3vh;
             i{
-                font-size: 3vw;
+                font-size: 3vh;
             }
         }
     }

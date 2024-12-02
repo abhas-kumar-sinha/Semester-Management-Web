@@ -28,7 +28,15 @@
 .conf-box h1{
     font-size: 2vw;
     font-family: "Cedarville Cursive", cursive;
-    padding-left: 11vw;
+}
+
+.conf-box-h1-wrapper{
+    width: 25vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin:0.4vw 0;
+    margin-left: 12vw;
 }
 
 .alert-conf{
@@ -152,6 +160,11 @@
     border-right: 2px solid #695cfe;
 }
 
+.left-photo h1{
+    font-family: "Cedarville Cursive", cursive;
+    margin-left: 1vw;
+}
+
 .img-container{
     height: 15vw;
     width: 15vw;
@@ -251,4 +264,268 @@ form table{
     box-sizing: border-box;
     padding-bottom: 0vw;
     padding-top: 1.3vw;
+}
+
+@media only screen and (max-width: 655px){
+    .delete-conf{
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .conf-box{
+        padding: 0 1.5vw;
+        height: 50vh;
+        width: 40vh;
+        border-radius: 1vw;
+        border: 1.5px solid red;
+        background-color: white;
+    }
+    
+    .conf-box h1{
+        font-size: 2.6vh;
+        font-family: "Cedarville Cursive", cursive;
+        padding-left: 5vh;
+    }
+
+    .conf-box-h1-wrapper{
+        width: 34vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin:0.4vh 0;
+        margin-left: 4vh;
+    }
+    
+    .alert-conf{
+        height: 4vh;
+        width: 100%;
+        background-color: #FFEBE9;
+        display: flex;
+        align-items: center;
+        color: red;
+        font-size: 1.2vh;
+        color: #1F2328;
+    }
+    
+    .hide{
+        visibility: hidden;
+    }
+    
+    .toblur{
+        filter: blur(4px);
+    }
+    
+    .alert-conf i{
+        font-size: 2.2vw;
+        color: #F85149;
+        margin: 0 1vw;
+    }
+    
+    .alert-content{
+        margin: 2.25vh 0;
+    }
+    
+    .alert-content p{
+        margin-top: -2.25%;
+        font-size: 1.1vh;
+    }
+    
+    .alert-content a{
+        font-size: 1.1vh;
+        color: #1B74DD;
+    }
+    
+    .line-div{
+        height: 1px;
+        width: 100%;
+        margin-bottom: 1vw;
+        background-color: #707070;
+    }
+    
+    .form-label{
+        width: 100%;
+        letter-spacing: 0.25vw;
+        font-size: 1.2vh;
+        margin-left: 1vh;
+    }
+    
+    .form-input{
+        width: 95%;
+        height: 2.4vh;
+        margin: 0.3vw 0;
+        margin-left: 1vh;
+        outline: none;
+        padding: 0 1vw;
+        font-size: 1.1vh;
+        letter-spacing: 0.15vw;
+        display: block;
+    }
+    
+    .form-submit{
+        margin-top: 1.25vh;
+        width: 70%;
+        height: 2.8vh;
+        border: 1.5px solid red;
+        border-radius: 1vh;
+        margin-left: 5.5vh;
+        background-color: transparent;
+        font-size: 1.3vh;
+        color: red;
+        transition: 0.2s scale, 0.2s background-color, 0.2s color;
+    }
+    
+    .form-submit:hover{
+        scale: 1.05;
+        background-color: red;
+        color: white;
+    }
+    
+    .close-form{
+        margin-left: 3%;
+        text-decoration: none;
+        transition: 0.2s scale;
+    }
+    
+    .close-form:hover{
+        scale: 1.2;
+    }
+    
+    .close-form i{
+        font-size: 2.35vh;
+        color: red;
+        border-radius: 50%;
+        transition: 0.2s scale;
+    }
+    
+    .close-form i:hover{
+        scale: 1.2;
+    }
+    
+    .user-details{
+        height: 80vh;
+        width: 100%;
+        background-color: white;
+        border: 1.5px solid #695cfe;
+        border-radius: 2vw;
+        margin-top: 2vw;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .left-photo{
+        height: 45%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        border: none;
+    }
+    
+    .img-container{
+        height: 15vh;
+        width: 15vh;
+        border-radius: 50%;
+        margin-top: 4vw;
+        border: 1.5px solid #695cfe;
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .right-details{
+        height: 55%;
+        width: 100%;
+    }
+    
+    .file-chosen-text{
+        padding: 0.5vw 2vw;
+        border-radius: 2vw;
+        border: 1.5px solid #695cfe;
+        transition: 0.2s;
+    }
+    
+    .file-chosen-text:hover{
+        background-color: #695cfe;
+        color: white;
+    }
+    
+    .upload-container{
+        margin-top: 2vw;
+    }
+    
+    .right-details{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    
+    .right-details h1{
+        font-family: "Cedarville Cursive", cursive;
+    }
+    
+    form table{
+        margin-top: 0.5vh;
+        height: 32vh;
+        width: 41vh;
+        margin-left: 0;
+    }
+    
+    .profile-label{
+        font-size: 2vh;
+        font-family: "Cedarville Cursive", cursive;
+        margin-right: 2vh;
+    }
+    
+    .profile-in-botton{
+        margin-left: 4vw;
+        padding: 0.7vw 2.5vw;
+        border-radius: 2vw;
+        border: 1.5px solid #695cfe;
+        background-color: transparent;
+        transition: 0.2s;
+    }
+    
+    .profile-in-botton:hover{
+        scale: 1.06;
+        background-color: #695cfe;
+        color: white;
+    }
+    
+    .profile-in-botton-1{
+        margin-left: 4vw;
+        padding: 0.7vw 2.5vw;
+        border-radius: 2vw;
+        border: 1.5px solid red;
+        background-color: transparent;
+        transition: 0.2s;
+        color: red;
+    }
+    
+    .profile-in-botton-1:hover{
+        scale: 1.06;
+        background-color: red;
+        color: white;
+    }
+    
+    .profile-input{
+        font-family: "Poppins", sans-serif;
+        height: 3vh;
+        width: 21vh;
+        margin-bottom: 1.1vh;
+        border: none;
+        border-bottom: 1.5px solid #695cfe;
+        outline: none;
+        font-size: 1.3vh;
+        letter-spacing: 0.01vh;
+        line-height: 1;
+        box-sizing: border-box;
+        padding-bottom: 0vh;
+        padding-top: 1.3vh;
+    }    
 }

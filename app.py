@@ -21,7 +21,7 @@ result = urlparse(database_url)
 connection = pg8000.connect(
     user=result.username,
     password=result.password,
-    host=result.hostname,
+    host="dpg-csrk7jl2ng1s738a9hag-a.oregon-postgres.render.com",
     port=5432,
     database=result.path[1:]
 )
@@ -398,6 +398,7 @@ def auth_user_google(email):
         if str(i[1]) == str(email) and str(i[2]) == "Google_Login":
             Ans = True
             break
+    session['U_id'] = str(i[0])
     return Ans
 
 def write_User_table(U_id, email, password, date, login_U_id):

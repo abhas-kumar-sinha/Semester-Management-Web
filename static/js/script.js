@@ -37,9 +37,9 @@ async function fetchAtData() {
                             {
                     
                                 dataSource: [
-                                    { x: 'Present', y: course[1]['LECTURE']+course[1]['LAB']+course[1]['TUTORIAL']+course[1]['INTRODUCTION'], r: '92.5' },
-                                    { x: 'Absent', y: course[2]['LECTURE']+course[2]['LAB']+course[2]['TUTORIAL']+course[2]['INTRODUCTION'], r: '92.5' },
-                                    { x: 'Medical leave', y: course[3]['LECTURE']+course[3]['LAB']+course[3]['TUTORIAL']+course[3]['INTRODUCTION'], r: '92.5' },
+                                    { x: 'Present', y: course[1]['LECTURE']+course[1]['LAB']+course[1]['TUTORIAL']+course[1]['INTRODUCTION'], r: '100%' },
+                                    { x: 'Absent', y: course[2]['LECTURE']+course[2]['LAB']+course[2]['TUTORIAL']+course[2]['INTRODUCTION'], r: '100%' },
+                                    { x: 'Medical leave', y: course[3]['LECTURE']+course[3]['LAB']+course[3]['TUTORIAL']+course[3]['INTRODUCTION'], r: '100%' },
                                 ],
                                 dataLabel: {
                                     visible: false, position: 'none',
@@ -113,6 +113,7 @@ function isMobileDevice() {
 }
 
 if (isMobileDevice()) {
+
     photoDiv.removeAttribute("href");
     toggle.style.display = "none";
     newMenu = document.createElement('div')

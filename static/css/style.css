@@ -617,15 +617,17 @@ header .img-text .header-text {
     }
     
     .line-1 {
-        font-size: 3vh;
+        font-size: 2.6vh;
         font-family: "Cedarville Cursive", cursive;
-        padding-left: 4.5vh;
+        padding-left: 1vh;
+        margin-right: -2.75vh;
     }
     
     .line-2 {
         margin-top: -10%;
-        font-size: 2.6vh;
-        padding-left: 6vh;
+        font-size: 2.2vh;
+        padding-left: 2.5vh;
+        margin-right: -2.75vh;
     }
     
     .side-bar .image{
@@ -639,7 +641,7 @@ header .img-text .header-text {
         left: 0;
         top: 0;
         height: 100%;
-        width: 90vw;
+        width: 70vw;
         background-color: var(--sidebar-color);
         padding: 1.5vh;
         transition: var(--tran-05);
@@ -1162,6 +1164,7 @@ header .img-text .header-text {
         top: 7vh;
         left: 37vh;
         border-radius: 1vh;
+        z-index: 999;
 
         ul{
             list-style-type: none;

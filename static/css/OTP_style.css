@@ -26,8 +26,17 @@
     height: 100%;
     width: 100%;
     border-radius: 2vw;
+
+    p a{
+        color: rgb(9, 145, 145);
+    }
 }
 
+.spam-alert{
+    font-size: 1.1vw;
+    color: red;
+    margin: -0.5% 0;
+}
 
 .legend-wrapper{
     width: 37vw;
@@ -73,8 +82,7 @@
 }
 
 .otp-submit{
-    margin-top: 0.5vw;
-    height:3.5vw;
+    height:3.25vw;
     width: 8vw;
     border-radius: 2vw;
     font-size: 1.5vw;
@@ -157,6 +165,13 @@
             font-size: 1.25vh;
             color: rgb(9, 145, 145);
         }
+    }
+
+    .spam-alert{
+        font-size: 1vh;
+        color: red;
+        margin: -0.5% 0;
+        margin-bottom: -2%;
     }
     
     .otp-submit{

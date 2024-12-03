@@ -6,6 +6,7 @@ from random import randint
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 from urllib.parse import urlparse
+import requests
 import pg8000
 import os
 
@@ -34,6 +35,17 @@ google = oauth.register(
     access_token_url='https://oauth2.googleapis.com/token',
     api_base_url='https://www.googleapis.com/oauth2/v1/',
     client_kwargs={'scope': 'email profile'},
+)
+
+github = oauth.register(
+    'github',
+    client_id=os.getenv('GITHUB_CLIENT_ID'),
+    client_secret=os.getenv('GITHUB_CLIENT_SECRET'),
+    authorize_url='https://github.com/login/oauth/authorize',
+    authorize_params=None,
+    access_token_url='https://github.com/login/oauth/access_token',
+    refresh_token_url=None,
+    client_kwargs={'scope': 'read:user user:email'},
 )
 
 def create_connect_db(): 
@@ -394,12 +406,21 @@ def auth_user_google(email):
     all_User_data = read_User_table()
     Ans = False
     for i in all_User_data:
-        print(str(i[1]), str(email), str(i[1]) == str(email))
         if str(i[1]) == str(email) and str(i[2]) == "Google_Login":
             Ans = True
             break
     session['U_id'] = str(i[0])
     return Ans
+
+def auth_user_github(name):
+    all_User_data = read_User_table()
+    Ans = False
+    for i in all_User_data:
+        if str(i[4][4:-4]) == str(name) and str(i[2]) == "GitHub_Login":
+            Ans = True
+            break
+    session['U_id'] = str(i[0])
+    return Ans  
 
 def write_User_table(U_id, email, password, date, login_U_id):
     connection_cursor = connection.cursor()
@@ -898,12 +919,11 @@ def Sign_Up_Web():
 
 @app.route('/Sign-up/Google-Login')
 def google_login():
-    # Redirect to Google OAuth 2.0 consent screen
     session['action'] = request.args.get('action')
     redirect_uri = url_for('google_authorized', _external=True)
     return google.authorize_redirect(redirect_uri)
 
-@app.route('/callback')
+@app.route('/Google/auth/callback')
 def google_authorized():
     # Handle the OAuth callback
     token = google.authorize_access_token()
@@ -929,12 +949,63 @@ def google_authorized():
     if action == 'signup':
         if Register_new_User():
             update_userDetails(session['U_id'], session['name'], session['picture'])
-            return redirect('Home')
+            return redirect('/Home')
         else:
             return "Error! Email already used... Try Signing in..<a href='Sign-In'>Sign In</a>"
     else:
         if auth_user_google(session['email']):
-            return redirect('Home')
+            return redirect('/Home')
+        else:
+            return "Error! Email not registered... Try Signing up first..<a href='Sign-Up'>Sign Up</a>"
+        
+@app.route('/Sign-up/GitHub-Login')
+def github_login():
+    session['action'] = request.args.get('action')
+    redirect_uri = url_for('github_authorized', _external=True)
+    return github.authorize_redirect(redirect_uri)
+
+# GitHub OAuth callback handler
+@app.route('/GitHub/auth/callback')
+def github_authorized():
+    token = github.authorize_access_token()
+    access_token = token["access_token"]
+    headers = {
+    "Authorization": f"Bearer {access_token}",
+    "Accept": "application/vnd.github+json",
+    }
+    user = github.get('https://api.github.com/user').json()  # Fetch user profile
+
+    action = session.pop('action', 'default')
+    # Extract user data
+    username = user.get('login')
+    profile_photo = user.get('avatar_url')
+    email = f"{username}_GitHub"
+
+    response = requests.get("https://api.github.com/user/emails", headers=headers)
+    if response.status_code == 200:
+        email_data = response.json()
+        for email_entry in email_data:
+            email = email_entry.get('email')
+            break
+    else:
+        print(f"Error: {response.status_code}, {response.json()}")
+
+    session['name'] = username
+    session['email'] = email
+    session['picture'] = profile_photo
+    session['password'] = "GitHub_Login"
+    session['joining_year'] = "2024"
+
+    # You can call your custom Register_new_User function here
+    if action == 'signup':
+        if Register_new_User():
+            update_userDetails(session['U_id'], session['name'], session['picture'])
+            return redirect('/Home')
+        else:
+            return "Error! Email already used... Try Signing in..<a href='Sign-In'>Sign In</a>"
+    else:
+        if auth_user_github(session['name']):
+            return redirect('/Home')
         else:
             return "Error! Email not registered... Try Signing up first..<a href='Sign-Up'>Sign Up</a>"
 
@@ -1249,7 +1320,6 @@ def Settings():
         return redirect('Grades')
 
     return render_template('settings.html', read_data_user=read_data_user, U_id = Ans, user_concent = user_concent)
-
 
 
 @app.route("/sitemap.xml", methods=['GET', 'POST', 'HEAD'])

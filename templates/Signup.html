@@ -32,7 +32,7 @@
                     <legend class="signup-legend">Please enter your details to sign up.</legend>
                     <fieldset class="short-signup">
                         <a href="{{ url_for('google_login', action = 'signup') }}" class="Google button" type="button"><i class='bx bxl-google'></i></a>
-                        <a class="Apple button" type="button"><i class='bx bxl-apple'></i></a>
+                        <a href="{{ url_for('github_login', action = 'signup') }}" class="GitHub button" type="button"><i class='bx bxl-github'></i></i></a>
                         <a class="LinkedIn button" type="button"><i class='bx bxl-linkedin'></i></a>
                     </fieldset>
 

@@ -21,7 +21,7 @@ result = urlparse(database_url)
 connection = pg8000.connect(
     user=result.username,
     password=result.password,
-    host=result.hostname,
+    host="dpg-csrk7jl2ng1s738a9hag-a.oregon-postgres.render.com",
     port=5432,
     database=result.path[1:]
 )
@@ -931,12 +931,12 @@ def google_authorized():
             update_userDetails(session['U_id'], session['name'], session['picture'])
             return redirect('Home')
         else:
-            return "Error! Email already used..."
+            return "Error! Email already used... Try Signing in..<a href='Sign-In'>Sign In</a>"
     else:
         if auth_user_google(session['email']):
             return redirect('Home')
         else:
-            return "Error! Email not registered..."
+            return "Error! Email not registered... Try Signing up first..<a href='Sign-Up'>Sign Up</a>"
 
 @app.route("/Verify-OTP", methods=['GET', 'POST', 'HEAD'])
 def Verify_User():
@@ -1249,6 +1249,8 @@ def Settings():
         return redirect('Grades')
 
     return render_template('settings.html', read_data_user=read_data_user, U_id = Ans, user_concent = user_concent)
+
+
 
 @app.route("/sitemap.xml", methods=['GET', 'POST', 'HEAD'])
 def Sitemap():

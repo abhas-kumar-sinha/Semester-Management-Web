@@ -1383,10 +1383,11 @@ table tr td button:hover{
     }
     
     .leaderboard-wrapper{
-        min-height: 28vh;
-        max-height: 58vh;
+        min-height: 27vh;
+        max-height: 57vh;
         overflow: hidden;
         overflow-y: scroll;
+
     }
     
     .give-permission{
@@ -1427,12 +1428,14 @@ table tr td button:hover{
     }
     
     .leaderboard-wrapper table tr th{
+        padding: 0.5vh 1.3vh;
         font-family: "Poppins", sans-serif;
+        font-size: 1.4vh;
     }
     
     .leaderboard-wrapper table tr td{
-        font-size: 1.2vw;
-        padding: 0.5vw 0;
+        font-size: 1.2vh;
+        padding: 0.5vh 0;
         background-color: rgba(232, 230, 230, 0.823);
         border-top: 2px solid black;
         border-bottom: 2px solid black;
@@ -1444,10 +1447,10 @@ table tr td button:hover{
     }
     
     .user-photo{
-        height: 2vw;
-        width: 2vw;
+        height: 2.75vh;
+        width: 2.75vh;
         border-radius: 50%;
-        margin-left: 1vw;
+        margin-left: 2vh;
         background-size: contain;
         background-position: center;
         transition: 0.2s;

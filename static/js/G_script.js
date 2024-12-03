@@ -161,6 +161,10 @@ function isMobileDevice() {
 }
 
 if (isMobileDevice()) {
+    allNavOptions = document.querySelectorAll(".nav-up-bx")
+    allNavOptions.forEach(option => {
+        option.style.visibility = "hidden";
+    });
     photoDiv.removeAttribute("href");
     leaderBoard.classList.add("cg-leaderboard-close")
     toggle.style.display = "none";
@@ -219,6 +223,26 @@ if (isMobileDevice()) {
     photoDiv.addEventListener('click', () => {
         newDropDown.classList.toggle('new-drop-down-close')
     })
+
+    document.addEventListener('click', (event) => {
+        if (photoDiv.contains(event.target)) {
+    
+            newDropDown.classList.toggle('new-drop-down-close')
+    
+        } else if (newDropDown.contains(event.target)) {
+    
+            console.log("newDropDown clicked");
+    
+        } else {
+            listOfAllClasses = newDropDown.classList
+            if ("new-drop-down-close" in listOfAllClasses){
+                console.log("Do nothing")
+            } else{
+                newDropDown.classList.add('new-drop-down-close')
+            }
+        }
+    })
+    
 } else{
     toggle.addEventListener("click", () => {
         sidebar.classList.toggle("close")

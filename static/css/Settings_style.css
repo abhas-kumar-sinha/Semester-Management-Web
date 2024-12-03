@@ -514,27 +514,30 @@
     .result-box{
         position: absolute;
         background-color: #fff;
-        border-bottom-left-radius: .5vw;
-        border-bottom-right-radius: .5vw;
+        border-bottom-left-radius: .5vh;
+        border-bottom-right-radius: .5vh;
         border: 0.5px solid black;
-        margin-left: 1vw;
+        margin-left: 1vh;
         overflow: hidden;
-        padding: 0 0.5vw;
-        max-height: 20vw;
+        padding: 0 0.5vh;
+        max-height: 30vh;
+        width: 18vh;
         overflow: hidden;
         overflow-y: scroll;
+        z-index: 998;
     
         ul{
-            padding: 0.5vw 0;
+            padding: 0.5vh 0;
         }
     
         ul li{
-            height: 2.5vw;
-            width: 20vw;
+            height: 2.5vh;
+            width: 20vh;
             display: flex;
             align-items: center;
-            border-radius: .5vw;
-            padding: 0 1vw;
+            border-radius: .5vh;
+            padding: 0 1vh;
+            font-size: 1.2vh;
         }
     
         ul li:hover{

@@ -14,8 +14,9 @@
     <meta name="google-site-verification" content="ugixsSdls_xXtq2-enrY0O-SYxFlzbJbybEN4ShYNLQ" />
     <title>Login/Sign Up</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/L_S_style.css')}}">
-    <link rel="shortcut icon" href="../../Assets/logo/At_logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{{url_for('static', filename='logo/logo.png')}}" type="image/x-icon">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" />
 </head>
 <body>
     <div id="main">
@@ -33,7 +34,7 @@
                     <fieldset class="short-signup">
                         <a href="{{ url_for('google_login', action = 'signup') }}" class="Google button" type="button"><i class='bx bxl-google'></i></a>
                         <a href="{{ url_for('github_login', action = 'signup') }}" class="GitHub button" type="button"><i class='bx bxl-github'></i></i></a>
-                        <a class="LinkedIn button" type="button"><i class='bx bxl-linkedin'></i></a>
+                        <a href="{{ url_for('twitter_login', action = 'signup') }}" class="LinkedIn button mk-sm" type="button"><i class="fa-brands fa-x-twitter"></i></a>
                     </fieldset>
 
                     <div class="partition">

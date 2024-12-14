@@ -15,7 +15,7 @@ load_dotenv()
 app = Flask(__name__)
 oauth = OAuth(app)
 
-app.secret_key = os.getenv("SECRET_KEY")
+app.secret_key = os.getenv("APP_SECRET_KEY")
 database_url = os.getenv("DATABASE_URL")
 
 result = urlparse(database_url)
@@ -46,6 +46,17 @@ github = oauth.register(
     access_token_url='https://github.com/login/oauth/access_token',
     refresh_token_url=None,
     client_kwargs={'scope': 'read:user user:email'},
+)
+
+twitter = oauth.register(
+    'twitter',
+    client_id=os.getenv('TWITTER_CLIENT_ID'),
+    client_secret=os.getenv('TWITTER_CLIENT_SECRET'),
+    request_token_url="https://api.twitter.com/oauth/request_token",
+    authorize_url="https://api.twitter.com/oauth/authenticate",
+    access_token_url="https://api.twitter.com/oauth/access_token",
+    api_base_url="https://api.twitter.com/1.1/",
+    client_kwargs={"scope": "email"},
 )
 
 def create_connect_db(): 
@@ -414,6 +425,7 @@ def auth_user_google(email):
 
 def auth_user_github(name):
     all_User_data = read_User_table()
+    name=name.lower()
     Ans = False
     for i in all_User_data:
         if str(i[4][4:-4]) == str(name) and str(i[2]) == "GitHub_Login":
@@ -421,6 +433,17 @@ def auth_user_github(name):
             break
     session['U_id'] = str(i[0])
     return Ans  
+
+def auth_user_twitter(name):
+    all_User_data = read_User_table()
+    name=name.lower()
+    Ans = False
+    for i in all_User_data:
+        if str(i[4][4:-4]) == str(name) and str(i[2]) == "Twitter_Login":
+            Ans = True
+            break
+    session['U_id'] = str(i[0])
+    return Ans     
 
 def write_User_table(U_id, email, password, date, login_U_id):
     connection_cursor = connection.cursor()
@@ -951,12 +974,12 @@ def google_authorized():
             update_userDetails(session['U_id'], session['name'], session['picture'])
             return redirect('/Home')
         else:
-            return "Error! Email already used... Try Signing in..<a href='Sign-In'>Sign In</a>"
+            return "Error! Email already used... Try Signing in..<a href='/Sign-In'>Sign In</a>"
     else:
         if auth_user_google(session['email']):
             return redirect('/Home')
         else:
-            return "Error! Email not registered... Try Signing up first..<a href='Sign-Up'>Sign Up</a>"
+            return "Error! Email not registered... Try Signing up first..<a href='/Sign-Up'>Sign Up</a>"
         
 @app.route('/Sign-up/GitHub-Login')
 def github_login():
@@ -1002,12 +1025,54 @@ def github_authorized():
             update_userDetails(session['U_id'], session['name'], session['picture'])
             return redirect('/Home')
         else:
-            return "Error! Email already used... Try Signing in..<a href='Sign-In'>Sign In</a>"
+            return "Error! Email already used... Try Signing in..<a href='/Sign-In'>Sign In</a>"
     else:
         if auth_user_github(session['name']):
             return redirect('/Home')
         else:
-            return "Error! Email not registered... Try Signing up first..<a href='Sign-Up'>Sign Up</a>"
+            return "Error! Email not registered... Try Signing up first..<a href='/Sign-Up'>Sign Up</a>"
+        
+# Route to start OAuth flow
+@app.route("/Sign-up/Twitter-Login")
+def twitter_login():
+    session['action'] = request.args.get('action')
+    redirect_uri = url_for('twitter_authorized', _external=True)
+    try:
+        return twitter.authorize_redirect(redirect_uri)
+    except Exception as e:
+        print(f"Error: {e}")
+        return f"Authentication failed: {e}"
+
+# Callback route
+@app.route("/Twitter/auth/callback")
+def twitter_authorized():
+    token = twitter.authorize_access_token()
+    user_info = twitter.get("account/verify_credentials.json?include_email=true").json()
+
+    action = session.pop('action', 'default')
+    # Example: Extracting user details
+    username = user_info["screen_name"]
+    email = user_info.get("email", "No email available")
+    profile_photo = user_info.get("profile_image_url", "No profile picture available")
+
+    session['name'] = username
+    session['email'] = email
+    session['picture'] = profile_photo
+    session['password'] = "Twitter_Login"
+    session['joining_year'] = "2024"
+
+    # You can call your custom Register_new_User function here
+    if action == 'signup':
+        if Register_new_User():
+            update_userDetails(session['U_id'], session['name'], session['picture'])
+            return redirect('/Home')
+        else:
+            return "Error! Email already used... Try Signing in..<a href='/Sign-In'>Sign In</a>"
+    else:
+        if auth_user_twitter(session['name']):
+            return redirect('/Home')
+        else:
+            return "Error! Email not registered... Try Signing up first..<a href='/Sign-Up'>Sign Up</a>"
 
 @app.route("/Verify-OTP", methods=['GET', 'POST', 'HEAD'])
 def Verify_User():

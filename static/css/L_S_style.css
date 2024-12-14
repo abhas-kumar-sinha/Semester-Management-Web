@@ -110,13 +110,17 @@ form{
     border-radius: 1vw;
     border: 1px solid #707070;
     background-color: transparent;
-    font-size: 2vw;
+    font-size: 2.25vw;
     transition: 0.2s;
     text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
     color: black;
+}
+
+.mk-sm{
+    font-size: 2vw;
 }
 
 .button:hover{
@@ -363,9 +367,13 @@ form{
     border-radius: 1vh;
     border: 1px solid #707070;
     background-color: transparent;
-    font-size: 2vh;
+    font-size: 2.5vh;
     transition: 0.2s;
     text-decoration: none;
+}
+
+.mk-sm{
+    font-size: 2vh;
 }
 
 .button:hover{

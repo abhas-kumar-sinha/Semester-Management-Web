@@ -90,3 +90,21 @@ if (to_test == "#Grades") {
     hero = document.querySelector("#Grades")
     hero.classList.add("Grades")
 }
+
+function copyUserID() {
+    // Get the input field
+    const userIdInput = document.getElementById('user-id-copy');
+
+    // Select the text inside the input field
+    userIdInput.select();
+    userIdInput.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text to the clipboard
+    navigator.clipboard.writeText(userIdInput.value)
+      .then(() => {
+        alert(`User I'D copied to clipboard!`);
+      })
+      .catch((err) => {
+        console.error('Failed to copy text: ', err);
+      });
+  }

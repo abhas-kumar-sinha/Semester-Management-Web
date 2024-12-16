@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for, json, send_from_directory
+from flask import Flask, render_template, request, redirect, session, url_for, json, send_from_directory, flash
 from flask_mail import Mail, Message
 from authlib.integrations.flask_client import OAuth
 from datetime import datetime, timedelta, time, timezone
@@ -390,6 +390,14 @@ def update_course_number(U_id):
     User_cursor = connection.cursor()
     
     query = f'UPDATE "{U_id}_userDetails" SET courses_registered = courses_registered + 1 WHERE U_id = %s'
+    User_cursor.execute(query, (U_id,))
+
+    connection.commit()
+
+def update_remove_course_number(U_id):
+    User_cursor = connection.cursor()
+    
+    query = f'UPDATE "{U_id}_userDetails" SET courses_registered = courses_registered - 1 WHERE U_id = %s'
     User_cursor.execute(query, (U_id,))
 
     connection.commit()
@@ -895,6 +903,7 @@ def home():
     create_connect_db()
     if request.method == 'POST':
         reset_User(session['U_id'])
+        flash("Data has been resetted!", "success")
         return redirect('Home')
 
     return redirect('Sign-In')
@@ -903,10 +912,15 @@ def home():
 def main_Web():
     read_data_user = read_userDetails(session['U_id'])
     attendance = read_User_attendance(session['U_id'])
+
+    if read_data_user[0][5] == 0:
+        flash("Add Courses !", "error")
+
     return render_template('index.html', attendance = attendance, read_data_user=read_data_user)
 
 @app.route("/Sign-In", methods=['GET', 'POST', 'HEAD'])
 def Sign_In_Web():
+    flash("Welcome Back!", "success")
     if request.method == 'POST':
         input_id = request.form["signin-i'd"]
         password = request.form['signin-password']
@@ -914,15 +928,18 @@ def Sign_In_Web():
         if auth_user(input_id, password):
             session.clear()
             session['U_id'] = input_id[-4:]
+            flash(f"Signed In as {session['U_id']}!", "success")
             return redirect('Home')
         else:
             connection.rollback()
-            return "error! Invalid Credentials"
+            flash("error! Invalid Credentials", "error")
+            return redirect('Home')
 
     return render_template('Signin.html')
 
 @app.route("/Sign-Up", methods=['GET', 'POST', 'HEAD'])
 def Sign_Up_Web():
+    flash("Welcome to my Website!", "success")
     if request.method == 'POST':
         email = request.form['signup-email']
         password = request.form['signup-password']
@@ -930,6 +947,7 @@ def Sign_Up_Web():
         joining_year = request.form['signup-year']
         session.clear()
 
+        flash(f"Welcome to my Website!", "success")
         session['email'] = email
         session['password'] = password
         session['name'] = name
@@ -1077,9 +1095,9 @@ def twitter_authorized():
 @app.route("/Verify-OTP", methods=['GET', 'POST', 'HEAD'])
 def Verify_User():
     email = session.get('email')
-
     if 'OTP' not in session:
         OTP = generate_otp()
+        flash(f"OTP sent successfully!", "success")
         
         session['OTP'] = OTP
 
@@ -1100,12 +1118,15 @@ def Verify_User():
         
         if entered_OTP == OTP:
             if Register_new_User():
+                flash(f"Signed Up using {email}!", "success")
                 return redirect('Home')
             else:
-                return "Error! Email already used..."
+                flash("Error! Email already used...", "error")
+                return redirect("/Sign-Up")
         else:
             connection.rollback()
-            return "OTP does not match!!!"
+            flash("OTP does not match!", "error")
+            return redirect("/Sign-Up")
     
     return render_template('Signup-OTP.html', email=email)
 
@@ -1135,21 +1156,26 @@ def Add_Course():
         Instructor_email = request.form.get('form-instructor-email')
 
         if write_User(session['U_id'], course_id, course_name, course_credits, course_details, course_website, Instructor_name, Instructor_email):
+            flash(f"Course {course_id} added", "success")
             update_course_number(session['U_id'])
             return redirect("Add-Course")
         else:
+            flash("Error. Course already exists.", "error")
             connection.rollback()
-            return "Error. Course already exists."
+            return redirect("Add-Course")
         
     if request.method == 'POST' and form_name == "delete-course":
         C_id = request.form.get("C_id")
+        flash(f"Course {course_id} Removed", "success")
         del_User(session['U_id'], C_id)
+        update_remove_course_number(session['U_id'])
         courses = read_User(session['U_id'])
 
     return render_template('AddCourse.html', courses = courses, read_data_user=read_data_user)
 
 @app.route("/Mark-Attendance", methods=['GET', 'POST', 'HEAD'])
 def Mark_Attendance():
+    
     update_day_tracker(session['U_id'])
     read_data_user = read_userDetails(session['U_id'])
     courses = read_User(session['U_id'])
@@ -1179,13 +1205,14 @@ def Mark_Attendance():
         
         write_User_attendance(session['U_id'], attendance, course_id, class_type)
         write_date_table(session['U_id'], [course_id, class_type, day, start_time, end_time])
-
+        flash(f"Marked {course_id} as {attendance}", "success")
         return redirect("Mark-Attendance")
         
     return render_template('MarkAttendance.html', courses=courses, fin_timetables_list=fin_timetables_list, fin_day_name=fin_day_name, read_data_user = read_data_user, date = date)
 
 @app.route("/Today-Schedule", methods=['GET', 'POST', 'HEAD'])
 def Schedule():
+    
     read_data_user = read_userDetails(session['U_id'])
     timetables = read_timetable(session['U_id'])
     timetables_list = [item for sublist in timetables for item in sublist]
@@ -1215,6 +1242,7 @@ def Schedule():
         timetables = read_timetable(session['U_id'])
         timetables_list = [item for sublist in timetables for item in sublist]
         courses = read_User(session['U_id'])
+        flash("Updated TimeTable", "success")
         
     if request.method == 'POST' and form_name == "delete-course":
         C_id = request.form.get("course-id")
@@ -1226,17 +1254,20 @@ def Schedule():
         timetables = read_timetable(session['U_id'])
         timetables_list = [item for sublist in timetables for item in sublist]
         courses = read_User(session['U_id'])
+        flash("Updated TimeTable", "success")
 
     return render_template('Schedule.html', timetables_list=timetables_list, courses=courses, read_data_user=read_data_user)
 
 @app.route("/Analytics", methods=['GET', 'POST', 'HEAD'])
 def Course_Analytics():
+    
     read_data_user = read_userDetails(session['U_id'])
     attendance = read_User_attendance(session['U_id'])
     return render_template('Analytics-web.html', attendance=attendance, read_data_user=read_data_user)
 
 @app.route("/Grades", methods=['GET', 'POST', 'HEAD'])
 def Grades():
+    
     read_grades_user = read_User_grades(session['U_id'])
     read_data_user = read_userDetails(session['U_id'])
     courses = read_User(session['U_id'])
@@ -1258,6 +1289,8 @@ def Grades():
         if str(i[0]) == str(session['U_id']):
             to_show = True
             break
+        else:
+            flash("Give Permission to view leaderboard", "success")
 
     if request.method == 'POST' and form_name=="add-course":
         form_data = request.form
@@ -1279,6 +1312,7 @@ def Grades():
 
         write_User_grades(session['U_id'], Course_id, final_dict)
         read_grades_user = read_User_grades(session['U_id'])
+        flash(f"Added {Course_id}", "success")
 
         return redirect('Grades')
     
@@ -1299,6 +1333,7 @@ def Grades():
         read_grades_user = read_User_grades(session['U_id'])
         sgpa = calculate_sgpa(read_grades_user, courses)
         update_user_grades_table(session['U_id'], sgpa)
+        flash(f"Marks updated for {Course_id}", "success")
 
         return redirect('Grades')
 
@@ -1307,7 +1342,7 @@ def Grades():
         delete_user_grades_table(session['U_id'], course_id)
         sgpa = calculate_sgpa(read_grades_user, courses)
         update_user_grades_table(session['U_id'], sgpa)
-
+        flash(f"Removed {Course_id}", "success")
         return redirect('Grades')
 
     return render_template('Grades.html', read_data_user=read_data_user, courses= courses, read_grades_user=read_grades_user, grnated_list=grnated_list, grnated_users=grnated_users, to_show=to_show)
@@ -1356,16 +1391,23 @@ def Logout():
                         session.clear()
                         update_deleted_users(U_id, i[1], password, i[3])
                         delete_User_table(U_id)
+                        flash("Account {U_id} Qued for Deletion!", "error")
                         return redirect('Sign-In')
                     else:
-                        return "Incorrect Password"
+                        flash("Incorrect Password!", "error")
+                        return redirect("/Settings")
+                else:
+                    flash("Incorrect User I'D!", "error")
+                    return redirect("/Settings")
         else:
-            return "type DELETE carefully"
+            flash("type DELETE carefully!", "error")
+            return redirect("/Settings")
         
     return render_template('Signin.html')
 
 @app.route("/Settings", methods=['GET', 'POST', 'HEAD'])
 def Settings():
+    
     all_User_data = read_User_table()
     read_data_user = read_userDetails(session['U_id'])
     all_user_concent = read_grades_table()

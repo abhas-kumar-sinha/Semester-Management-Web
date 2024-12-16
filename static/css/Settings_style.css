@@ -147,6 +147,33 @@
     }
 }
 
+.Copy-user-id{
+    width: 105%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    button{
+        padding: 0.05vw 0.15vw;
+        padding-bottom: 0vw;
+        font-size: 0.9vw;
+    }
+}
+
+.not-to-copy{
+    width: 20vw;
+}
+
+#user-id-copy{
+    width: 14vw;
+    font-size: 1.2vw;
+    border: none;
+    outline: none;
+}
+
+#user-id-copy::selection{
+    user-select: none;
+}
+
 .user-photo{
     height: 13vw;
     width: 13vw;
@@ -619,6 +646,28 @@
             background-color: #695cfe;
             color: white;
         }
+    }
+
+    .Copy-user-id{
+        width: 120%;
+        button{
+            margin-top: 0;
+            margin-left: 0.5vh;
+            padding: 0.05vh 0.1vh;
+            padding-bottom: 0;
+            font-size: 0.8vh;
+        }
+    }
+
+    .not-to-copy{
+        width: 20vh;
+        font-size: 1vh;
+    }
+
+    #user-id-copy{
+        width: 10vh;
+        font-size: 1vh;
+        border: none;
     }
     
     .user-photo{

@@ -38,7 +38,7 @@
                 </a>
                 <div class="user-details">
                     <h2>{{read_data_user[0][1]}}</h2>
-                    <p>User I'D: {{U_id}}</p>
+                    <p class="Copy-user-id"> <span class="not-to-copy">User I'D:</span><input type="text" id="user-id-copy" value="{{U_id}}" readonly> <button class="copy-btn" type="button" onclick="copyUserID()"><i class='bx bx-copy'></i></i></button></p>
                     <div class="inp-btns">
                         <a href="User-Profile"><button><p>Change</p> Name</button></a>
                         <a href="User-Profile"><button><p>Change</p> Password</button></a>

@@ -14,6 +14,8 @@
     {% block head %}{% endblock %}
     <link rel="shortcut icon" href="{{url_for('static', filename='logo/logo.png')}}" type="image/x-icon">
     <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 </head>
 <body>
     <div id="main">
@@ -108,6 +110,54 @@
         {% endblock main %}
 
     </div>
+
+    <script>
+        function createToastNode(category, message) {
+            const div = document.createElement('div');
+            div.style.display = 'flex';
+            div.style.alignItems = 'center';
+            div.style.gap = '10px'; // Add spacing between icon and text
+
+            if (category === "success") {
+                div.innerHTML = `<i style="font-size: 2vw" class='bx bxs-check-circle'></i> ${message}`;
+            }
+            else{
+                div.innerHTML = `<i style="font-size: 2vw" class='bx bxs-error-circle'></i> ${message}`;
+            }
+            return div;
+        }
+        // Extract flashed messages from Flask
+        const messages = JSON.parse('{{ get_flashed_messages(with_categories=true) | tojson | safe }}');
+    
+        // Display each message as a toast
+        messages.forEach(([category, message]) => {
+            Toastify({
+                node: createToastNode(category, message),
+                duration: 5000, // Auto-close after 5 seconds
+                close: true, // Show close button
+                gravity: "top", // Top position
+                position: "right", // Right position
+                stopOnFocus: true, // Pause when focused
+                style: {
+                    background: category == "success"? "#07BC0C" : "#E74C3C", // Gradient background
+                    color: "white",
+                    fontWeight: "400",
+                    fontSize: "1.4vw",
+                    borderRadius: "4px",
+                    padding: "1vw",
+                    minHeight: "4.5vw",
+                    minWidth: "22.5vw",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                },
+                onClick: function () {
+                    console.log("Toast clicked!"); // Custom on-click behavior
+                },
+            }).showToast();
+        });
+    </script>
+
     {% if include_base_js is not defined or include_base_js %}
         <script src="{{url_for('static', filename='js/script.js')}}"></script>
     {% endif %}

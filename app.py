@@ -992,12 +992,14 @@ def google_authorized():
             update_userDetails(session['U_id'], session['name'], session['picture'])
             return redirect('/Home')
         else:
-            return "Error! Email already used... Try Signing in..<a href='/Sign-In'>Sign In</a>"
+            flash("Error! Email already used... Try Signing in..", "error")
+            return redirect("/Sign-In")
     else:
         if auth_user_google(session['email']):
             return redirect('/Home')
         else:
-            return "Error! Email not registered... Try Signing up first..<a href='/Sign-Up'>Sign Up</a>"
+            flash("Error! Email not registered... Try Signing up first..", "error")
+            return redirect("/Sign-Up")
         
 @app.route('/Sign-up/GitHub-Login')
 def github_login():
@@ -1043,12 +1045,14 @@ def github_authorized():
             update_userDetails(session['U_id'], session['name'], session['picture'])
             return redirect('/Home')
         else:
-            return "Error! Email already used... Try Signing in..<a href='/Sign-In'>Sign In</a>"
+            flash("Error! Email already used... Try Signing in..", "error")
+            return redirect("/Sign-In")
     else:
         if auth_user_github(session['name']):
             return redirect('/Home')
         else:
-            return "Error! Email not registered... Try Signing up first..<a href='/Sign-Up'>Sign Up</a>"
+            flash("Error! Email not registered... Try Signing up first..", "error")
+            return redirect("/Sign-Up")
         
 # Route to start OAuth flow
 @app.route("/Sign-up/Twitter-Login")
@@ -1085,12 +1089,14 @@ def twitter_authorized():
             update_userDetails(session['U_id'], session['name'], session['picture'])
             return redirect('/Home')
         else:
-            return "Error! Email already used... Try Signing in..<a href='/Sign-In'>Sign In</a>"
+            flash("Error! Email already used... Try Signing in..", "error")
+            return redirect("/Sign-In")
     else:
         if auth_user_twitter(session['name']):
             return redirect('/Home')
         else:
-            return "Error! Email not registered... Try Signing up first..<a href='/Sign-Up'>Sign Up</a>"
+            flash("Error! Email not registered... Try Signing up first..", "error")
+            return redirect("/Sign-Up")
 
 @app.route("/Verify-OTP", methods=['GET', 'POST', 'HEAD'])
 def Verify_User():
@@ -1289,8 +1295,8 @@ def Grades():
         if str(i[0]) == str(session['U_id']):
             to_show = True
             break
-        else:
-            flash("Give Permission to view leaderboard", "success")
+    else:
+        flash("Give Permission to view leaderboard", "success")
 
     if request.method == 'POST' and form_name=="add-course":
         form_data = request.form

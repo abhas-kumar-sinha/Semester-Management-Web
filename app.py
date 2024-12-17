@@ -1386,19 +1386,20 @@ def Logout():
 
         if confirmation == "DELETE":
             for i in existingUsers:
+                print(str(i[0]), str(U_id), str(session['U_id']), str(i[0]) == str(U_id), str(U_id) == str(session['U_id']))
                 if str(i[0]) == str(U_id) and str(U_id) == str(session['U_id']):
                     if str(i[2]) == str(password):
                         session.clear()
                         update_deleted_users(U_id, i[1], password, i[3])
                         delete_User_table(U_id)
-                        flash("Account {U_id} Qued for Deletion!", "error")
+                        flash(f"Account {U_id} Queued for Deletion!", "success")
                         return redirect('Sign-In')
                     else:
                         flash("Incorrect Password!", "error")
                         return redirect("/Settings")
-                else:
-                    flash("Incorrect User I'D!", "error")
-                    return redirect("/Settings")
+            else:
+                flash("Incorrect User I'D!", "error")
+                return redirect("/Settings")
         else:
             flash("type DELETE carefully!", "error")
             return redirect("/Settings")
@@ -1427,7 +1428,6 @@ def Settings():
         return redirect('Grades')
 
     return render_template('settings.html', read_data_user=read_data_user, U_id = Ans, user_concent = user_concent)
-
 
 @app.route("/sitemap.xml", methods=['GET', 'POST', 'HEAD'])
 def Sitemap():
